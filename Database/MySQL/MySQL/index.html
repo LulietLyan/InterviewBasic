@@ -1,0 +1,2187 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="博学 审问 慎思 明辨 笃行">
+      
+      
+      
+        <link rel="canonical" href="https://lulietlyan.github.io/Internship-Basic/Database/MySQL/MySQL/">
+      
+      
+        <link rel="prev" href="../../../Operating%20System/Socket%20%26%20Server/">
+      
+      
+        <link rel="next" href="../../Redis/Redis/">
+      
+      
+      <link rel="icon" href="../../../Figures/README/SYSU.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>MySQL - ✨ SYSU-CS-Basic</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai+Screen+GB+Screen:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"LXGW WenKai Screen GB Screen";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/timeline.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/basic.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/admonition.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/no-footer.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/unordered-list-symbols.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/cards.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/flink.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/rounded_corner.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/lxgw/lxgwscreen.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/custom.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/tasklist.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/fold_toc.css">
+    
+      <link rel="stylesheet" href="../../../stylesheets/changelog_extra.css">
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/material.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/light.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/backdrop.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/document-dates.config.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script><style>/* 自定义分隔线样式 */
+hr.custom-hr {
+    position: relative;
+    text-align: center;
+    border: 0;
+    height: 1px;
+    background: none;
+    /* 使用主题的边框颜色 */
+    border-top: 2px solid var(--md-default-fg-color--lighter, currentColor);
+    margin: 100px 0 !important;
+}
+
+hr.custom-hr:before {
+    content: attr(data-content);
+    position: absolute;
+    /* 使用主题的背景色，fallback 到页面背景色 */
+    background: var(--md-default-bg-color, var(--md-primary-bg-color, inherit));
+    /* 使用主题的文本颜色 */
+    color: var(--md-default-fg-color, currentColor);
+    padding: 0 0.5em;
+    line-height: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* 目录中分隔线条目的样式 */
+.md-nav__item.hr-nav-item {
+    text-align: center;
+    margin: 1.16em 0;
+    /* 增加上下间距 */
+}
+
+.md-nav__item.hr-nav-item .md-nav__link {
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--md-typeset-color) !important;
+}
+
+/* 悬停效果 */
+.md-nav__item.hr-nav-item .md-nav__link:hover {
+    color: var(--md-accent-fg-color) !important;
+}
+
+/* 修改分隔线的样式 */
+.md-content__inner hr.custom-hr {
+    border: none !important;
+    height: 2px !important;
+    background-color: var(--md-typeset-color) !important;
+    margin: 8em 0 !important;
+    /* 增加分隔线的上下间距 */
+}
+
+/* 确保分隔线文字可见 */
+.md-content__inner hr.custom-hr[data-content]::before {
+    color: var(--md-typeset-color) !important;
+}</style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#contents" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="✨ SYSU-CS-Basic" class="md-header__button md-logo" aria-label="✨ SYSU-CS-Basic" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ✨ SYSU-CS-Basic
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MySQL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LulietLyan/Internship-Basic" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SYSU-CS-Basic
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔯 Portal
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Computer%20Network/Intro/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🕸 Computer Network
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Operating%20System/Intro/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  💻 Operating System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  📕 Database
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../Docker/Docker/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🎒 Docker
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="✨ SYSU-CS-Basic" class="md-nav__button md-logo" aria-label="✨ SYSU-CS-Basic" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ✨ SYSU-CS-Basic
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LulietLyan/Internship-Basic" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SYSU-CS-Basic
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🔯 Portal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    🕸 Computer Network
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            🕸 Computer Network
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Computer%20Network/Intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Network Model
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Computer%20Network/HTTP%20%26%20HTTPs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HTTP & HTTPs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Computer%20Network/TCP%20%26%20UDP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TCP & UDP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Computer%20Network/IP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    💻 Operating System
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            💻 Operating System
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Operating%20System/Intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System Basic
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Operating%20System/Concurrency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concurrency
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Operating%20System/Memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Operating%20System/Process%20%26%20Thread/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Process & Thread
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Operating%20System/File%20System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Operating%20System/Socket%20%26%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Socket & Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    📕 Database
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            📕 Database
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    MySQL
+    
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Redis/Redis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Redis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    🎒 Docker
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            🎒 Docker
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Docker/Docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+                  
+  
+    <a href="https://github.com/LulietLyan/Internship-Basic/edit/main/docs/Database/MySQL/MySQL.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LulietLyan/Internship-Basic/raw/main/docs/Database/MySQL/MySQL.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+
+
+<h1 align="center">MySQL</h1>
+
+<h1 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 16476 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6m80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3"/></svg></span> 17 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 83 分钟</p>
+</div>
+<ul>
+<li><a href="#contents">Contents</a></li>
+<li><a href="#-概述">🔴 概述</a></li>
+<li><a href="#关系的三个范式是什么">关系的三个范式是什么？</a></li>
+<li><a href="#mysql-中-varchar-和-char-的区别是什么">MySQL 中 varchar 和 char 的区别是什么？</a></li>
+<li><a href="#join-和-left-join-的区别">join 和 left join 的区别？</a></li>
+<li><a href="#sql-怎么实现模糊查询">SQL 怎么实现模糊查询？</a></li>
+<li><a href="#select-的执行过程">select 的执行过程？</a></li>
+<li><a href="#update-的执行过程">update 的执行过程？</a></li>
+<li><a href="#count-性能比较">count 性能比较？</a></li>
+<li><a href="#droptruncate-和-delete-的区别">drop、truncate 和 delete 的区别？</a></li>
+<li><a href="#mysql-会出现死锁吗如何避免死锁">MySQL 会出现死锁吗，如何避免死锁？</a><ul>
+<li><a href="#什么情况发生死锁">什么情况发生死锁</a></li>
+<li><a href="#解决办法">解决办法：</a></li>
+</ul>
+</li>
+<li><a href="#-事务">🟤 事务</a></li>
+<li><a href="#mysql-之事务的四大特性acid">MySQL 之事务的四大特性(ACID)？</a></li>
+<li><a href="#并发事务会出现什么问题">并发事务会出现什么问题？</a></li>
+<li><a href="#mysql-的事务隔离级别">MySQL 的事务隔离级别？</a></li>
+<li><a href="#在不同事务隔离级别下会发生什么现象">在不同事务隔离级别下会发生什么现象？</a></li>
+<li><a href="#mvcc-实现原理">MVCC 实现原理？</a></li>
+<li><a href="#幻读是如何解决的">幻读是如何解决的？</a></li>
+<li><a href="#读提交是怎么实现的">读提交是怎么实现的？</a></li>
+<li><a href="#可重复读是怎么实现的">可重复读是怎么实现的？</a></li>
+<li><a href="#-索引">🔵 索引</a></li>
+<li><a href="#mysql-为什么使用-b-树来作索引它的优势什么">MySQL 为什么使用 B+ 树来作索引，它的优势什么？</a><ul>
+<li><a href="#特性和定义">特性和定义</a></li>
+<li><a href="#b-树和-b-树相比">B+ 树和 B 树相比：</a></li>
+<li><a href="#优势">优势</a></li>
+<li><a href="#对比">对比</a></li>
+</ul>
+</li>
+<li><a href="#索引有哪些种类">索引有哪些种类？</a></li>
+<li><a href="#什么是最左匹配原则">什么是最左匹配原则？</a></li>
+<li><a href="#索引区分度">索引区分度？</a></li>
+<li><a href="#联合索引如何进行排序">联合索引如何进行排序？</a></li>
+<li><a href="#使用索引会有哪些缺陷">使用索引会有哪些缺陷？</a></li>
+<li><a href="#什么时候需要不需要创建索引">什么时候需要/不需要创建索引？</a><ul>
+<li><a href="#需要创建索引">需要创建索引</a></li>
+<li><a href="#不需要创建索引">不需要创建索引</a></li>
+</ul>
+</li>
+<li><a href="#索引的优化使用索引的注意事项">索引的优化(使用索引的注意事项)？</a></li>
+<li><a href="#where-语句索引使用的注意事项">WHERE 语句索引使用的注意事项？</a></li>
+<li><a href="#索引什么时候会失效">索引什么时候会失效？</a></li>
+<li><a href="#-锁">🟢 锁</a></li>
+<li><a href="#mysql-的全局锁有什么作用">MySQL 的全局锁有什么作用？</a></li>
+<li><a href="#mysql-的表级锁有哪些作用是什么">MySQL 的表级锁有哪些？作用是什么？</a><ul>
+<li><a href="#元数据锁">元数据锁</a></li>
+<li><a href="#意向锁">意向锁</a></li>
+<li><a href="#auto-inc-锁">AUTO-INC 锁</a></li>
+</ul>
+</li>
+<li><a href="#mysql-的行级锁有哪些作用是什么">MySQL 的行级锁有哪些？作用是什么？</a><ul>
+<li><a href="#记录锁record-lock">记录锁(Record Lock)</a></li>
+<li><a href="#间隙锁gap-lock">间隙锁(Gap Lock)</a></li>
+<li><a href="#临键锁next-key-lock">临键锁(Next-Key Lock)</a></li>
+<li><a href="#插入意向锁">插入意向锁</a></li>
+</ul>
+</li>
+<li><a href="#mysql-如何加锁">MySQL 如何加锁</a><ul>
+<li><a href="#唯一索引等值查询">唯一索引等值查询</a></li>
+<li><a href="#非唯一索引等值查询">非唯一索引等值查询</a></li>
+<li><a href="#唯一索引范围查询">唯一索引范围查询</a></li>
+<li><a href="#非唯一索引范围查询">非唯一索引范围查询</a></li>
+</ul>
+</li>
+<li><a href="#-存储引擎">🟣 存储引擎</a></li>
+<li><a href="#mysql-的执行引擎有哪些">MySQL 的执行引擎有哪些？</a></li>
+<li><a href="#myisam-和-innodb-存储引擎的区别">MyISAM 和 InnoDB 存储引擎的区别？</a></li>
+<li><a href="#存储引擎如何选择">存储引擎如何选择？</a></li>
+<li><a href="#myisam-索引与-innodb-索引的区别">MyISAM 索引与 InnoDB 索引的区别？</a></li>
+<li><a href="#-日志">🟠 日志</a></li>
+<li><a href="#mysql-三种日志">MySQL 三种日志？</a><ul>
+<li><a href="#undo-log回滚日志">UNDO LOG(回滚日志)</a></li>
+<li><a href="#redo-log重做日志">REDO LOG(重做日志)</a></li>
+<li><a href="#binlog归档日志">BINLOG(归档日志)</a></li>
+</ul>
+</li>
+<li><a href="#redo-log-与-bin-log-的区别">redo log 与 bin log 的区别？</a></li>
+<li><a href="#redo-log-和-undo-log-区别">redo log 和 undo log 区别？</a></li>
+<li><a href="#undo-log-是如何实现-mvcc-的">undo log 是如何实现 MVCC 的？</a></li>
+<li><a href="#为什么有了-binlog还要有-redo-log">为什么有了 binlog，还要有 redo log？</a></li>
+<li><a href="#被修改-undo-页面需要记录对应-redo-log-吗">被修改 Undo 页面，需要记录对应 redo log 吗？</a></li>
+<li><a href="#binlog-的三种格式">binlog 的三种格式？</a></li>
+<li><a href="#redo-log-容灾恢复过程">redo log 容灾恢复过程？</a></li>
+<li><a href="#redo-log-是直接写入硬盘的吗">redo log 是直接写入硬盘的吗？</a></li>
+<li><a href="#redo-log-比直接落盘的优点">redo log 比直接落盘的优点？</a></li>
+<li><a href="#redo-log-buffer-什么时候刷盘">redo log buffer 什么时候刷盘？</a></li>
+<li><a href="#redo-log-文件文件格式和写入过程">redo log 文件文件格式和写入过程？</a></li>
+<li><a href="#binlog-什么时候刷盘">binlog 什么时候刷盘？</a></li>
+<li><a href="#binlog-什么时候刷盘频率">binlog 什么时候刷盘频率？</a></li>
+<li><a href="#主从复制是怎么实现">主从复制是怎么实现？</a></li>
+<li><a href="#mysql-主从复制模型">MySQL 主从复制模型？</a></li>
+<li><a href="#为什么需要两阶段提交">为什么需要两阶段提交？</a></li>
+<li><a href="#两阶段提交的过程是怎样的">两阶段提交的过程是怎样的？</a></li>
+<li><a href="#异常重启会出现什么现象">异常重启会出现什么现象？</a></li>
+<li><a href="#事务没提交-redo-log-会被持久化到硬盘吗">事务没提交 redo log 会被持久化到硬盘吗？</a></li>
+<li><a href="#两阶段提交有什么问题">两阶段提交有什么问题？</a></li>
+<li><a href="#组提交是什么意思">组提交是什么意思？</a></li>
+<li><a href="#buffer-pool-有什么作用">Buffer Pool 有什么作用？</a></li>
+<li><a href="#buffer-pool-缓存内容">Buffer Pool 缓存内容？</a></li>
+<li><a href="#-优化">🟡 优化</a></li>
+<li><a href="#慢查询的原因">慢查询的原因？</a></li>
+<li><a href="#mysql-硬盘-io-很高有什么优化的方">MySQL 硬盘 I/O 很高有什么优化的方</a></li>
+</ul>
+<h1 id="_1">🔴 概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">关系的三个范式是什么？<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><strong>第一范式(1NF)</strong>：用来确保每列的原子性，要求每列(或者每个属性值)都是不可再分的最小数据单元(也称为最小的原子单元)</p>
+</li>
+<li>
+<p><strong>第二范式(2NF)</strong>：在第一范式的基础上更进一层，要求表中的每列都和主键相关，即要求实体的唯一性。如果一个表满足第一范式，并且除了主键以外的其他列全部都依赖于该主键，那么该表满足第二范式</p>
+</li>
+<li>
+<p><strong>第三范式(3NF)</strong>：在第二范式的基础上更进一层，第三范式是确保每列都和主键列直接相关，而不是间接相关，即限制列的冗余性。如果一个关系满足第二范式，并且除了主键以外的其他列都依赖于主键列，列和列之间不存在相互依赖关系，则满足第三范式</p>
+</li>
+</ul>
+<h2 id="mysql-varchar-char">MySQL 中 varchar 和 char 的区别是什么？<a class="headerlink" href="#mysql-varchar-char" title="Permanent link">&para;</a></h2>
+<ul>
+<li>char 字段的最大长度为 255 字符，varchar 字段的最大长度为 65535 个字符</li>
+<li>char 类型如果存的数据量小于最大长度，剩余的空间会使用空格填充，因此可能会浪费空间，所以 char 类型适合存储长度固定的数据，这样不会浪费空间，效率还比 varchar 略高；varchar 类型如果存到数据量小于最大长度，剩余的空间会留给别的数据使用，所以 varchar 类型适合存储长度不固定的数据，这样虽然没有 char 存储效率高，但至少不会浪费空间</li>
+<li>char 类型的查找效率高，varchar 类型的查找效率较低</li>
+</ul>
+<h2 id="join-left-join">join 和 left join 的区别？<a class="headerlink" href="#join-left-join" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>join 等价于 inner join 内连接，是返回两个表中都有的符合条件的行</p>
+</li>
+<li>
+<p>left join 左连接，是返回左表中所有的行及右表中符合条件的行</p>
+</li>
+<li>
+<p>right join 右连接，是返回右表中所有的行及左表中符合条件的行</p>
+</li>
+</ul>
+<h2 id="sql">SQL 怎么实现模糊查询？<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h2>
+<p>索引 B+ 树是按照索引值有序排列存储的，只能根据前缀进行比较。每一次按照模糊匹配的前缀字典序来进行比较。</p>
+<h2 id="select">select 的执行过程？<a class="headerlink" href="#select" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>连接</strong>：首先客户端和 MySQL 通过三次握手建立连接，MySQL 是基于 TCP 进行传输的。MySQL 服务如果没有启动就会报错。MySQL 正常运行的话就去校验用户名和密码，如果认证信息错误也会报错。检验通过之后连接器会获取用户权限并且保存起来，后续的任何操作都会基于开始的读到权限进行判断，即便创建连接之后更改了权限也不会影响已连接的权限<blockquote>
+<p><strong>如何断开长连接</strong> </p>
+<ul>
+<li><strong>定期断开长连接</strong> </li>
+<li><strong>客户端主动重置连接</strong>：当客户端执行了一个很大的操作后，在代码里调用 mysql_reset_connection 函数来重置连接，达到释放内存的效果。这个过程不需要重连和重新做权限验证，但是会将连接恢复到刚刚创建完时的状态</li>
+</ul>
+</blockquote>
+</li>
+<li><strong>查询缓存</strong>：连接成功后会向 MySQL 服务发送 SQL 语句，MySQL 服务收到语句之后会进行解析判断 SQL 语句的类型。如果是 select 语句的话就去缓存中查询，看看之前有没有执行过这条 select 语句。缓存是以 k-v 形式保存在内存中的，key 是 SQL 语句，value 是 SQL 查询结果。如果缓存中有结果就直接返回给客户端，如果没有命中就继续向下执行。执行完成后的结果会被放入缓存中<blockquote>
+<p><strong>缓存缺点</strong> </p>
+<p>对于更新比较频繁的表，查询缓存的命中率很低，只要一个表有更新操作，那么这个表的查询缓存就会被清空。如果刚缓存了一个查询结果很大的数据，还没被使用的时候，刚好这个表有更新操作，查询缓冲就被清空了。
+ <strong>MySQL 8.0 版本直接将查询缓存删掉了</strong>，执行一条 SQL 查询语句，不会有查询缓存这个阶段了</p>
+</blockquote>
+</li>
+<li><strong>SQL 解析</strong>：词法分析和语法分析，词法分析是把 SQL 语句的字符串识别出关键字，方便后续优化，语法分析根据语法规则判断 SQL 语句是否满足要求。如果 SQL 语法不正确就会报错</li>
+<li><strong>SQL 执行</strong>：主要是 prepare 预处理、optimize 优化和 execute 执行阶段</li>
+<li><strong>预处理器检查 SQL 查询的表或者字段是否存在</strong>，如果有就将它扩展为 SQL 的所有的列</li>
+<li><strong>优化器是确定 SQL 语句的执行方案</strong>，比方说有索引会选择走了哪个索引</li>
+<li><strong>执行器会与存储引擎交互</strong>，如果走索引了就将相应索引条件交给存储引擎<ul>
+<li><strong>存储引擎通过 B+ 树定位数据</strong>，如果数据不存在就像执行器返回错误，然后查询结束；找到了就将记录返回给执行数，执行器读到数据之后判断记录是否满足要求，如果满足要求就将数据返回给客户端，否则跳过该数据</li>
+<li><strong>全表扫描优化器</strong> 和存储引擎交互之后存储引擎会访问第一条表中数据，执行器会判断这条数据是否满足条件，满足就发给客户端。</li>
+</ul>
+</li>
+<li><strong>执行器查询是一个 while 循环</strong>，继续取下一条记录重复判断，直到读完表中所有记录退出循环。如果使用联合索引，会在存储引擎层分别判断每个索引是否满足条件，而不先执行回表，所有索引有一个不成立就跳过；否则就返回给 Server 层回表，这是一个 <strong>索引下推</strong> 的过程</li>
+</ul>
+<h2 id="update">update 的执行过程？<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
+<p><strong>执行器负责具体执行</strong>，会调用存储引擎的接口，通过主键索引树搜索获取一行记录：</p>
+<ul>
+<li>如果记录所在的数据页本来就在 buffer pool 中，就直接返回给执行器更新</li>
+<li>如果记录不在 buffer pool，将数据页从硬盘读入到 buffer pool，返回记录给执行器</li>
+</ul>
+<p>执行器得到聚簇索引记录后，会 <strong>比较更新前的记录和更新后的记录是否相同</strong>：</p>
+<ul>
+<li>如果一样就不进行后续更新流程</li>
+<li>如果不一样就把更新前的记录和更新后的记录都当作参数传给 InnoDB 层，让 InnoDB 真正的执行更新记录的操作</li>
+<li><strong>开启事务</strong>：首先要记录相应的 undo log，需要把被更新的列的旧值记下来，也就是要生成一条 undo log，undo log 会写入 Buffer Pool 中的 Undo 页面，不过在内存修改该 Undo 页面后，需要记录对应的 redo log</li>
+</ul>
+<p>InnoDB 层开始更新记录，会先更新内存(同时标记为脏页)，然后将记录写到 redo log 里面，这个时候更新就算完成了。为了减少硬盘 I/O，不会立即将脏页写入硬盘，后续由后台线程选择一个合适的时机将脏页写入到硬盘。</p>
+<p>在一条更新语句执行完成后，然后开始记录该语句对应的 binlog，此时记录的 binlog 会被保存到 binlog cache，在事务提交时才会统一将该事务运行过程中的所有 binlog 刷新到硬盘。</p>
+<p><strong>两阶段提交</strong>：</p>
+<ul>
+<li><strong>prepare 阶段</strong>：将 redo log 对应的事务状态设置为 prepare，然后将 redo log 刷新到硬盘；</li>
+<li><strong>commit 阶段</strong>：将 binlog 刷新到硬盘，接着调用引擎的提交事务接口，将 redo log 状态设置为 commit(将事务设置为 commit 状态后，刷入到硬盘 redo log 文件)</li>
+</ul>
+<h2 id="count">count 性能比较？<a class="headerlink" href="#count" title="Permanent link">&para;</a></h2>
+<p><strong>count(*) = count(1) &gt; count(主键) &gt; count(字段)</strong> </p>
+<p>MySQL 会将星号参数转化为参数 0 来处理，所以 count(*) 和 count(1)相等。count(主键)需要判断主键是否为空值；count(字段)会进行全表扫描，效率最差。</p>
+<h2 id="droptruncate-delete">drop、truncate 和 delete 的区别？<a class="headerlink" href="#droptruncate-delete" title="Permanent link">&para;</a></h2>
+<p><strong>drop 删除整张表和表结构，以及表的索引、约束和触发器；truncate 只删除表数据，表的结构、索引、约束等会被保留； delete 只删除表的全部或部分数据，表结构、索引、约束等会被保留</strong>。</p>
+<ul>
+<li><strong>delete 语句为 DML(data maintain Language)</strong>，执行删除操作的过程是每次从表中删除一行，并且同时将该行的删除操作作为事务记录在日志中保存以便进行进行回滚操作</li>
+<li><strong>truncate、drop 是 DDL(data define language)</strong>，删除行是不能恢复的，并且在删除的过程中不会激活与表有关的删除触发器，执行速度快，原数据不放到 rollback segment 中，不能回滚。</li>
+<li><strong>truncate 和 drop 不支持添加 where 条件，而 delete 支持 where 条件</strong> </li>
+<li>执行速度  <strong>drop &gt; truncate &gt; delete</strong>，delete 是逐行执行的，并且在执行时会把操作日志记录下来，以备日后回滚使用，所以 delete 的执行速度是比较慢的；而 truncate 的操作是先复制一个新的表结构，再把原先的表整体删除，所以它的执行速度居中，而 drop 的执行速度最快。</li>
+<li>truncate 只能对 TABLE；delete 可以是 TABLE 和 VIEW</li>
+</ul>
+<blockquote>
+<p><strong>使用场景</strong> </p>
+<ul>
+<li>如果 <strong>想删除表用 drop</strong> </li>
+<li>如果 <strong>想保留表而将所有数据删除，和事务无关，用 truncate</strong>  即可</li>
+<li>如果 <strong>和事务有关，或者想触发 trigger，用 delete</strong> </li>
+<li>如果是整理表内部的碎片，可以用 truncate 跟上 reuse stroage，再重新导入/插入数据</li>
+</ul>
+</blockquote>
+<h2 id="mysql">MySQL 会出现死锁吗，如何避免死锁？<a class="headerlink" href="#mysql" title="Permanent link">&para;</a></h2>
+<h3 id="_3">什么情况发生死锁<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>如果 update 语句的 where 条件没有用到索引列，那么就会全表扫描，在一行行扫描的过程中，不仅给行记录加上了行锁，还给行记录两边的空隙也加上了间隙锁，相当于锁住整个表，然后直到事务结束才会释放锁。</p>
+<p>行锁会发生死锁，表锁不会。死锁的四个必要条件： <strong>互斥、占有且等待、不可强占用、循环等待</strong>。只要系统发生死锁，这些条件必然成立，但是只要破坏任意一个条件就死锁就不会成立。</p>
+<h3 id="_4">解决办法：<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>设置事务等待锁的超时时间</strong>：当一个事务的等待时间超过该值后，就对这个事务进行回滚，于是锁就释放了，另一个事务就可以继续执行了。在 InnoDB 中，参数  <strong>innodb_lock_wait_timeout</strong>  是用来设置超时时间的，默认值时 50 秒</li>
+<li><strong>应用乐观锁</strong>：在应用层控制并发操作</li>
+<li><strong>避免长查询</strong>：简化事务，减少复杂查询</li>
+<li><strong>优化事务设计</strong>：合理顺序获取锁，减少锁持有时间</li>
+<li><strong>开启主动死锁检测</strong>：主动死锁检测在发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数  <strong>innodb_deadlock_detect</strong>  设置为 on，表示开启这个逻辑，默认就开启。当检测到死锁后，就会出现提示</li>
+</ul>
+<h1 id="_5">🟤 事务<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
+<h2 id="mysql-acid">MySQL 之事务的四大特性(ACID)？<a class="headerlink" href="#mysql-acid" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>原子性(atomicity)</strong>：一个事务必须视为一个不可分割的最小工作单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能只执行其中的一部分操作，这就是事务的原子性</li>
+<li><strong>一致性(consistency)</strong>：数据库总是从一个一致性的状态转换到另一个一致性的状态</li>
+<li><strong>隔离性(isolation)</strong>：一个事务所做的修改在最终提交以前，对其他事务是不可见的</li>
+<li><strong>持久性(durability)</strong>：一旦事务提交，则其所做的修改就会永久保存到数据库中。此时即使系统崩溃，修改的数据也不会丢失</li>
+</ul>
+<blockquote>
+<p><strong>实现</strong> </p>
+<ul>
+<li><strong>原子性</strong>：通过 undo log 来保证</li>
+<li><strong>一致性</strong>：通过持久性 + 原子性 + 隔离性来保证</li>
+<li><strong>隔离性</strong>：通过 MVCC 或锁机制来保证</li>
+<li><strong>持久性</strong>：通过 redo log 来保证</li>
+</ul>
+</blockquote>
+<h2 id="_6">并发事务会出现什么问题？<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>脏读</strong>： <strong>读到了其他事务未提交的数据</strong>。未提交意味着这些数据可能会回滚，也就是可能最终不会存到数据库中，也就是不存在的数据。读到了不一定最终存在的数据，这就是脏读</li>
+<li><strong>不可重复读</strong>： <strong>不可重复读指的是在同一事务内，不同的时刻读到的同一批数据可能是不一样的</strong>，可能会受到其他事务的影响。比如其他事务改了这批数据并提交了。通常针对数据更新操作</li>
+<li><strong>幻读</strong>：幻读是针对数据插入操作来说的。假设事务 A 对某些行的内容作了更改，但是还未提交，此时事务 B 插入了与事务 A 更改前的记录相同的记录行，并且在事务 A 提交之前先提交了，而这时在事务 A 中查询会发现好像刚刚的更改对于某些数据未起作用，让用户感觉出现了幻觉，这就叫幻读。简而言之， <strong>当一个事务前后两次查询的结果集不相同时，就认为发生幻读</strong> </li>
+</ul>
+<h2 id="mysql_1">MySQL 的事务隔离级别？<a class="headerlink" href="#mysql_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>读未提交(read uncommitted)</strong>：指一个事务还没提交时，它做的变更就能被其他事务看到</li>
+<li><strong>读提交(read committed)</strong>：指一个事务提交之后，它做的变更才能被其他事务看到</li>
+<li><strong>可重复读(repeatable read)</strong>：指一个事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的， <strong>MySQL InnoDB 引擎的默认隔离级别</strong> </li>
+<li><strong>串行化(serializable)</strong>：会 <strong>对记录加上读写锁</strong>，在多个事务对这条记录进行读写操作时，如果发生了读写冲突的时候，后访问的事务必须等前一个事务执行完成，才能继续执行</li>
+</ul>
+<h2 id="_7">在不同事务隔离级别下会发生什么现象？<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>读未提交</strong>： <strong>可能发生脏读、不可重复读和幻读现象</strong> </li>
+<li><strong>读提交</strong>： <strong>可能发生不可重复读和幻读现象</strong>，但是不可能发生脏读现象</li>
+<li><strong>可重复读</strong>： <strong>可能发生幻读现象</strong>，但是不可能脏读和不可重复读现象</li>
+<li><strong>串行化</strong>：脏读、不可重复读和幻读现象 <strong>都不可能发生</strong> </li>
+</ul>
+<blockquote>
+<p><strong>💡 提示</strong> 
+- <strong>解决脏读现象</strong>：升级到读提交以上的隔离级别
+- <strong>解决不可重复读</strong>：升级到可重复读的隔离级别
+- <strong>解决幻读</strong>： <strong>不建议</strong> 将隔离级别升级到串行化，因为这样会导致数据库在 <strong>并发事务时性能很差</strong> </p>
+</blockquote>
+<h2 id="mvcc">MVCC 实现原理？<a class="headerlink" href="#mvcc" title="Permanent link">&para;</a></h2>
+<p><strong>Read View</strong>  有四个重要的字段：</p>
+<ul>
+<li><strong>m_ids</strong> ：指的是在创建 Read View 时，当前数据库中活跃事务的事务 id 列表，活跃事务指的就是，启动了但还没提交的事务</li>
+<li><strong>min_trx_id</strong> ：指的是在创建 Read View 时，当前数据库中活跃事务中事务 id 最小的事务，也就是 m_ids 的最小值</li>
+<li><strong>max_trx_id</strong> ：创建 Read View 时当前数据库中应该给下一个事务的 id 值，也就是全局事务中最大的事务 id 值 + 1</li>
+<li><strong>creator_trx_id</strong> ：指的是创建该 Read View 的事务的事务 id</li>
+</ul>
+<p>对于使用 InnoDB 存储引擎的数据库表，它的聚簇索引记录中都包含下面两个隐藏列：</p>
+<ul>
+<li><strong>trx_id</strong>：当一个事务对某条聚簇索引记录进行改动时，就会把该事务的事务 id 记录在 trx_id 隐藏列里。</li>
+<li><strong>roll_pointer</strong>：每次对某条聚簇索引记录进行改动时，都会把旧版本的记录写入到 undo 日志中，然后这个隐藏列是个指针，指向每一个旧版本记录，于是就可以通过它找到修改前的记录</li>
+</ul>
+<p>一个事务去访问记录的时候，除了自己的更新记录总是可见之外，还有这几种情况：</p>
+<ul>
+<li><strong>如果记录的 trx_id 值小于 Read View 中的 min_trx_id 值</strong>：表示这个版本的记录是在创建 Read View 前已经提交的事务生成的，所以该版本的记录 <strong>对当前事务可见</strong> </li>
+<li><strong>如果记录的 trx_id 值大于等于 Read View 中的 max_trx_id 值</strong>：表示这个版本的记录是在创建 Read View 后才启动的事务生成的，所以该版本的记录 <strong>对当前事务不可见</strong> </li>
+<li><strong>如果记录的 trx_id 值在 Read View 的 min <em>trx</em> id 和 max <em>trx</em> id 之间</strong>，需要判断 trx_id 是否在 m_ids 列表中：</li>
+<li><strong>如果记录的 trx_id 在 m_ids 列表中</strong>：表示生成该版本记录的活跃事务依然活跃着(还没提交事务)，所以该版本的记录对当前事务不可见</li>
+<li><strong>如果记录的 trx_id 不在 m_ids 列表中</strong>：表示生成该版本记录的活跃事务已经被提交，所以该版本的记录对当前事务可见</li>
+</ul>
+<h2 id="_8">幻读是如何解决的？<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>快照读(普通 select 语句)</strong>：是 <strong>通过 MVCC 方式</strong> 解决了幻读，可重复读隔离级别下，事务执行过程中看到的数据，一直跟这个事务启动时看到的数据是一致的，即使中途有其他事务插入了一条数据，查询不出来这条数据的</li>
+<li><strong>当前读(select ... for update 等语句)</strong>：是 <strong>通过 next-key lock(记录锁 + 间隙锁)方式</strong> 解决了幻读，因为当执行 select ... for update 语句的时候会加上 next-key lock，如果有其他事务在 next-key lock 锁范围内插入了一条记录，那么这个插入语句就会被阻塞，无法成功插入</li>
+</ul>
+<blockquote>
+<p><strong>失败的情况</strong> </p>
+<ul>
+<li><strong>对于快照读</strong>：MVCC 并不能完全避免幻读现象。当事务 A 更新了一条事务 B 插入的记录，那么事务 A 前后两次查询的记录条目就不一样了，所以就发生幻读</li>
+<li><strong>对于当前读</strong>：如果事务开启后，并没有执行当前读，而是先快照读，然后这期间如果其他事务插入了一条记录，那么事务后续使用当前读进行查询的时候，就会发现两次查询的记录条目就不一样了，所以就发生幻读</li>
+<li><strong>MySQL 可重复读隔离级别并没有彻底解决幻读，只是很大程度上避免了幻读现象的发生</strong> </li>
+<li><strong>尽量在开启事务之后，马上执行 select ... for update 这类当前读的语句</strong>，因为它会对记录加 next-key lock，从而避免其他事务插入一条新记录</li>
+</ul>
+</blockquote>
+<h2 id="_9">读提交是怎么实现的？<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>读提交隔离级别是在 <strong>每次读取数据时，都会生成一个新的 Read View</strong>。事务期间的多次读取同一条数据，前后两次读的数据可能会出现不一致，因为可能这期间 <strong>另外一个事务修改了该记录，并提交了事务</strong>。</p>
+<h2 id="_10">可重复读是怎么实现的？<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<p>可重复读隔离级别是在 <strong>启动事务时生成一个 Read View，然后整个事务期间都在用这个 Read View</strong>。事务期间多次读取同一条数据，前后两次读的数据若被修改过，则会因为记录中的  <strong>trx_id</strong>  仍然在  <strong>m_ids</strong>  范围内，导致程序通过  <strong>roll_pointer</strong>  获取所指向的前一个版本对应的记录，以此类推，最终找到不在 m_ids 队列中的事务对应的记录。不会导致正在执行事务在同一位置读到不同的记录。</p>
+<h1 id="_11">🔵 索引<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h1>
+<h2 id="mysql-b">MySQL 为什么使用 B+ 树来作索引，它的优势什么？<a class="headerlink" href="#mysql-b" title="Permanent link">&para;</a></h2>
+<h3 id="_12">特性和定义<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>B+ Tree 是一种多叉树， <strong>叶子节点才存放数据，非叶子节点只存放索引</strong>，每个节点里的数据是按主键顺序存放的。在叶子节点中，包括了所有的索引值信息，并且每一个叶子节点都指向下一个叶子节点，形成一个链表。B+ Tree 存储千万级的数据只需要 3-4 层高度就可以满足，千万级的表查询目标数据最多需要 3-4 次硬盘 I/O。</p>
+<h3 id="b-b">B+ 树和 B 树相比：<a class="headerlink" href="#b-b" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>B+ 树所有关键码都存放在叶节点中</strong>，上层的非叶节点的关键码是其子树中最小关键码的复写</li>
+<li><strong>B+ 树叶节点包含了全部关键码及指向相应数据记录存放地址的指针</strong>，且叶节点本身按关键码从小到大顺序连接</li>
+<li>B+ 树在搜索过程中， <strong>如果查询和内部节点的关键字一致，那么搜索过程不停止，而是继续向下搜索这个分支</strong> </li>
+</ul>
+<h3 id="_13">优势<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>单点查询</strong>：B 树进行单个索引查询时，最快可以在 O(1) 的时间代价内就查到。从平均时间代价来看， <strong>会比 B+ 树稍快一些</strong>。但是  <strong>B 树的查询波动会比较大</strong>，因为每个节点即存索引又存记录，所以有时候访问到了非叶子节点就可以找到索引，而有时需要访问到叶子节点才能找到索引。B+ 树的非叶子节点不存放实际的记录数据，仅存放索引，数据量相同的情况下，B+ 树的非叶子节点可以存放更多的索引，查询底层节点的 <strong>硬盘 I/O 次数会更少</strong> </li>
+<li><strong>插入和删除效率</strong>：B+ 树有大量的冗余节点，删除一个节点的时候，可以直接从叶子节点中删除，甚至可以不动非叶子节点，删除非常快。B+ 树的插入也是一样，有冗余节点，插入可能存在节点的分裂(如果节点饱和)，但是最多只涉及树的一条路径。B 树没有冗余节点，插入或删除节点的时候非常复杂，可能涉及复杂的树的变形</li>
+<li><strong>范围查询</strong>：B+ 树所有叶子节点间有一个链表进行连接，而 B 树没有将所有叶子节点用链表串联起来的结构，因此只能通过树的遍历来完成范围查询， <strong>范围查询效率不如 B+ 树</strong>。B+ 树的插入和删除范围查询效率更高。存在大量范围检索的场景适合使用 B+ 树，比如数据库。而对于大量的单个索引查询的场景可以考虑 B 树，比如 nosql 的 MongoDB</li>
+</ul>
+<h3 id="_14">对比<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>B+ Tree 对比 B Tree</strong>：B+Tree 只在叶子节点存储数据，而 B 树 的非叶子节点也要存储数据，所以 B+Tree 的单个节点的数据量更小，在相同的硬盘 I/O 次数下，就能查询更多的节点。B+ Tree 叶子节点采用的是双链表连接，适合 MySQL 中常见的基于范围的顺序查找，而 B 树无法做到这一点</li>
+<li><strong>B+ Tree 对比 二叉树</strong>：对于有 N 个叶子节点的 B+ Tree， <strong>其搜索复杂度为 <span class="arithmatex">\(O(log_dN)\)</span></strong>，其中 d 表示节点允许的最大子节点个数。在实际的应用当中， d 值是大于 100 的，即使数据达到千万级别时，B+ Tree 的高度依然维持在 3~4 层左右，一次数据查询操作只需要做 3~4 次的硬盘 I/O 操作就能查询到。二叉树的每个父节点的儿子节点个数是 2 个，意味着 <strong>其搜索复杂度为 <span class="arithmatex">\(O(log_2N)\)</span></strong>，二叉树检索到目标数据所经历的 <strong>硬盘 I/O 次数要更多</strong> </li>
+<li><strong>B+ Tree 对比 Hash</strong>：Hash 在做等值查询的时候效率高，搜索复杂度为 O(1)。但是  <strong>Hash 表不适合做范围查询</strong> </li>
+</ul>
+<h2 id="_15">索引有哪些种类？<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>单值索引</strong>：即一个索引只包含单个列，一个表可以有多个单列索引</li>
+<li>建表时加上  <strong>key(列名)</strong>  指定</li>
+<li>单独创建： <strong>create index 索引名 on 表名(列名)</strong> </li>
+<li>单独创建： <strong>alter table 表名 add index 索引名(列名)</strong> </li>
+<li><strong>唯一索引</strong>：索引列的值必须唯一，但 <strong>允许有 null 且 null 可以出现多次</strong> </li>
+<li>建表时加上  <strong>unique(列名)</strong>  指定</li>
+<li>单独创建： <strong>create unique index idx 表名(列名) on 表名(列名)</strong> </li>
+<li>单独创建： <strong>alter table 表名 add unique 索引名(列名)</strong> </li>
+<li><strong>主键索引</strong>：设定为主键后数据库会自动建立索引，innodb 为聚簇索引，值 <strong>必须唯一且不能为 null</strong> </li>
+<li>建表时加上  <strong>primary key(列名)</strong>  指定</li>
+<li><strong>复合索引</strong>：即一个索引包含多个列</li>
+<li>建表时加上  <strong>key(列名列表)</strong>  指定</li>
+<li>单独创建： <strong>create index 索引名 on 表名(列名列表)</strong> </li>
+<li>单独创建： <strong>alter table 表名 add index 索引名(列名列表)</strong> </li>
+<li><strong>前缀索引</strong>：对字符类型字段的前几个字符建立的索引，而不是在整个字段上建立的索引，前缀索引可以建立在字段类型为  <strong>char、 varchar、binary、varbinary</strong>  的列上。使用前缀索引的目的是为了减少索引占用的存储空间，提升查询效率</li>
+<li>单独创建： <strong>alter table 表名 add index 索引名(列名(索引长度))</strong> </li>
+</ul>
+<h2 id="_16">什么是最左匹配原则？<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
+<p>使用联合索引时，存在最左匹配原则，也就是按照最左优先的方式进行索引的匹配。使用联合索引进行查询的时候，如果不遵循最左匹配原则，联合索引会失效。</p>
+<blockquote>
+<p><strong>以联合索引(a, b, c)为例</strong> </p>
+<p>因为 (a, b, c) 联合索引是先按 a 排序；在 a 相同的情况再按 b 排序；在 b 相同的情况再按 c 排序。所以  <strong>b 和 c 是全局无序，局部相对有序的</strong>，这样在没有遵循最左匹配原则的情况下，是无法利用到索引的。 <strong>利用索引的前提是索引里的 key 是有序的</strong> </p>
+<p>联合索引的最左匹配原则在遇到范围查询(如 &gt;、&lt;)的时候停止匹配，范围查询的字段可以用到联合索引，在范围查询字段的后面的字段无法用到联合索引。</p>
+<p><strong>注意</strong>：对于  <strong>&gt;=、&lt;=、BETWEEN、like</strong>  前缀匹配的范围查询并不会停止匹配</p>
+</blockquote>
+<h2 id="_17">索引区分度？<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<p>查询优化器发现某个值出现在表的数据行中的百分比(惯用的百分比界线是"30%")很高的时候会忽略索引，进行全表扫描。</p>
+<h2 id="_18">联合索引如何进行排序？<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
+<p>给索引列和排序列建立一个联合索引，在查询时查到一个索引之后，还要对 create_time 排序，用到文件排序 filesort。在 SQL 执行计划中，Extra 列会出现 Using filesort。</p>
+<p>可以利用索引的有序性，在排序列建立联合索引，这样根据 status 筛选后的数据就是按照 create_time 排好序的，避免在文件排序，提高了查询效率。</p>
+<h2 id="_19">使用索引会有哪些缺陷？<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h2>
+<p>虽然索引大大提高了查询速度，同时却会 <strong>降低更新表的速度</strong>，如对表进行 INSERT、UPDATE 和 DELETE。</p>
+<p>因为更新表时，MySQL  <strong>不仅要保存数据，还要保存索引文件每次更新添加了索引列的字段</strong>，都会调整因为更新所带来的键值变化后的索引信息。</p>
+<p>实际上索引也是一张表，该表保存了主键与索引字段，并指向实体表的记录，所以索引列也是要占用空间的。</p>
+<h2 id="_20">什么时候需要/不需要创建索引？<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h2>
+<h3 id="_21">需要创建索引<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>表的主关键字</strong>：自动建立唯一索引</li>
+<li><strong>表的字段唯一约束</strong>：利用索引来保证数据的完整</li>
+<li><strong>直接条件查询的字段</strong>：经常用于 WHERE 查询条件的字段，这样能够提高整个表的查询速度</li>
+<li><strong>查询中与其它表关联的字段</strong>：例如字段建立了外键关系</li>
+<li><strong>查询中排序的字段</strong>：排序的字段如果通过索引去访问将大大提高排序速度</li>
+<li><strong>查询中统计或分组统计的字段</strong>：经常用于 GROUP BY 和 ORDER BY 的字段，可以创建联合索引</li>
+</ul>
+<h3 id="_22">不需要创建索引<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>表记录太少</strong>：表数据太少的时候，不需要创建索引</li>
+<li><strong>经常插入、删除、修改的字段</strong>：经常更新的字段不用创建索引，索引字段频繁修改，由于要维护 B+ Tree 的有序性，那么就需要频繁的重建索引，会影响数据库性能</li>
+<li><strong>数据重复且分布平均的表字段</strong>：假如一个表有10万行记录，性别只有男和女两种值，且每个值的分布概率大约为50%，那么对这种字段建索引一般不会提高数据库的查询速度。</li>
+<li><strong>经常和主字段一块查询但主字段索引值比较多的表字段</strong> </li>
+</ul>
+<h2 id="_23">索引的优化(使用索引的注意事项)？<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>like 语句的前导模糊查询不能使用索引</strong> 
+  <div class="language-sql highlight"><span class="filename">SQL</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos" data-linenos="1 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;%XX&#39;</span><span class="p">;</span><span class="w">   </span><span class="c1">--不能使用索引</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a><a href="#__codelineno-0-2"><span class="linenos" data-linenos="2 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;XX%&#39;</span><span class="p">;</span><span class="w">   </span><span class="c1">--非前导模糊查询，可以使用索引</span>
+</span></code></pre></div>
+  union、in、or 都能够命中索引，建议使用 in，因为 in 的综合效率最高。</li>
+<li><strong>负向条件查询不能使用索引</strong> 
+  负向条件有：!=、&lt;&gt;、not in、not exists、not like 等，优化案例：
+  <div class="language-sql highlight"><span class="filename">SQL</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><a href="#__codelineno-1-1"><span class="linenos" data-linenos="1 "></span></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">  </span><span class="c1">--优化前</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><a href="#__codelineno-1-2"><span class="linenos" data-linenos="2 "></span></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span><span class="w">            </span><span class="c1">--优化后</span>
+</span></code></pre></div></li>
+<li><strong>联合索引最左前缀原则</strong> 
+  如果在 (a, b, c) 三个字段上建立联合索引，那么他会自动建立 a| (a,b) | (a,b,c) 组索引。</li>
+<li>建立联合索引的时候，区分度最高的字段在最左边</li>
+<li>存在非等号和等号混合判断条件时，在建立索引时，把等号条件的列前置。如 where a&gt;? and b=?，那么即使 a  的区分度更高，也必须把 b 放在索引的最前列</li>
+<li>最左前缀查询时，并不是指 SQL 语句的 where 顺序要和联合索引一致</li>
+<li><strong>不能使用索引中范围条件右边的列(范围列可以用到索引)，范围列之后列的索引全失效</strong> </li>
+<li>范围条件有：&lt;、&lt;=、&gt;、&gt;=、between 等</li>
+<li>索引最多用于一个范围列，如果查询条件中有两个范围列则无法全用到索引</li>
+<li>假如有联合索引 (emp_no、title、fromdate)，那么下面的 SQL 中 emp_no 可以用到索引，而 title  和 from_date 则使用不到索引
+  <div class="language-sql highlight"><span class="filename">SQL</span><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><a href="#__codelineno-2-1"><span class="linenos" data-linenos="1 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">employees</span><span class="p">.</span><span class="n">titles</span><span class="w"> </span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a><a href="#__codelineno-2-2"><span class="linenos" data-linenos="2 "></span></a><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">emp_no</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10010</span><span class="s1">&#39; and title=&#39;</span><span class="n">Senior</span><span class="w"> </span><span class="n">Engineer</span><span class="s1">&#39; and </span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a><a href="#__codelineno-2-3"><span class="linenos" data-linenos="3 "></span></a><span class="s1">  from_date between &#39;</span><span class="mi">1986</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span><span class="s1">&#39; and &#39;</span><span class="mi">1986</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">31</span><span class="err">&#39;</span><span class="p">;</span>
+</span></code></pre></div></li>
+<li><strong>不要在索引列上面做任何操作(计算、函数)，否则会导致索引失效而转向全表扫描</strong> 
+  <div class="language-sql highlight"><span class="filename">SQL</span><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><a href="#__codelineno-3-1"><span class="linenos" data-linenos="1 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">YEAR</span><span class="p">(</span><span class="n">create_time</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;2016&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">--优化前`</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a><a href="#__codelineno-3-2"><span class="linenos" data-linenos="2 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">create_time</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;2016-01-01&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">--优化后</span>
+</span></code></pre></div></li>
+<li><strong>强制类型转换会全表扫描</strong> 
+  <div class="language-sql highlight"><span class="filename">SQL</span><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><a href="#__codelineno-4-1"><span class="linenos" data-linenos="1 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="k">YEAR</span><span class="p">(</span><span class="n">create_time</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;2016&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">--优化前</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a><a href="#__codelineno-4-2"><span class="linenos" data-linenos="2 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">doc</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">create_time</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="s1">&#39;2016-01-01&#39;</span><span class="p">;</span><span class="w"> </span><span class="c1">--优化后</span>
+</span></code></pre></div></li>
+<li><strong>更新十分频繁、数据区分度不高的列不宜建立索引</strong> </li>
+<li>更新会变更 B+ 树，更新频繁的字段建立索引会大大降低数据库性能</li>
+<li>"性别"这种区分度不大的属性，建立索引是没有什么意义的，不能有效过滤数据，性能与全表扫描类似</li>
+<li>一般区分度在 80% 以上的时候就可以建立索引，区分度可以使用  <strong>count(distinct(列名)) / count(*)</strong>  来计算</li>
+<li><strong>利用覆盖索引来进行查询操作，避免回表，减少 select * 的使用</strong> </li>
+<li><strong>覆盖索引</strong>：查询的列和所建立的索引的列个数相同，字段相同</li>
+<li><strong>被查询的列</strong>：数据能从索引中取得，而不用通过行定位符 row-locator 再到 row 上获取，即“被查询列要被所建的索引覆盖”，这能够加速查询速度</li>
+<li>可以建立 (login_name, passwd, login_time) 的联合索引，由于 login_time 已经建立在索引中了，被查询的 uid 和 login_time 就不用去 row 上获取数据了，从而加速查询
+  <div class="language-sql highlight"><span class="filename">SQL</span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><a href="#__codelineno-5-1"><span class="linenos" data-linenos="1 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="n">uid</span><span class="p">,</span><span class="w"> </span><span class="n">login_time</span><span class="w"> </span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a><a href="#__codelineno-5-2"><span class="linenos" data-linenos="2 "></span></a><span class="w">  </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a><a href="#__codelineno-5-3"><span class="linenos" data-linenos="3 "></span></a><span class="w">  </span><span class="k">where</span><span class="w"> </span><span class="n">login_name</span><span class="o">=?</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">passwd</span><span class="o">=?</span><span class="p">;</span>
+</span></code></pre></div></li>
+<li><strong>索引不会包含有 NULL 值的列，IS NULL，IS NOT  NULL 无法使用索引</strong> </li>
+<li><strong>只要列中包含有 NULL 值都将不会被包含在索引中</strong>，复合索引中只要有一列含有 NULL 值，那么这一列对于此复合索引就是无效的。所以在数据库设计时，尽量使用 NOT NULL 约束以及默认值</li>
+<li><strong>如果有 order by、group by 的场景，利用索引的有序性</strong> </li>
+<li>order by 最后的字段是组合索引的一部分，并且放在索引组合顺序的最后，避免出现 file_sort 的情况，影响查询性能</li>
+<li><strong>使用短索引(前缀索引)</strong> </li>
+<li>对列进行索引，如果可能应该 <strong>指定一个前缀长度</strong>。例如，如果有一个 CHAR(255) 的列，如果该列在前 10 个或 20 个字符内，可以做到既使得前缀索引的区分度接近全列索引，那么就 <strong>不要对整个列进行索引</strong>。因为短索引不仅可以提高查询速度而且可以节省硬盘空间和 I/O 操作，减少索引文件的维护开销。可以使用  <strong>count(distinct leftIndex(列名, 索引长度)) / count(*)</strong>  来计算前缀索引的区分度</li>
+<li>缺点是不能用于 ORDER BY 和 GROUP BY 操作，也不能用于覆盖索引</li>
+<li>很多时候没必要对全字段建立索引，根据实际文本区分度决定索引长度即可</li>
+<li><strong>利用延迟关联或者子查询优化超多分页场景</strong> </li>
+<li>MySQL 并不是跳过 offset 行，而是取  <strong>offset + N</strong>  行，然后返回放弃前 offset 行，返回 N 行，那当 offset 特别大的时候，效率就非常的低下，要么控制返回的总页数，要么对超过特定阈值的页数进行 SQL 改写</li>
+<li><strong>如果明确知道只有一条结果返回，limit 1 能够提高效率</strong> 
+  <div class="language-sql highlight"><span class="filename">SQL</span><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><a href="#__codelineno-6-1"><span class="linenos" data-linenos="1 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">login_name</span><span class="o">=?</span><span class="p">;</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a><a href="#__codelineno-6-2"><span class="linenos" data-linenos="2 "></span></a><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="err">可以优化为</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a><a href="#__codelineno-6-3"><span class="linenos" data-linenos="3 "></span></a><span class="w">  </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">login_name</span><span class="o">=?</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">1</span>
+</span></code></pre></div></li>
+<li><strong>超过三个表最好不要 join</strong> </li>
+<li>需要 join 的字段，数据类型必须一致，多表关联查询时，保证被关联的字段需要有索引</li>
+<li>例如：left join 是由左边决定的，左边的数据一定都有，所以右边是我们的关键点，建立索引要建右边的。当然如果索引在左边，可以用 right join</li>
+<li><strong>单表索引建议控制在 5 个以内</strong> </li>
+<li><strong>SQL 性能优化 explain 中的 type：至少要达到 range 级别，要求是 ref 级别，如果可以是 consts 最好</strong> </li>
+<li><strong>consts</strong>：单表中最多只有一个匹配行(主键或者唯一索引)，在优化阶段即可读取到数据</li>
+<li><strong>ref</strong>：使用普通的索引(Normal Index)</li>
+<li><strong>range</strong>：对索引进行范围检索</li>
+<li><strong>当 type = index 时</strong>：索引物理文件全扫，速度非常慢</li>
+<li><strong>业务上具有唯一特性的字段，即使是多个字段的组合，也必须建成唯一索引</strong> </li>
+<li>不要以为唯一索引影响了 insert 速度，这个速度损耗可以忽略，但提高查找速度是明显的</li>
+</ul>
+<h2 id="where">WHERE 语句索引使用的注意事项？<a class="headerlink" href="#where" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>where 子句使用的所有字段，都必须建立索引</strong> </li>
+<li>确保  <strong>MySQL 版本 5.0 以上</strong>，且查询优化器 <strong>开启了 index_merge_union = on</strong>，也就是变量 optimizer_switch 里存在 index_merge_union 且为 on</li>
+</ul>
+<h2 id="_24">索引什么时候会失效？<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h2>
+<ul>
+<li>查询条件中 <strong>带有 or</strong>，除非所有的查询条件都建有索引，</li>
+<li><strong>like 查询是以 % 开头</strong>，索引会失效</li>
+<li>如果列类型是字符串，那在查询条件中需要将数据用引号引用起来，否则索引失效</li>
+<li>索引列上参与计算，索引失效</li>
+<li><strong>违背最左匹配原则</strong>，索引失效</li>
+<li>如果  <strong>MySQL 估计全表扫描要比使用索引要快</strong>，索引失效</li>
+</ul>
+<h1 id="_25">🟢 锁<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h1>
+<h2 id="mysql_2">MySQL 的全局锁有什么作用？<a class="headerlink" href="#mysql_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>作用</strong>：让整个数据库处于 <strong>只读状态</strong>，增删改会被阻塞</li>
+<li><strong>使用场景</strong>：全局锁 <strong>主要应用于做全库逻辑备份</strong>，不会因为数据或表结构的更新而出现备份文件的数据与预期的不一样</li>
+<li><strong>缺陷</strong>：数据库里有很多数据，备份会花费很多的时间。备份期间，业务 <strong>只能读数据而不能更新数据</strong>，这样会造成业务停滞</li>
+<li><strong>改进</strong>：可重复读的隔离级别。在备份数据库之前先开启事务，会先创建 Read View，然后整个事务执行期间都在用这个 Read View，而且由于 MVCC 的支持，备份期间业务依然可以对数据进行更新操作。即使其他事务更新了表的数据，也不会影响备份数据库时的 Read View，这样备份期间备份的数据一直是在开启事务时的数据</li>
+</ul>
+<h2 id="mysql_3">MySQL 的表级锁有哪些？作用是什么？<a class="headerlink" href="#mysql_3" title="Permanent link">&para;</a></h2>
+<h3 id="_26">元数据锁<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>作用</strong>：对数据库表进行操作时 <strong>自动</strong> 给这个表加上元数据锁。可以保证当用户对表执行 CRUD 操作时其他线程对这个表结构做了变更。元数据锁在事务提交后才会释放</li>
+</ul>
+<h3 id="_27">意向锁<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h3>
+<p><strong>作用</strong>：对某些记录加上「共享锁」之前，需要先在表级别加上一个「意向共享锁」，对某些记录加上「独占锁」之前，需要先在表级别加上一个「意向独占锁」。普通的 select 是不会加行级锁的，普通的 select 语句是利用 MVCC 实现一致性读，是无锁的
+- 意向共享锁和意向独占锁是表级锁，不会和行级的共享锁和独占锁发生冲突，意向锁之间也不会发生冲突，只会和共享表锁和独占表锁发生冲突。意向锁的目的是为了快速判断表里是否有记录被加锁</p>
+<blockquote>
+<p><strong>Tips</strong> </p>
+<p><strong>select 也是可以对记录加共享锁和独占锁的</strong> </p>
+</blockquote>
+<h3 id="auto-inc">AUTO-INC 锁<a class="headerlink" href="#auto-inc" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>作用</strong>：表里的主键通常在设置成自增后可以在插入数据时不指定主键的值，数据库会自动给主键递增赋值。 <strong>递增值是通过 AUTO-INC 锁实现的</strong>。在插入数据时会加一个表级别的 AUTO-INC 锁并将 AUTO_INCREMENT 修饰的字段递增赋值，等插入语句执行完成后才会把 AUTO-INC 锁释放掉。在此期间其他事务向该表插入语句都会被阻塞，从而保证插入数据时字段的值是连续递增的</li>
+<li><strong>缺陷</strong>：对大量数据进行插入的时会影响插入性能，因为其他事务中的插入会被阻塞</li>
+<li><strong>改进</strong>：InnoDB 存储引擎提供了一种轻量级的锁来实现自增。在插入数据的时候，会为被 AUTO_INCREMENT 修饰的字段加上轻量级锁，然后给该字段赋值一个自增的值，就把这个轻量级锁释放了，而不需要等待整个插入语句执行完后才释放锁</li>
+</ul>
+<blockquote>
+<p><strong>AUTO-INC 锁控制</strong> 
+设置 innodb_autoinc_lock_mode 的系统变量，是用来控制选择用 AUTO-INC 锁
+- 当 innodb_autoinc_lock_mode = 0，采用 AUTO-INC 锁，语句执行结束后才释放锁
+- 当 innodb_autoinc_lock_mode = 2，采用轻量级锁，申请自增主键后就释放锁，并不需要等语句执行后才释放
+- 当 innodb_autoinc_lock_mode = 1
+  - 普通 insert 语句，自增锁在申请之后就马上释放
+  - 类似 insert … select 这样的批量插入数据的语句，自增锁要等语句结束后才被释放</p>
+<p><strong>innodb_autoinc_lock_mode = 2 是性能最高的方式</strong>，但是当搭配 binlog 的日志格式是 statement 时，在主从复制的场景中会发生 <strong>数据不一致</strong> 的问题</p>
+<p>binlog 日志格式要设置为 row，这样在 binlog 里面记录的是主库分配的自增值。到备库执行的时候，主库的自增值是什么，从库的自增值就是什么</p>
+<p>所以，当  <strong>innodb_autoinc_lock_mode = 2 并且 binlog_format = row</strong>  时既能提升并发性，又不会出现数据一致性问题</p>
+</blockquote>
+<h2 id="mysql_4">MySQL 的行级锁有哪些？作用是什么？<a class="headerlink" href="#mysql_4" title="Permanent link">&para;</a></h2>
+<h3 id="record-lock">记录锁(Record Lock)<a class="headerlink" href="#record-lock" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>作用</strong>：锁住的是一条记录，记录锁分为 <strong>共享锁(S 锁)</strong> 和 <strong>排他锁(X 锁)</strong>。其中 S 锁之间不互斥</li>
+</ul>
+<h3 id="gap-lock">间隙锁(Gap Lock)<a class="headerlink" href="#gap-lock" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>作用</strong>：只存在于可重复读隔离级别，目的是为了 <strong>解决可重复读隔离级别下幻读的现象</strong>。间隙锁之间是兼容的，两个事务可以同时持有包含共同间隙范围的间隙锁，并不存在互斥关系</li>
+</ul>
+<h3 id="next-key-lock">临键锁(Next-Key Lock)<a class="headerlink" href="#next-key-lock" title="Permanent link">&para;</a></h3>
+<p><strong>Next-Key Lock</strong>  临键锁是  <strong>Record Lock + Gap Lock 的组合</strong> 
+- <strong>作用</strong>：锁定一个范围，并且锁定记录本身。next-key lock 既能保护该记录，又能阻止其他事务将新纪录插入到被保护记录前面的间隙中，形成 <strong>左开右闭</strong> 得插入保护区间</p>
+<h3 id="_28">插入意向锁<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h3>
+<p>一个事务在插入一条记录的时候，需要判断插入位置是否已被其他事务加了间隙锁(next-key lock 也包含间隙锁)。如果有的话，插入操作就会发生阻塞，直到拥有间隙锁的那个事务提交为止，在此期间会生成一个插入意向锁，表明有事务想在某个区间插入新记录，但是现在处于等待状态。</p>
+<h2 id="mysql_5">MySQL 如何加锁<a class="headerlink" href="#mysql_5" title="Permanent link">&para;</a></h2>
+<h3 id="_29">唯一索引等值查询<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h3>
+<ul>
+<li>当查询的记录 <strong>存在</strong>，在索引树上定位到对应记录后，将该记录的  <strong>next-key lock</strong>  退化成 <strong>记录锁</strong> </li>
+<li>当查询的记录 <strong>不存在</strong>，在索引树上定位到第一条大于该查询的记录后，将该记录的  <strong>next-key lock</strong>  退化成间隙锁</li>
+</ul>
+<h3 id="_30">非唯一索引等值查询<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h3>
+<ul>
+<li>当查询的记录 <strong>存在</strong>，由于不是唯一索引，所以有可能存在索引值相同的记录。在扫描的过程中对扫描到的二级索引记录加  <strong>next-key lock</strong>；对于第一个不符合条件的二级索引记录退化成 <strong>间隙锁</strong>；符合查询条件的记录的主键索引加 <strong>记录锁</strong> </li>
+<li>当查询的记录 <strong>不存在</strong>，扫描的第一条不符合条件的二级索引记录退化成 <strong>间隙锁</strong>；因为不存在满足条件的查询记录，因此不会对主键索引加锁</li>
+</ul>
+<h3 id="_31">唯一索引范围查询<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>当查询条件为 &gt;</strong>：对大于当前条件的所有索引加  <strong>next-key lock</strong>；对最大索引后面的伪记录加  <strong>next-key lock</strong>。相当于 <strong>在区间 (value, +∞) 加锁</strong> </li>
+<li><strong>当查询条件为 ≥</strong>：对等于当前条件的索引加 <strong>记录锁</strong>；对大于当前条件的所有索引加  <strong>next-key lock</strong>；对最大索引后面的伪记录加  <strong>next-key lock</strong>。相当于 <strong>在区间 (value, +∞) 加锁</strong> </li>
+<li><strong>当查询条件为 &lt;</strong>：对小于当前条件的所有索引加  <strong>next-key lock</strong>；对第一个不满足小于条件的记录左端加  <strong>间隙锁</strong>。相当于 <strong>在区间 (-∞, value) 加 next-key lock；在区间 (pre-value, value] 加间隙锁</strong> </li>
+<li><strong>当查询条件为 ≤</strong>：</li>
+<li><strong>如果限制条件对应的记录存在</strong>： <strong>在区间 (-∞, value] 加 next-key lock</strong> </li>
+<li><strong>如果限制条件对应的记录不存在</strong>：对小于当前条件的所有索引加  <strong>next-key lock</strong>；对第一个不满足小于条件的记录左端加  <strong>间隙锁</strong>。相当于 <strong>在区间 (-∞, value) 加 next-key lock；在区间 (pre-value, next-value) 加间隙锁</strong> </li>
+</ul>
+<h3 id="_32">非唯一索引范围查询<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h3>
+<ul>
+<li>索引的 next-key lock  <strong>不会有退化为间隙锁和记录锁的情况</strong> </li>
+<li>非唯一索引进行范围查询时，对二级索引记录加锁 <strong>都是加 next-key lock</strong> </li>
+</ul>
+<h1 id="_33">🟣 存储引擎<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h1>
+<h2 id="mysql_6">MySQL 的执行引擎有哪些？<a class="headerlink" href="#mysql_6" title="Permanent link">&para;</a></h2>
+<p>主要有  <strong>MyISAM、InnoDB、Memery</strong>  等引擎：</p>
+<ul>
+<li>InnoDB 引擎提供了对事务 ACID 的支持，还提供了行级锁和外键的约束</li>
+<li>MyISAM 引擎不支持事务，也不支持行级锁和外键约束</li>
+<li>Memery 就是将数据放在内存中，数据处理速度很快，但是安全性不高</li>
+</ul>
+<h2 id="myisam-innodb">MyISAM 和 InnoDB 存储引擎的区别？<a class="headerlink" href="#myisam-innodb" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>锁的细粒度不同</strong>：InnoDB 比 MyISAM 更好的支持并发，因为 InnoDB 的支持行锁，而 MyISAM 支持表锁，行锁对每一条记录上锁，所以开销更大，但是可以解决脏读和不可重复读的问题，相对来说也更容易发生死锁</li>
+<li><strong>可恢复性</strong>：InnoDB 有事务日志，数据库崩溃后可以通过日志进行恢复，MyISAM 没有日志支持</li>
+<li><strong>查询性能</strong>：MyISAM 要好于 InnoDB，因为 InnoDB 在查询过程中是在维护数据缓存。并且先要定位到所在数据块，然后从数据块定位到数据内存地址来查找数据</li>
+<li><strong>表结构文件</strong>：MyISAM 的表结构文件包括 .frm(表结构定义)、.MYI(索引)、.MYD(数据)；而 InnoDB 的表数据文件为 .ibd(数据和索引集中存储)和 .frm(表结构定义)</li>
+<li><strong>记录存储顺序</strong>：MyISAM 按照记录插入顺序，InnoDB 按照主键大小顺序有序插入</li>
+<li><strong>外键和事务</strong>：MyISAM 均不支持，InnoDB 支持。对于 InnoDB 每一条 SQL 语言都默认封装成事务，自动提交，这样会影响速度，所以最好把多条 SQL 语言放在 begin 和 commit 之间，组成一个事务。对一个包含外键的 InnoDB 表转为 MYISAM 会失败</li>
+<li><strong>操作速度</strong>：对于 SELECT 前者更优，INSERT、UPDATE、DELETE 后者更优。select count(*)使用 MyISAM 更快，因为内部维护了一个计数器，可以直接调度</li>
+<li><strong>存储空间</strong>：MyISAM 可被压缩，存储空间较小，InnoDB 的表需要更多的内存和存储，会在主内存中建立专用的缓冲池用于高速缓存数据和索引</li>
+<li><strong>索引方式</strong>：二者都是 B+ 树索引，前者是堆表，后者是索引组织表</li>
+</ul>
+<blockquote>
+<p><strong>为什么 InnoDB 没有计数器变量？</strong> 
+- 因为 InnoDB 的事务特性，同一时刻表中的行数对于不同事务而言是不同的，因此计数器统计的是当前事务对应的行数，而不是总行数</p>
+</blockquote>
+<h2 id="_34">存储引擎如何选择？<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>如果没有特别的需求</strong>：使用默认的 InnoDB 即可</li>
+<li><strong>要支持事务选择 InnoDB</strong>：如果不需要可以考虑 MyISAM；如果表中绝大多数都只是读查询考虑 MyISAM；如果既有读也有写使用 InnoDB 存储引擎</li>
+<li><strong>系统崩溃后 MyISAM 恢复起来更困难，考虑业务能否接受系统崩溃的程度</strong>：MySQL5.5 版本开始 Innodb 已经成为 MySQL 的默认引擎(之前是 MyISAM)，说明其优势是有目共睹的</li>
+</ul>
+<h2 id="myisam-innodb_1">MyISAM 索引与 InnoDB 索引的区别？<a class="headerlink" href="#myisam-innodb_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>InnoDB 是聚簇索引，MyISAM 是非聚簇索引</li>
+<li>InnoDB 的主键索引的叶子节点存储着行数据，因此主键索引非常高效。MyISAM 索引的叶子节点存储的是行数据地址，需要再寻址一次才能得到数据</li>
+<li>InnoDB 非主键索引的叶子节点存储的是主键和其他带索引的列数据，因此查询时做到覆盖索引会非常高效</li>
+</ul>
+<h1 id="_35">🟠 日志<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h1>
+<h2 id="mysql_7">MySQL 三种日志？<a class="headerlink" href="#mysql_7" title="Permanent link">&para;</a></h2>
+<h3 id="undo-log">UNDO LOG(回滚日志)<a class="headerlink" href="#undo-log" title="Permanent link">&para;</a></h3>
+<p>undo log 是 Innodb 存储引擎层生成的日志，实现了事务中的原子性，主要用于事务回滚和 MVCC。</p>
+<p>在事务没提交之前，Innodb 会先记录更新前的数据到 undo log 中，回滚时利用 undo log 来进行回滚。每当进行一条记录进行操作(修改、删除、新增)时，要把回滚时需要的信息都记录到 undo log 里：原理是执行一条相反的操作。undo log 有两个参数：roll_pointer 指针和一个 trx_id 事务 id，通过 trx_id 可以知道该记录是被哪个事务修改的；通过 roll_pointer 指针可以将这些 undo log 串成一个链表，形成版本链。</p>
+<p>Innodb 存储引擎也通过 ReadView + undo log 实现 MVCC(多版本并发控制)。</p>
+<blockquote>
+<p><strong>UNDO LOG 的作用</strong> 
+ <strong>实现事务回滚，保障事务的原子性</strong>：如果出现了错误或者用户执行了 ROLLBACK 语句，可以利用 undo log 中的历史数据将数据恢复到事务开始之前的状态
+ <strong>实现  MVCC 关键因素之一</strong>：MVCC 是通过 ReadView + undo log 实现的。undo log 为每条记录保存多份历史数据，在执行快照读的时候，会根据事务的 Read View 里的信息，顺着 undo log 的版本链找到满足其可见性的记录</p>
+</blockquote>
+<h3 id="redo-log">REDO LOG(重做日志)<a class="headerlink" href="#redo-log" title="Permanent link">&para;</a></h3>
+<p>edo log 是物理日志，记录了某个数据页做了什么修改，每当执行一个事务就会产生一条或者多条物理日志。在事务提交时，先将 redo log 持久化到硬盘即可，不需要等到将缓存在 Buffer Pool 里的脏页数据持久化到硬盘。当系统崩溃时，虽然脏页数据没有持久化但是 redo log 已经持久化，可以根据 redo log 的内容，将所有数据恢复到最新的状态。</p>
+<p>redo log 实现了事务中的持久性，主要用于掉电等故障恢复。发生更新的时候，InnoDB 会先更新内存，同时标记为脏页，然后将本次对这个页的修改以 redo log 的形式记录下来。InnoDB 引擎会在适当的时候，由后台线程将缓存在 Buffer Pool 的脏页刷新到硬盘里，实现 WAL 技术。</p>
+<blockquote>
+<p><strong>什么是 WAL 技术？</strong> 
+ WAL 技术指的是 MySQL 的写操作并不是立刻写到硬盘上，而是先写日志，然后在合适的时间再写到硬盘上</p>
+<p><strong>什么是 crash-safe？</strong> 
+redo log + WAL 技术，InnoDB 就可以保证即使数据库发生异常重启，之前已提交的记录都不会丢失</p>
+</blockquote>
+<h3 id="binlog">BINLOG(归档日志)<a class="headerlink" href="#binlog" title="Permanent link">&para;</a></h3>
+<p>Server 层生成的日志，主要用于数据备份和主从复制。</p>
+<p>在完成一条更新操作后，Server 层会生成一条 binlog，等之后事务提交的时候，会将该事物执行过程中产生的所有 binlog 统一写入 binlog 文件。binlog 文件是记录了所有数据库表结构变更和表数据修改的日志，不会记录查询类的操作。</p>
+<h2 id="redo-log-bin-log">redo log 与 bin log 的区别？<a class="headerlink" href="#redo-log-bin-log" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>适用对象不同</strong>：binlog 是 MySQL 的 Server 层实现的，所有存储引擎都可以使用；redo log 是 Innodb 存储引擎实现的日志</li>
+<li><strong>文件格式不同</strong>：redo log 是物理日志，记录的是在某个数据页做了什么修改，比如对 XXX 表空间中的 YYY 数据页 ZZZ 偏移量的地方做了 AAA 更新</li>
+<li><strong>写入方式不同</strong>：binlog 是追加写，写满一个文件，就创建一个新的文件继续写，不会覆盖以前的日志，保存的是全量的日志。redo  log 是循环写，日志空间大小是固定，全部写满就从头开始，保存未被刷入硬盘的脏页日志</li>
+<li><strong>用途不同</strong>：binlog 用于备份恢复、主从复制；redo log 用于掉电等故障恢复</li>
+</ul>
+<h2 id="redo-log-undo-log">redo log 和 undo log 区别？<a class="headerlink" href="#redo-log-undo-log" title="Permanent link">&para;</a></h2>
+<p>redo log 记录了此次事务完成后的数据状态，undo log 记录了此次事务开始前的数据状态。</p>
+<h2 id="undo-log-mvcc">undo log 是如何实现 MVCC 的？<a class="headerlink" href="#undo-log-mvcc" title="Permanent link">&para;</a></h2>
+<p>对于读提交和可重复读隔离级别，快照读是通过 Read View + undo log 来实现的，区别在于创建 Read View 的时机不同：</p>
+<ul>
+<li>读提交在每个 select 都会生成一个新的 Read View，事务期间的多次读取同一条数据，前后两次读的数据可能会出现不一致，因为可能这期间另外一个事务修改了该记录，并提交了事务</li>
+<li>可重复读隔离级别是启动事务时生成一个 Read View，然后整个事务期间都在用这个 Read View，这样就保证了在事务期间读到的数据都是事务启动前的记录</li>
+</ul>
+<p>通过 <strong>事务的 Read View 里的字段和记录中的两个隐藏列(trx_id 和 roll_pointer)</strong>  的比对，如果不满足可见行，就会顺着 undo log 版本链里找到满足其可见性的记录，从而控制并发事务访问同一个记录时的行为。</p>
+<h2 id="binlog-redo-log">为什么有了 binlog，还要有 redo log？<a class="headerlink" href="#binlog-redo-log" title="Permanent link">&para;</a></h2>
+<p>早期版本 MySQL 里没有 InnoDB 引擎，MySQL 自带的  MyISAM 引擎没有 crash-safe 的能力，binlog 日志只能用于归档。InnoDB 是另一个公司以插件形式引入 MySQL 的，所以 InnoDB 使用 redo log 来实现 crash-safe 能力。</p>
+<h2 id="undo-redo-log">被修改 Undo 页面，需要记录对应 redo log 吗？<a class="headerlink" href="#undo-redo-log" title="Permanent link">&para;</a></h2>
+<p>需要。开启事务后，InnoDB 更新记录前，首先要记录相应的 undo log，如果是更新操作，也就是要生成一条 undo log，undo log 会写入 Buffer Pool 中的 Undo 页面。在内存修改该 Undo 页面后，需要记录对应的 redo log。</p>
+<h2 id="binlog_1">binlog 的三种格式？<a class="headerlink" href="#binlog_1" title="Permanent link">&para;</a></h2>
+<p>STATEMENT(默认格式)、ROW、 MIXED：
+- <strong>STATEMENT</strong>：每一条修改数据的 SQL 都会被记录到 binlog 中，主从复制中 slave 端再根据 SQL 语句重现
+- <strong>ROW</strong>：记录行数据最终被修改成什么样了，不会出现 STATEMENT 下动态函数的问题
+- <strong>MIXED</strong>：包含了 STATEMENT 和 ROW 模式，它会根据不同的情况自动使用 ROW 模式和 STATEMENT 模式</p>
+<h2 id="redo-log_1">redo log 容灾恢复过程？<a class="headerlink" href="#redo-log_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>如果 redo log 是完整(commit 状态)的，直接用 redo log 恢复</li>
+<li>如果 redo log 是预提交 prepare 但不是 commit 状态，此时要去判断 binlog 是否完整，如果完整那就提交 redo log，再用 redo log 恢复，不完整就回滚事务</li>
+</ul>
+<h2 id="redo-log_2">redo log 是直接写入硬盘的吗？<a class="headerlink" href="#redo-log_2" title="Permanent link">&para;</a></h2>
+<p>不是。直接写入硬盘会产生大量的 I/O 操作，redo log 会写入 redo log buffer，每当产生一条 redo log 时，会先写入到 redo log buffer，后续在持久化到硬盘。</p>
+<h2 id="redo-log_3">redo log 比直接落盘的优点？<a class="headerlink" href="#redo-log_3" title="Permanent link">&para;</a></h2>
+<p>redo log 的写方式使用了追加，日志操作是顺序写，硬盘操作是随机写，MySQL 的写操作从硬盘的 <strong>随机写变成了顺序写</strong>，提升语句的执行性能。</p>
+<ul>
+<li><strong>实现事务的持久性</strong>，让 MySQL 有 crash-safe 的能力，能够保证 MySQL 在任何时间段突然崩溃，重启后之前已提交的记录都不会丢失</li>
+<li><strong>将写操作从随机写变成了顺序写</strong>，提升 MySQL 写入硬盘的性能</li>
+</ul>
+<h2 id="redo-log-buffer">redo log buffer 什么时候刷盘？<a class="headerlink" href="#redo-log-buffer" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MySQL 正常关闭时，会触发落盘</li>
+<li>当 redo log buffer 中记录的写入量大于 redo log buffer 内存空间的一半时，会触发落盘</li>
+<li>InnoDB 的后台线程每隔 1 秒，将 redo log buffer 持久化到硬盘</li>
+<li>每次事务提交时都将缓存在 redo log buffer 里的 redo log 直接持久化到硬盘</li>
+</ul>
+<h2 id="redo-log_4">redo log 文件文件格式和写入过程？<a class="headerlink" href="#redo-log_4" title="Permanent link">&para;</a></h2>
+<p>InnoDB 有 1 个 redo log 组，由有 2 个 redo log 文件组成：logfile0 和 logfile1。</p>
+<p>redo log 组中每个 redo log 的大小是固定且相同的，redo log 组是以循环写的方式工作的，从头开始写，写到末尾就又回到开头，相当于一个环形。</p>
+<p>先写 logfile0 文件，当 logfile0 文件被写满的时候，会切换至 logfile1 文件，当 logfile1 文件也被写满时，会切换回 ib_logfile0 文件。随着系统运行，Buffer Pool 的脏页刷新到了硬盘中， redo log 对应的记录没用了，会腾出空间记录新的更新操作。redo log 是循环写的方式相当于一个环形，用 write pos 表示 redo log 当前记录写到的位置，用 checkpoint 表示当前要擦除的位置。</p>
+<p>write pos 追上了 checkpoint，说明 redo log 文件满了， MySQL 会被阻塞，会停下来将 Buffer Pool 中的脏页刷新到硬盘中，然后标记 redo log 哪些记录可以被擦除，接着对旧的 redo log 记录进行擦除，等擦除完旧记录腾出了空间，checkpoint 就会往后移动，然后 MySQL 恢复正常运行，继续执行新的更新操作。</p>
+<h2 id="binlog_2">binlog 什么时候刷盘？<a class="headerlink" href="#binlog_2" title="Permanent link">&para;</a></h2>
+<p>事务执行过程中，先把日志写到 binlog cache(Server 层的 cache)，事务提交的时候，再把 binlog cache 写到 binlog 文件中。</p>
+<h2 id="binlog_3">binlog 什么时候刷盘频率？<a class="headerlink" href="#binlog_3" title="Permanent link">&para;</a></h2>
+<p>MySQL 提供一个 sync_binlog 参数来控制数据库的 binlog 刷到硬盘上的频率：</p>
+<ul>
+<li><strong>sync_binlog = 0 时</strong>：表示每次提交事务都只 write，不 fsync，后续交由操作系统决定何时将数据持久化到硬盘</li>
+<li><strong>sync_binlog = 1 时</strong>：表示每次提交事务都会 write，然后马上执行 fsync</li>
+<li><strong>sync_binlog = N(N &gt; 1) 时</strong>：表示每次提交事务都 write，但累积 N 个事务后才 fsync</li>
+</ul>
+<p>系统默认的设置是 sync_binlog = 0，也就是不做任何强制性的硬盘刷新指令，这时候的性能是最好的，但是风险也是最大的，因为一旦主机发生异常重启，还没持久化到硬盘的数据就会丢失。</p>
+<p>当 sync_binlog 设置为 1 的时候，是最安全但是性能损耗最大的设置。因为当设置为 1 的时候，即使主机发生异常重启，最多丢失一个事务的 binlog，而已经持久化到硬盘的数据就不会有影响，不过就是对写入性能影响太大。</p>
+<p><strong>如果能容少量事务的 binlog 日志丢失的风险，为了提高写入的性能，一般会 sync_binlog 设置为 100~1000 中的某个数值</strong>。</p>
+<h2 id="_36">主从复制是怎么实现？<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h2>
+<p>binlog 记录 MySQL 上的所有变化并以二进制形式保存在硬盘上。复制的过程就是将 binlog 中的数据从主库传输到从库上。</p>
+<ul>
+<li>主库在收到提交事务的请求之后会先写入 binlog，再提交事务，更新存储引擎中的数据，事务提交完成后，返回“操作成功”的响应</li>
+<li>从库会创建一个专门的 I/O 线程，连接主库的 log dump 线程，来接收主库的 binlog 日志，再把 binlog 信息写入 relay log 的中继日志里，再返回给主库“复制成功”的响应</li>
+<li>从库会创建一个用于回放 binlog 的线程，去读 relay log 中继日志，然后回放 binlog 更新存储引擎中的数据，最终实现主从的数据一致性</li>
+</ul>
+<h2 id="mysql_8">MySQL 主从复制模型？<a class="headerlink" href="#mysql_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>同步复制</strong>：MySQL 主库提交事务的线程要等待所有从库的复制成功响应，才返回客户端结果。这种方式在实际项目中，基本上没法用，原因有两个：一是性能很差，因为要复制到所有节点才返回响应；二是可用性也很差，主库和所有从库任何一个数据库出问题，都会影响业务。</li>
+<li><strong>异步复制(默认)</strong>：MySQL 主库提交事务的线程并不会等待 binlog 同步到各从库，就返回客户端结果。这种模式一旦主库宕机，数据就会发生丢失。</li>
+<li><strong>半同步复制</strong>：介于两者之间，事务线程不用等待所有的从库复制成功响应，只要一部分复制成功响应回来就行，比如一主二从的集群，只要数据成功复制到任意一个从库上，主库的事务线程就可以返回给客户端。这种半同步复制的方式，兼顾了异步复制和同步复制的优点，即使出现主库宕机，至少还有一个从库有最新的数据，不存在数据丢失的风险</li>
+</ul>
+<h2 id="_37">为什么需要两阶段提交？<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h2>
+<p>事务提交后，redo log 和 binlog 都要持久化到硬盘，但是这两个是独立的逻辑，可能出现半成功的状态，造成两份日志之间的逻辑不一致。</p>
+<ul>
+<li><strong>如果在将 redo log 刷入到硬盘之后， MySQL 突然宕机了，而 binlog 还没有来得及写入</strong>：MySQL 重启后，通过 redo log 能将 Buffer Pool 恢复到新值，但是 binlog 里面没有记录这条更新语句，在主从架构中，binlog 会被复制到从库，由于 binlog 丢失了这条更新语句，从库的这一行是旧值，主从不一致。</li>
+<li><strong>如果在将 binlog 刷入到硬盘之后， MySQL 突然宕机了，而 redo log 还没有来得及写入</strong>：由于 redo log 还没写，崩溃恢复以后这个事务无效，数据是旧值，而 binlog 里面记录了这条更新语句，在主从架构中，binlog 会被复制到从库，从库执行了这条更新语句，这一行字段是新值，与主库的值不一致性。</li>
+</ul>
+<p>所以会造成主从环境的数据不一致性。因为 redo log 影响主库的数据，binlog 影响从库的数据，redo log 和 binlog 必须保持一致。</p>
+<p><strong>两阶段提交把单个事务的提交拆分成了 2 个阶段，分别是准备(Prepare)阶段和提交(Commit)阶段</strong>。每个阶段都由协调者(Coordinator)和参与者(Participant)共同完成。</p>
+<h2 id="_38">两阶段提交的过程是怎样的？<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h2>
+<p>在 MySQL 的 InnoDB 存储引擎中，开启 binlog 的情况下，MySQL 会同时维护 binlog 日志与 InnoDB 的 redo log，为了保证这两个日志的一致性，MySQL 使用了内部 XA 事务，内部 XA 事务由 binlog 作为协调者，存储引擎是参与者。</p>
+<p>当客户端执行 commit 语句或者在自动提交的情况下，MySQL 内部开启一个 XA 事务，分两阶段来完成 XA 事务的提交。</p>
+<p>事务的提交过程有两个阶段，将 redo log 的写入拆成了两个步骤：prepare 和 commit，中间再穿插写入 binlog：</p>
+<ul>
+<li><strong>prepare 阶段</strong>：将 内部 XA 事务的  ID 写入到 redo log，同时将 redo log 对应的事务状态设置为 prepare，然后将 redo log 持久化到硬盘。</li>
+<li><strong>commit 阶段</strong>：把 内部 XA 事务的  ID 写入到 binlog，然后将 binlog 持久化到硬盘，接着调用引擎的提交事务接口，将 redo log 状态设置为 commit，此时该状态并不需要持久化到硬盘，只需要 write 到文件系统的 page cache 成功，只要 binlog 写硬盘成功，redo log 的状态还是 prepare 也没有关系，一样会被认为事务已经执行成功</li>
+</ul>
+<h2 id="_39">异常重启会出现什么现象？<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h2>
+<p>在 MySQL 重启后会按顺序扫描 redo log 文件，碰到处于 prepare 状态的 redo log，就拿着 redo log 中的 XID 去 binlog 查看是否存在此 XID：</p>
+<ul>
+<li><strong>如果 binlog 中没有当前内部 XA 事务的 XID，说明 redolog 完成刷盘，但是 binlog 还没有刷盘，则回滚事务</strong>。对应时刻 A 崩溃恢复的情况</li>
+<li><strong>如果 binlog 中有当前内部 XA 事务的 XID，说明 redolog 和 binlog 都已经完成了刷盘，则提交事务</strong>。对应时刻 B 崩溃恢复的情况</li>
+</ul>
+<p>对于处于 prepare 阶段的 redo log，即可以提交事务，也可以回滚事务，这取决于是否能在 binlog 中查找到与 redo log 相同的 XID，如果有就提交事务，如果没有就回滚事务。这样就可以保证 redo log 和 binlog 这两份日志的一致性了。</p>
+<h2 id="redo-log_5">事务没提交 redo log 会被持久化到硬盘吗？<a class="headerlink" href="#redo-log_5" title="Permanent link">&para;</a></h2>
+<p>会。事务执行中间过程的 redo log 也是直接写在 redo log buffer 中的，这些缓存在 redo log buffer 里的 redo log 也会被后台线程每隔一秒一起持久化到硬盘。</p>
+<h2 id="_40">两阶段提交有什么问题？<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>硬盘 I/O 次数高</strong>：每个事务提交都会进行两次 fsync(刷盘)，一次是 redo log 刷盘，另一次是 binlog 刷盘</li>
+<li><strong>锁竞争激烈</strong>：两阶段提交虽然能够保证单事务两个日志的内容一致，但在多事务的情况下，却不能保证两者的提交顺序一致。在两阶段提交的流程基础上，还需要加一个锁来保证提交的原子性，从而保证多事务的情况下，两个日志的提交顺序一致</li>
+</ul>
+<h2 id="_41">组提交是什么意思？<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h2>
+<p>有多个事务提交的时候，会将多个 binlog 刷盘操作合并成一个，从而减少硬盘 I/O 的次数。组提交机制后，prepare 阶段不变， <strong>将 commit 阶段拆分为三个过程</strong>：</p>
+<ul>
+<li><strong>flush 阶段</strong>：多个事务按进入的顺序将 binlog 从 cache 写入文件(不刷盘)；</li>
+<li><strong>sync 阶段</strong>：对 binlog 文件做 fsync 操作(多个事务的 binlog 合并一次刷盘)；</li>
+<li><strong>commit 阶段</strong>：各个事务按顺序做 InnoDB commit 操作；</li>
+</ul>
+<p>上面的每个阶段都有一个队列，每个阶段有锁进行保护，因此保证了事务写入的顺序，第一个进入队列的事务会成为 leader，leader 领导所在队列的所有事务，全权负责整队的操作，完成后通知队内其他事务操作结束。对每个阶段引入了队列后，锁就只针对每个队列进行保护，不再锁住提交事务的整个过程，锁粒度减小了，这样就使得多个阶段可以并发执行，从而提升效率</p>
+<h2 id="buffer-pool">Buffer Pool 有什么作用？<a class="headerlink" href="#buffer-pool" title="Permanent link">&para;</a></h2>
+<p>主要的作用是实现缓存：</p>
+<ul>
+<li><strong>当读取数据时</strong>：如果数据存在于 Buffer Pool 中，会直接读取 Buffer Pool 中的数据</li>
+<li><strong>当修改数据时</strong>：如果数据存在于 Buffer Pool 中，那直接修改 Buffer Pool 中数据所在的页，然后将其页设置为脏页(该页的内存数据和硬盘上的数据已经不一致)；不会立即将脏页写入硬盘，后续由后台线程选择一个合适的时机将脏页写入到硬盘</li>
+</ul>
+<h2 id="buffer-pool_1">Buffer Pool 缓存内容？<a class="headerlink" href="#buffer-pool_1" title="Permanent link">&para;</a></h2>
+<p>InnoDB 会为 Buffer Pool 申请一片连续的内存空间，然后按照默认的大小划分出一个个的页， Buffer Pool 中的页就叫做缓存页。此时这些缓存页都是空闲的，之后随着程序的运行，才会有硬盘上的页被缓存到 Buffer Pool 中。</p>
+<p>Buffer Pool 除了缓存索引页和数据页，还包括了 Undo 页，插入缓存、自适应哈希索引、锁信息等等。</p>
+<p>开启事务后，InnoDB 层更新记录前，首先要记录相应的 undo log，undo log 会写入 Buffer Pool 中的 Undo 页面。</p>
+<h1 id="_42">🟡 优化<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h1>
+<h2 id="_43">慢查询的原因？<a class="headerlink" href="#_43" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>索引不足</strong>：如果查询的表没有合适的索引，MySQL 需要遍历整个表才能找到匹配的记录，这会导致查询变慢。可以通过添加索引来优化查询性能</li>
+<li><strong>数据库设计问题</strong>：如果数据库设计不合理，例如表过于庞大、列过多等，查询时可能需要耗费大量时间。这时可以通过优化数据库设计来解决问题</li>
+<li><strong>数据库服务器负载过高</strong>：如果 MySQL 服务器上同时运行了太多的查询，会导致服务器负载过高，从而导致查询变慢。可以通过增加服务器硬件配置或分散查询负载来解决问题</li>
+<li><strong>查询语句复杂</strong>：复杂的查询语句可能需要耗费更多的时间才能完成。可以尝试简化查询语句或将查询分解成多个较简单的查询语句来提高性能</li>
+<li><strong>数据库统计信息不准确</strong>：如果数据库统计信息不准确，MySQL 可能会选择不合适的查询计划，从而导致查询变慢。可以通过更新数据库统计信息来解决问题</li>
+<li><strong>MySQL 版本过低</strong>：较老版本的 MySQL 可能性能较差，升级到较新版本的 MySQL 可能会提高查询性能</li>
+</ul>
+<h2 id="mysql-io">MySQL 硬盘 I/O 很高有什么优化的方<a class="headerlink" href="#mysql-io" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>设置组提交的两个参数</strong>： binlog_group_commit_sync_delay 和 binlog_group_commit_sync_no_delay_count 参数，延迟 binlog 刷盘的时机，从而减少 binlog 的刷盘次数</li>
+<li><strong>将 sync_binlog 设置为大于 1 的值(比较常见是 100~1000)</strong>：表示每次提交事务都 write，但累积 N 个事务后才 fsync，相当于延迟了 binlog 刷盘的时机。但是这样做的风险是，主机掉电时会丢 N 个事务的 binlog 日志</li>
+<li><strong>将 innodb_flush_log_at_trx_commit 设置为 2</strong>：表示每次事务提交时，都只是缓存在 redo log buffer 里的 redo log 写到 redo log 文件，注意写入到 redo log 文件并不意味着写入到了硬盘，因为操作系统的文件系统中有个 Page Cache，专门用来缓存文件数据的，所以写入 redo log 文件意味着写入到了操作系统的文件缓存，然后交由操作系统控制持久化到硬盘的时机。但是这样做的风险是，主机掉电的时候会丢数据</li>
+</ul>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin'><span data-tippy-content='创建时间: 2025-05-31'><span class='material-icons' data-icon='doc_created'></span>2025-05-31 18:31:21</span><span data-tippy-content='最后更新: 2025-05-31'><span class='material-icons' data-icon='doc_modified'></span>2025-05-31 18:31:21</span></div></div>
+
+                
+
+  
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+        <script src="https://giscus.app/client.js"
+                data-repo="LulietLyan/Internship-Basic"
+                data-repo-id="R_kgDOOJAUow"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOOJAUo84CplqN"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="fro"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/LulietLyan/" target="_blank" rel="noopener" title="GitHub | LulietLyan" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:<lulietlyan@gmail.com>" target="_blank" rel="noopener" title="Email | LulietLyan" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.code.select", "content.tooltips", "content.footnote.tooltips", "content.tabs.link", "toc.follow", "header.autohide"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../../javascripts/katex.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml-full.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-svg-full.js"></script>
+      
+        <script src="../../../javascripts/tablesort.js"></script>
+      
+        <script src="../../../javascripts/toc.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="../../../javascripts/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../javascripts/web-time.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/extra.js"></script>
+      
+        <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      
+        <script src="../../../assets/document_dates/tippy/popper.min.js"></script>
+      
+        <script src="../../../assets/document_dates/tippy/tippy.umd.min.js"></script>
+      
+        <script src="../../../assets/document_dates/document-dates.config.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script><script>document.addEventListener('DOMContentLoaded', () => {
+    let attempts = 0;
+    const maxAttempts = 50;
+
+    const waitForNav = setInterval(() => {
+        attempts++;
+        const nav = document.querySelector('.md-sidebar--secondary .md-nav__list');
+        if (!nav) return;
+
+        const navItems = Array.from(nav.querySelectorAll('.md-nav__item'));
+        if (navItems.length === 0) {
+            if (attempts >= maxAttempts) {
+                clearInterval(waitForNav);
+                console.error('目录加载超时');
+            }
+            return;
+        }
+
+        clearInterval(waitForNav);
+        console.log('目录项数量:', navItems.length);
+
+        // 获取主内容区域
+        const mainContent = document.querySelector('.md-content__inner');
+        if (!mainContent) return;
+
+        // 获取所有标题
+        const headings = Array.from(mainContent.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+        console.log('标题数量:', headings.length);
+
+        // 收集所有分隔线位置
+        const walker = document.createTreeWalker(mainContent, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node) => {
+                if (!node || !node.textContent) return NodeFilter.FILTER_REJECT;
+                if (node.parentElement?.closest('pre, code, .md-nav, script, style')) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }, false);
+
+        const hrPositions = [];
+        let node;
+        while (node = walker.nextNode()) {
+            const text = node.textContent.trim();
+            const match = text.match(/^---(.+?)---$/);
+            if (match) {
+                hrPositions.push({
+                    node,
+                    content: match[1].trim()
+                });
+            }
+        }
+
+        // 处理每个分隔线
+        hrPositions.forEach((hrData, index) => {
+            // 创建分隔线
+            const hr = document.createElement('hr');
+            hr.setAttribute('data-content', hrData.content);
+            hr.classList.add('custom-hr');
+            hr.id = `hr-${index + 1}`;
+            hrData.node.parentNode.replaceChild(hr, hrData.node);
+
+            // 创建目录项
+            const li = document.createElement('li');
+            li.classList.add('md-nav__item', 'hr-nav-item');
+            const a = document.createElement('a');
+            a.classList.add('md-nav__link');
+            a.href = `#hr-${index + 1}`;
+            a.textContent = `${hrData.content}`; // 修改这里，添加前后的破折号
+            li.appendChild(a);
+
+
+
+            // 找到分隔线后的第一个标题
+            let nextHeadingIndex = -1;
+            for (let i = 0; i < headings.length; i++) {
+                const heading = headings[i];
+                if (hr.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING) {
+                    nextHeadingIndex = i;
+                    break;
+                }
+            }
+
+            console.log('分隔线:', hrData.content, '下一个标题索引:', nextHeadingIndex);
+
+            if (nextHeadingIndex !== -1) {
+                // 找到对应的目录项
+                const nextHeading = headings[nextHeadingIndex];
+                const nextNavItem = navItems.find(item => {
+                    const link = item.querySelector('a');
+                    const text = link?.textContent?.replace('¶', '').trim();
+                    return text === nextHeading.textContent.replace('¶', '').trim();
+                });
+
+                if (nextNavItem) {
+                    nav.insertBefore(li, nextNavItem);
+                    console.log('插入到标题前:', nextHeading.textContent);
+                    return;
+                }
+            }
+
+            nav.appendChild(li);
+            console.log('追加到末尾:', hrData.content);
+        });
+    }, 100);
+});</script></body>
+</html>

@@ -1,0 +1,2438 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="博学 审问 慎思 明辨 笃行">
+      
+      
+      
+        <link rel="canonical" href="https://lulietlyan.github.io/Internship-Basic/Operating%20System/Socket%20%26%20Server/">
+      
+      
+        <link rel="prev" href="../File%20System/">
+      
+      
+        <link rel="next" href="../../Database/MySQL/MySQL/">
+      
+      
+      <link rel="icon" href="../../Figures/README/SYSU.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>Socket & Server - ✨ SYSU-CS-Basic</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai+Screen+GB+Screen:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"LXGW WenKai Screen GB Screen";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/timeline.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/basic.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/admonition.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/no-footer.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/unordered-list-symbols.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/cards.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/flink.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/rounded_corner.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/lxgw/lxgwscreen.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/tasklist.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/fold_toc.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/changelog_extra.css">
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/material.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/light.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/backdrop.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/scale.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/document-dates.config.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script><style>/* 自定义分隔线样式 */
+hr.custom-hr {
+    position: relative;
+    text-align: center;
+    border: 0;
+    height: 1px;
+    background: none;
+    /* 使用主题的边框颜色 */
+    border-top: 2px solid var(--md-default-fg-color--lighter, currentColor);
+    margin: 100px 0 !important;
+}
+
+hr.custom-hr:before {
+    content: attr(data-content);
+    position: absolute;
+    /* 使用主题的背景色，fallback 到页面背景色 */
+    background: var(--md-default-bg-color, var(--md-primary-bg-color, inherit));
+    /* 使用主题的文本颜色 */
+    color: var(--md-default-fg-color, currentColor);
+    padding: 0 0.5em;
+    line-height: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* 目录中分隔线条目的样式 */
+.md-nav__item.hr-nav-item {
+    text-align: center;
+    margin: 1.16em 0;
+    /* 增加上下间距 */
+}
+
+.md-nav__item.hr-nav-item .md-nav__link {
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--md-typeset-color) !important;
+}
+
+/* 悬停效果 */
+.md-nav__item.hr-nav-item .md-nav__link:hover {
+    color: var(--md-accent-fg-color) !important;
+}
+
+/* 修改分隔线的样式 */
+.md-content__inner hr.custom-hr {
+    border: none !important;
+    height: 2px !important;
+    background-color: var(--md-typeset-color) !important;
+    margin: 8em 0 !important;
+    /* 增加分隔线的上下间距 */
+}
+
+/* 确保分隔线文字可见 */
+.md-content__inner hr.custom-hr[data-content]::before {
+    color: var(--md-typeset-color) !important;
+}</style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#socker-server" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="✨ SYSU-CS-Basic" class="md-header__button md-logo" aria-label="✨ SYSU-CS-Basic" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ✨ SYSU-CS-Basic
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Socket & Server
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LulietLyan/Internship-Basic" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SYSU-CS-Basic
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔯 Portal
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Computer%20Network/Intro/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🕸 Computer Network
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Intro/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  💻 Operating System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Database/MySQL/MySQL/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  📕 Database
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Docker/Docker/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🎒 Docker
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="✨ SYSU-CS-Basic" class="md-nav__button md-logo" aria-label="✨ SYSU-CS-Basic" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ✨ SYSU-CS-Basic
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LulietLyan/Internship-Basic" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SYSU-CS-Basic
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🔯 Portal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    🕸 Computer Network
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            🕸 Computer Network
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer%20Network/Intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Network Model
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer%20Network/HTTP%20%26%20HTTPs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HTTP & HTTPs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer%20Network/TCP%20%26%20UDP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TCP & UDP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Computer%20Network/IP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    💻 Operating System
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            💻 Operating System
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System Basic
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Concurrency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concurrency
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Process%20%26%20Thread/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Process & Thread
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../File%20System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Socket & Server
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Socket & Server
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#select-poll-epoll" class="md-nav__link">
+    <span class="md-ellipsis">
+      select poll epoll 的区别与联系？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="select poll epoll 的区别与联系？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    <span class="md-ellipsis">
+      select
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="select">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      select 的主要限制
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poll" class="md-nav__link">
+    <span class="md-ellipsis">
+      poll
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="poll">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#poll_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      poll 的优点
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poll_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      poll 存在的问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epoll" class="md-nav__link">
+    <span class="md-ellipsis">
+      epoll
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epoll_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      epoll 的优点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      边缘触发与条件触发分别是什么？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="边缘触发与条件触发分别是什么？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      边缘触发
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      条件触发
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-server-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      讲一讲 client-server 通信双方 API 调用过程？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="讲一讲 client-server 通信双方 API 调用过程？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      服务器端 API 调用过程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      客户端 API 调用过程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io-io-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      阻塞 IO、非阻塞 IO 有什么区别？怎么判断写文件时 Buffer 已经写满？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="阻塞 IO、非阻塞 IO 有什么区别？怎么判断写文件时 Buffer 已经写满？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    <span class="md-ellipsis">
+      阻塞 IO
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      非阻塞 IO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      同步与异步的区别，阻塞与非阻塞的区别？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rector-proactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      讲一讲 Rector 模式与 Proactor 模式？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="讲一讲 Rector 模式与 Proactor 模式？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reator 模式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proactor 模式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何调试服务器内存占用过高的问题？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux 下如何查到端口被哪个进程占用？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux 零拷贝的原理？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lvs-nattundr" class="md-nav__link">
+    <span class="md-ellipsis">
+      LVS 的 NAT、TUN、DR 原理及区别
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LVS 的 NAT、TUN、DR 原理及区别">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nat" class="md-nav__link">
+    <span class="md-ellipsis">
+      NAT(网络地址转换模式)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tunip" class="md-nav__link">
+    <span class="md-ellipsis">
+      TUN(IP 隧道模式)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dr" class="md-nav__link">
+    <span class="md-ellipsis">
+      DR(直接路由模式)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      区别
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    📕 Database
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            📕 Database
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Database/MySQL/MySQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MySQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Database/Redis/Redis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Redis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    🎒 Docker
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            🎒 Docker
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Docker/Docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#select-poll-epoll" class="md-nav__link">
+    <span class="md-ellipsis">
+      select poll epoll 的区别与联系？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="select poll epoll 的区别与联系？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    <span class="md-ellipsis">
+      select
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="select">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      select 的主要限制
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poll" class="md-nav__link">
+    <span class="md-ellipsis">
+      poll
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="poll">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#poll_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      poll 的优点
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poll_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      poll 存在的问题
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epoll" class="md-nav__link">
+    <span class="md-ellipsis">
+      epoll
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epoll_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      epoll 的优点
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      总结
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      边缘触发与条件触发分别是什么？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="边缘触发与条件触发分别是什么？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      边缘触发
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      条件触发
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#client-server-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      讲一讲 client-server 通信双方 API 调用过程？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="讲一讲 client-server 通信双方 API 调用过程？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      服务器端 API 调用过程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      客户端 API 调用过程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#io-io-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      阻塞 IO、非阻塞 IO 有什么区别？怎么判断写文件时 Buffer 已经写满？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="阻塞 IO、非阻塞 IO 有什么区别？怎么判断写文件时 Buffer 已经写满？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#io" class="md-nav__link">
+    <span class="md-ellipsis">
+      阻塞 IO
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      非阻塞 IO
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      同步与异步的区别，阻塞与非阻塞的区别？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rector-proactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      讲一讲 Rector 模式与 Proactor 模式？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="讲一讲 Rector 模式与 Proactor 模式？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reator 模式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#proactor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Proactor 模式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何调试服务器内存占用过高的问题？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux 下如何查到端口被哪个进程占用？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linux 零拷贝的原理？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lvs-nattundr" class="md-nav__link">
+    <span class="md-ellipsis">
+      LVS 的 NAT、TUN、DR 原理及区别
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LVS 的 NAT、TUN、DR 原理及区别">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nat" class="md-nav__link">
+    <span class="md-ellipsis">
+      NAT(网络地址转换模式)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tunip" class="md-nav__link">
+    <span class="md-ellipsis">
+      TUN(IP 隧道模式)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dr" class="md-nav__link">
+    <span class="md-ellipsis">
+      DR(直接路由模式)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      区别
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+                  
+  
+    <a href="https://github.com/LulietLyan/Internship-Basic/edit/main/docs/Operating System/Socket & Server.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LulietLyan/Internship-Basic/raw/main/docs/Operating System/Socket & Server.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+
+
+<style>
+body {
+  position: relative; /* 确保 body 元素的 position 属性为非静态值 */
+}
+
+body::before {
+  --size: 35px; /* 调整网格单元大小 */
+  --line: color-mix(in hsl, canvasText, transparent 80%); /* 调整线条透明度 */
+  content: '';
+  height: 100vh;
+  width: 100%;
+  position: absolute; /* 修改为 absolute 以使其随页面滚动 */
+  background: linear-gradient(
+        90deg,
+        var(--line) 1px,
+        transparent 1px var(--size)
+      )
+      50% 50% / var(--size) var(--size),
+    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
+      var(--size) var(--size);
+  -webkit-mask: linear-gradient(-20deg, transparent 50%, white);
+          mask: linear-gradient(-20deg, transparent 50%, white);
+  top: 0;
+  transform-style: flat;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  body::before {
+    display: none; /* 在手机端隐藏网格效果 */
+  }
+}
+</style>
+
+<h1 id="socker-server">🔵 Socker &amp; Server<a class="headerlink" href="#socker-server" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 6759 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 34 分钟</p>
+</div>
+<h2 id="select-poll-epoll">select poll epoll 的区别与联系？<a class="headerlink" href="#select-poll-epoll" title="Permanent link">&para;</a></h2>
+<p>select, poll 和 epoll 都是  <strong>I/O 多路复用技术</strong>，它们用于同时处理多个 I/O 操作，特别是在高并发网络编程中。</p>
+<h3 id="select">select<a class="headerlink" href="#select" title="Permanent link">&para;</a></h3>
+<p>select 是最早的 I/O 多路复用技术，它可以同时监视多个文件描述符(file descriptor, FD)的 I/O 状态(如可读、可写、异常等)。select 函数使用一个文件描述符集合(通常是一个位图)来表示要监视的文件描述符，当有 I/O 事件发生时，select 会返回对应的文件描述符集合。</p>
+<h4 id="select_1">select 的主要限制<a class="headerlink" href="#select_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>文件描述符数量限制</strong>：select 使用一个位图来表示文件描述符集合，这限制了它能够处理的文件描述符数量(通常是 1024 个)</li>
+<li><strong>效率问题</strong>：当文件描述符数量较大时，select 需要遍历整个文件描述符集合来查找就绪的文件描述符，这会导致较低的效率</li>
+<li><strong>非实时性</strong>：每次调用 select 时，需要重新设置文件描述符集合，这会增加函数调用的开销</li>
+</ul>
+<h3 id="poll">poll<a class="headerlink" href="#poll" title="Permanent link">&para;</a></h3>
+<p>poll 是为了 <strong>克服 select 的限制</strong> 而引入的一种 I/O 多路复用技术。poll 使用一个文件描述符数组(通常是一个结构体数组)来表示要监视的文件描述符。与 select 类似，poll 可以监视多个文件描述符的 I/O 状态。</p>
+<h4 id="poll_1">poll 的优点<a class="headerlink" href="#poll_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>文件描述符数量不受限制</strong>：由于 poll 使用一个动态数组来表示文件描述符，因此它可以处理 <strong>任意数量</strong> 的文件描述符</li>
+<li><strong>效率相对较高</strong>：poll 在查找就绪的文件描述符时，只需要遍历实际使用的文件描述符数组，而不是整个文件描述符集合</li>
+</ul>
+<h3 id="poll_2">poll 存在的问题<a class="headerlink" href="#poll_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>效率问题</strong>：尽管 poll 相对于 select 具有较高的效率，但当文件描述符数量很大时，它仍然需要遍历整个文件描述符数组</li>
+<li><strong>非实时性</strong>：与 select 类似，每次调用 poll 时，需要重新设置文件描述符数组</li>
+</ul>
+<h3 id="epoll">epoll<a class="headerlink" href="#epoll" title="Permanent link">&para;</a></h3>
+<p>epoll 是  <strong>Linux 特有的一种高效 I/O 多路复用技术</strong>，它克服了 select 和 poll 的主要限制。epoll 使用一个事件驱动(event-driven)的方式来处理 I/O 操作，它只会返回就绪的文件描述符，而不是遍历整个文件描述符集合。</p>
+<h3 id="epoll_1">epoll 的优点<a class="headerlink" href="#epoll_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>高效</strong>：epoll 使用 <strong>事件驱动</strong> 的方式来处理 I / O 操作，因此它在处理大量文件描述符时具有很高的效率。当有 I/O 事件发生时，epoll 可以立即得到通知，而无需遍历整个文件描述符集合。这使得 epoll  <strong>在高并发场景中具有更好的性能</strong> </li>
+<li><strong>可扩展性</strong>：与 poll 类似，epoll 可以处理 <strong>任意数量</strong> 的文件描述符，因为它使用一个 <strong>动态数据结构</strong> 来表示文件描述符</li>
+<li><strong>实时性</strong>：epoll 使用一个内核事件表来记录要监视的文件描述符和事件，因此在每次调用 epoll 时无需重新设置文件描述符集合。这可以减少函数调用的开销，并提高实时性</li>
+</ul>
+<p>epoll 具有诸多优点，但它目前仅在 Linux 平台上可用。对于其他平台，可能需要使用类似的 I/O 多路复用技术，如 BSD 中的 kqueue。</p>
+<h3 id="_1">总结<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>select 是最早的 I/O 多路复用技术，但受到文件描述符数量和效率方面的限制。poll 克服了文件描述符数量的限制，但仍然存在一定的效率问题。epoll 是一种高效的 I/O 多路复用技术，尤其适用于高并发场景，但它仅在 Linux 平台上可用。一般来说， <strong>epoll 的效率要比 select 和 poll 高</strong>，但是对于活动连接较多的情景，由于回调函数触发的很频繁，其效率不一定比 select 和 poll 高。所以 epoll 在连接数量很多，但活动连接较小的情况性能体现的比较明显：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">系统调用</th>
+<th style="text-align: center;">select</th>
+<th style="text-align: center;">poll</th>
+<th style="text-align: center;">epoll</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">事件集合</td>
+<td style="text-align: center;">用户通过三个参数分别传入感兴趣的可读可写以及异常等事件，内核通过对这些参数的在线修改来反馈其中就绪的事件。如果用户需要的话需要创建三个 fdset 以监听不同类型的事件</td>
+<td style="text-align: center;"><strong>统一处理</strong> 所有的事件类型，因此只需要一个事件集参数。用户通过  <strong>pollfd.events</strong>  来传入感兴趣的事件，内核通过修改  <strong>pollfd.revents</strong>  反馈其中就绪的事件</td>
+<td style="text-align: center;">内核通过一个事件表直接管理用户感兴趣的所有事件。每次调用  <strong>epoll_wait</strong>，内核直接在调用参数的 events 中注册就绪事件</td>
+</tr>
+<tr>
+<td style="text-align: center;">应用程序索引效率</td>
+<td style="text-align: center;">轮询， <strong>O(n)</strong></td>
+<td style="text-align: center;">轮询， <strong>O(n)</strong></td>
+<td style="text-align: center;">回调， <strong>O(1)</strong></td>
+</tr>
+<tr>
+<td style="text-align: center;">最大支持文件描述符数</td>
+<td style="text-align: center;">一般 1024</td>
+<td style="text-align: center;">65535</td>
+<td style="text-align: center;">65535</td>
+</tr>
+<tr>
+<td style="text-align: center;">工作模式</td>
+<td style="text-align: center;">条件触发</td>
+<td style="text-align: center;">条件触发</td>
+<td style="text-align: center;">条件触发或边缘触发</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_2">边缘触发与条件触发分别是什么？<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>边缘触发(Edge-triggered)和条件触发(Level-triggered)是两种常见的 <strong>事件触发方式</strong>，主要应用于 I/O 多路复用和中断处理等场景。</p>
+<h3 id="_3">边缘触发<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>边缘触发是指在 <strong>事件状态发生变化的时刻触发一次</strong>，例如从无事件变为有事件。在 I / O 多路复用中，边缘触发意味着当某个文件描述符发生 I/O 事件(如变为可读或可写)时，我们只会收到一次通知。当收到通知后，我们需要处理该文件描述符上的所有数据，直到数据全部处理完毕，否则不会再收到通知。</p>
+<p>边缘触发的优点是 <strong>只在事件状态改变时触发</strong>，可以减少事件通知的次数。然而，边缘触发的缺点是我们 <strong>需要确保在收到通知后处理所有相关数据</strong>，否则可能会遗漏某些事件。</p>
+<h3 id="_4">条件触发<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>条件触发是指只要事件状态保持满足某种条件，就会持续触发。在 I/O 多路复用中，条件触发意味着只要某个文件描述符的 I/O 事件状态满足条件(如可读或可写)，我们就会不断收到通知。</p>
+<p>条件触发的优点是它可以 <strong>确保我们不会遗漏任何事件</strong>，因为只要条件满足，就会持续触发。然而，条件触发的缺点是它 <strong>可能导致大量的事件通知</strong>，从而增加处理开销。</p>
+<h2 id="client-server-api">讲一讲 client-server 通信双方 API 调用过程？<a class="headerlink" href="#client-server-api" title="Permanent link">&para;</a></h2>
+<p>Client-server 通信是 <strong>客户端与服务器之间进行数据交互</strong> 的一种常见方式。客户端和服务器分别调用各自的 API 来建立连接、发送请求、接收响应以及关闭连接。以下是典型的 Client-server 通信过程中的 API 调用：</p>
+<h3 id="api">服务器端 API 调用过程<a class="headerlink" href="#api" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>创建套接字(socket)</strong>：服务器端首先创建一个套接字。在 C 语言中，可以使用 socket() 函数创建一个新的套接字</li>
+<li><strong>绑定地址(bind)</strong>：服务器将套接字绑定到指定的 IP 地址和端口。这可以使用 bind() 函数完成</li>
+<li><strong>监听连接(listen)</strong>：服务器将套接字设置为监听模式，以便接受来自客户端的连接请求。这可以通过调用 listen() 函数实现</li>
+<li><strong>接受连接(accept)</strong>：当客户端发起连接请求时，服务器使用 accept() 函数接受该连接。accept() 函数返回一个新的套接字，用于与客户端进行通信</li>
+<li><strong>接收数据(recv)</strong>：服务器使用 recv() 或类似的函数从客户端接收数据。这些函数通常会阻塞，直到收到数据</li>
+<li><strong>发送数据(send)</strong>：服务器根据客户端的请求处理数据并生成响应。然后，服务器使用 send() 或类似的函数将响应数据发送回客户端</li>
+<li><strong>关闭连接(close)</strong>：完成通信后，服务器使用 close() 或类似的函数关闭与客户端的连接。服务器可以继续接受其他客户端的连接</li>
+</ul>
+<h3 id="api_1">客户端 API 调用过程<a class="headerlink" href="#api_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>创建套接字(socket)</strong>：与服务器类似，客户端使用 socket() 函数创建一个新的套接字</li>
+<li><strong>连接服务器(connect)</strong>：客户端使用 connect() 函数发起对服务器的连接请求。这需要指定服务器的 IP 地址和端口</li>
+<li><strong>发送数据(send)</strong>：连接建立后，客户端使用 send() 或类似的函数向服务器发送请求数据</li>
+<li><strong>接收数据(recv)</strong>：客户端使用 recv() 或类似的函数接收来自服务器的响应数据。这些函数通常会阻塞，直到收到数据</li>
+<li><strong>关闭连接(close)</strong>：通信完成后，客户端使用 close() 或类似的函数关闭与服务器的连接</li>
+</ul>
+<h2 id="io-io-buffer">阻塞 IO、非阻塞 IO 有什么区别？怎么判断写文件时 Buffer 已经写满？<a class="headerlink" href="#io-io-buffer" title="Permanent link">&para;</a></h2>
+<p>阻塞 IO 和非阻塞 IO 是两种不同的 I/O 处理方式，它们主要区别在于 I/O 操作是否会导致调用者等待。</p>
+<h3 id="io">阻塞 IO<a class="headerlink" href="#io" title="Permanent link">&para;</a></h3>
+<p>在阻塞 IO 模式下，当一个 I/O 操作(如读或写)发起时，如果数据还没有准备好(例如，等待数据从硬盘读取或从网络接收)，则调用者(通常是一个线程或进程)会被阻塞，直到数据准备好为止。在此期间， <strong>调用者无法执行其他任务，只能等待 I/O 操作完成</strong>。</p>
+<p>阻塞 IO 的优点是 <strong>编程简单，容易实现</strong>。然而，它的缺点是当 I/O 操作耗时较长时，会导致调用者的 <strong>低效率和资源浪费</strong>，尤其在高并发场景中。</p>
+<h3 id="io_1">非阻塞 IO<a class="headerlink" href="#io_1" title="Permanent link">&para;</a></h3>
+<p>在非阻塞 IO 模式下，当一个 I/O 操作发起时，如果数据还没有准备好，调用者不会被阻塞，而是立即返回一个错误码(例如，表示资源不可用)。调用者可以继续执行其他任务，然后在适当的时间点再次尝试 I/O 操作。</p>
+<p>非阻塞 IO 的优点是可以 <strong>提高调用者的效率和资源利用率</strong>，尤其适用于高并发场景。然而，它的缺点是 <strong>编程复杂度较高</strong>，需要使用 I/O 多路复用技术(如 select， poll 或 epoll )来处理多个 I/O 操作。</p>
+<p>关于判断写文件时 Buffer 是否已经写满，通常是通过以下方式：</p>
+<p>在 <strong>阻塞 IO 模式</strong> 下，当写入操作发起时，如果 Buffer 已满，调用者会被阻塞，直到 Buffer 有足够的空间容纳新的数据。在这种情况下不需要担心 Buffer 是否已满，因为操作系统会 <strong>自动处理</strong> 这个问题。</p>
+<p>在 <strong>非阻塞 IO 模式</strong> 下，当写入操作发起时，如果 Buffer 已满，调用者会立即收到一个错误码(例如，表示资源不可用)。在这种情况下 <strong>需要根据错误码来判断 Buffer 是否已满</strong>，并在适当的时间点再次尝试写入操作。通常，你可以结合 I/O 多路复用技术来监听文件描述符的可写事件，以便在 Buffer 有空间时得到通知。</p>
+<h2 id="_5">同步与异步的区别，阻塞与非阻塞的区别？<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>同步和异步主要关注的是 <strong>调用者与被调用者之间的关系</strong>。</p>
+<ul>
+<li><strong>同步(Synchronous)</strong>：在同步操作中，调用者发起一个请求后， <strong>需要等待被调用者处理完毕并返回结果</strong>，期间调用者不能进行其他操作。换句话说，调用者与被调用者的执行是串行的。同步操作的典型例子是普通的函数调用</li>
+<li><strong>异步(Asynchronous)</strong>：在异步操作中，调用者发起一个请求后， <strong>无需等待被调用者处理完毕</strong>，可以继续执行其他操作。被调用者在处理完请求后，通常通过回调函数、事件或消息队列等方式通知调用者结果。换句话说，调用者与被调用者的执行是并行的。异步操作的典型例子是 JavaScript 中的 Ajax 请求</li>
+</ul>
+<p>阻塞和非阻塞主要关注的是  <strong>I/O 操作或系统调用的行为</strong>。</p>
+<ul>
+<li><strong>阻塞(Blocking)</strong>：在阻塞操作中，如果数据还没有准备好(例如，等待数据从硬盘读取或从网络接收)，则调用者(通常是一个线程或进程)会被阻塞，直到数据准备好为止。在此期间， <strong>调用者无法执行其他任务</strong>，只能等待 I/O 操作完成。阻塞 I/O 操作的典型例子是普通的文件读写</li>
+<li><strong>非阻塞(Non-blocking)</strong>：在非阻塞操作中，如果数据还没有准备好，调用者不会被阻塞，而是立即返回一个错误码(例如，表示资源不可用)。 <strong>调用者可以继续执行其他任务</strong>，然后在适当的时间点再次尝试 I/O 操作。非阻塞 I/O 操作的典型例子是使用 select，poll 或 epoll 等 I/O 多路复用技术处理的网络通信</li>
+</ul>
+<h2 id="rector-proactor">讲一讲 Rector 模式与 Proactor 模式？<a class="headerlink" href="#rector-proactor" title="Permanent link">&para;</a></h2>
+<p>Reactor 模式和 Proactor 模式都是处理并发 I/O 事件的设计模式。它们各自的核心思想是将 I/O 操作与实际处理逻辑解耦，以便在高并发环境下更有效地处理请求。下面分别介绍这两种模式：</p>
+<h3 id="reator">Reator 模式<a class="headerlink" href="#reator" title="Permanent link">&para;</a></h3>
+<p>Reactor 模式基于事件驱动和异步 I/O 操作。其核心组件包括 Reactor、事件处理器和资源(如套接字)。Reactor 模式的工作原理如下：</p>
+<ul>
+<li><strong>Reactor 负责监视多个资源(如套接字)上的 I/O 事件</strong>。当某个资源上发生 I/O 事件时，Reactor 将事件通知对应的事件处理器。</li>
+<li><strong>事件处理器负责处理这些 I/O 事件</strong>，如接受连接、读取数据、写入数据等。事件处理器将 I/O 操作与实际的业务逻辑解耦，使程序更易于管理和扩展。</li>
+<li><strong>Reactor 模式通常使用非阻塞 I/O 操作</strong>。当资源不可用时，事件处理器不会阻塞，而是返回并允许 Reactor 继续监视其他资源。</li>
+</ul>
+<p>Reactor 模式适用于 I/O 密集型应用，特别是当 I/O 操作可能导致阻塞时。其主要优点是简化了并发 I/O 处理，提高了程序的可扩展性和性能</p>
+<h3 id="proactor">Proactor 模式<a class="headerlink" href="#proactor" title="Permanent link">&para;</a></h3>
+<p>Proactor 模式是 Reactor 模式的扩展，采用异步 I/O 操作和操作系统级别的异步通知机制。Proactor 模式的核心组件包括 Proactor、异步操作处理器和资源(如套接字)。Proactor 模式的工作原理如下：</p>
+<ul>
+<li><strong>Proactor 负责启动异步 I/O 操作(如读取、写入等)</strong>。异步 I/O 操作在后台进行，不会阻塞主程序的执行。</li>
+<li><strong>当异步 I/O 操作完成时，操作系统将通知 Proactor</strong>。Proactor 随后调用相应的异步操作处理器来处理已完成的操作。</li>
+<li><strong>异步操作处理器负责处理已完成的异步 I/O 操作</strong>。与 Reactor 模式类似，这些处理器将 I/O 操作与实际的业务逻辑解耦，使程序更易于管理和扩展。</li>
+</ul>
+<p>Proactor 模式的主要优点是充分利用了操作系统的异步 I/O 功能，进一步简化了并发 I/O 处理，提高了程序的可扩展性和性能。但是，Proactor 模式对操作系统的支持程度不同，因此可能需要考虑跨平台兼容性。</p>
+<h2 id="_6">如何调试服务器内存占用过高的问题？<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>服务器内存占用过高可能是由多种原因引起的，如内存泄漏、程序逻辑错误等：</p>
+<ul>
+<li><strong>监控内存使用情况</strong>：首先，使用操作系统提供的工具(如 Linux 上的 top，htop 或 free 命令)来实时监控服务器的内存使用情况。这可以帮助确定问题是否确实是由内存占用过高导致的，以及问题的严重程度</li>
+<li><strong>确定问题进程</strong>：接下来，通过监控工具找出内存占用过高的进程。可以通过 top 或 ps 命令查看进程的详细信息，例如进程 ID、用户、CPU 使用率、内存使用率等</li>
+<li><strong>分析进程内存使用</strong>：使用进程内存分析工具(如 pmap 或 smem)来查看问题进程的内存使用情况。这可以帮助你了解进程的内存使用分布，例如堆、栈、共享库等。通过这些信息，你可以初步判断问题可能出在哪个模块或功能</li>
+<li><strong>分析内存泄漏</strong>：如果怀疑问题是由内存泄漏导致的，可以使用内存泄漏检测工具(如 valgrind 或 gperftools)对进程进行分析。这些工具可以帮助你找出内存泄漏的位置，以及泄漏的详细信息</li>
+<li><strong>分析程序代码</strong>：根据前面的分析结果，仔细审查程序代码，检查是否存在内存分配和释放不当、数据结构设计不合理等问题。这可能需要深入理解程序的逻辑和算法</li>
+<li><strong>优化程序</strong>：针对发现的问题，优化程序代码，修复内存泄漏或逻辑错误。在修复后，重新监控内存使用情况，确保问题得到解决</li>
+<li><strong>定期检查</strong>：即使问题得到解决，也建议定期检查服务器的内存使用情况，以便及时发现潜在的问题。可以通过编写脚本或使用第三方监控工具来自动化这一过程</li>
+</ul>
+<h2 id="linux">Linux 下如何查到端口被哪个进程占用？<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h2>
+<p>两个方法查看占用端口进程：</p>
+<ol>
+<li><strong>lsof -i:端口号</strong> </li>
+<li><strong>netstat -tunlp | grep 端口号</strong> </li>
+</ol>
+<h2 id="linux_1">Linux 零拷贝的原理？<a class="headerlink" href="#linux_1" title="Permanent link">&para;</a></h2>
+<p>零拷贝是一种 <strong>避免 CPU 将数据从一块存储拷贝到另外一块存储的技术</strong>。通过减少用户态与内核态上下文切换和减少内存拷贝次数实现，通常实现方式有 3 种： <strong>mmap+write、sendfile、sendfile+DMA scatter/gather</strong>：</p>
+<ul>
+<li><strong>mmap + write</strong>：mmap() 系统调用函数会 <strong>直接把内核缓冲区里的数据「映射」到用户空间</strong>，这样，操作系统内核与用户空间就不需要再进行任何的数据拷贝操作。 <strong>包含 2 次系统调用，3 次数据拷贝(2 次 DMA 和 1 次 CPU 拷贝)</strong>：</li>
+</ul>
+<ol>
+<li>用户进程通过 mmap 方法向操作系统内核发起 IO 调用，上下文从用户态切换为内核态</li>
+<li>CPU 利用 DMA 控制器，把数据从硬盘中拷贝到内核缓冲区</li>
+<li>上下文从内核态切换回用户态，mmap 方法返回</li>
+<li>用户进程通过 write 方法向操作系统内核发起 IO 调用，上下文从用户态切换为内核态</li>
+<li>CPU 将内核缓冲区的数据拷贝到的 socket 缓冲区</li>
+<li>CPU 利用 DMA 控制器，把数据从 socket 缓冲区拷贝到网卡，上下文从内核态切换回用户态，write 调用返回</li>
+</ol>
+<ul>
+<li><strong>sendfile</strong>：在 Linux 内核版本 2.1 中，提供了一个专门发送文件的系统调用函数 sendfile()。它可以替代前面的 read() 和 write() 这两个系统调用，减少一次系统调用。 <strong>包含 1 次系统调用，3 次数据拷贝(2 次 DMA 和 1 次 CPU 拷贝)</strong>：</li>
+</ul>
+<ol>
+<li>用户进程发起 sendfile 系统调用，上下文(切换 1)从用户态转向内核态</li>
+<li>DMA 控制器，把数据从硬盘中拷贝到内核缓冲区</li>
+<li>CPU 将读缓冲区中数据拷贝到 socket 缓冲区</li>
+<li>DMA 控制器，异步把数据从 socket 缓冲区拷贝到网卡</li>
+<li>上下文(切换 2)从内核态切换回用户态，sendfile 调用返回</li>
+</ol>
+<ul>
+<li><strong>sendfile+DMA scatter/gather</strong>：Linux 2.4 版本之后，对 sendfile 做了优化升级，引入 SG-DMA 技术，其实就是对 DMA 拷贝加入了 scatter/gather 操作，它可以直接从内核空间缓冲区中将数据读取到网卡。使用这个特点搞零拷贝，即还可以多省去一次 CPU 拷贝。 <strong>包含 1 次系统调用，2 次数据拷贝(2 次 DMA 拷贝)</strong>：</li>
+</ul>
+<ol>
+<li>用户进程发起 sendfile 系统调用，上下文(切换 1)从用户态转向内核态。</li>
+<li>DMA 控制器，把数据从硬盘中拷贝到内核缓冲区。</li>
+<li>CPU 把内核缓冲区中的文件描述符信息(包括内核缓冲区的内存地址和偏移量)发送到 socket 缓冲区。</li>
+<li>DMA 控制器根据文件描述符信息，直接把数据从内核缓冲区拷贝到网卡。</li>
+<li>上下文(切换 2)从内核态切换回用户态，sendfile 调用返回</li>
+</ol>
+<h2 id="lvs-nattundr">LVS 的 NAT、TUN、DR 原理及区别<a class="headerlink" href="#lvs-nattundr" title="Permanent link">&para;</a></h2>
+<p>LVS 是 Linux Virtual Server 的简写，意即  <strong>Linux 虚拟服务器</strong>，是一个虚拟的服务器集群系统，使用负载均衡技术将多台服务器组成一个虚拟服务器。虚拟服务器的体系结构由一组服务器通过高速的局域网或者地理分布的广域网相互连接，在它们的前端有一个负载调度器(Load Balancer)，负载调度器能无缝地将网络请求调度到真实服务器上。</p>
+<h3 id="nat">NAT(网络地址转换模式)<a class="headerlink" href="#nat" title="Permanent link">&para;</a></h3>
+<p>原理：把客户端发来的数据包的 IP 头的目的地址，在负载均衡器上换成其中一台 RS 的 IP 地址，并发至此 RS 来处理，RS 处理完成后把数据交给经过负载均衡器，负载均衡器再把数据包的原 IP 地址改为自己的 IP，将目的地址改为客户端 IP 地址即可。 </p>
+<h3 id="tunip">TUN(IP 隧道模式)<a class="headerlink" href="#tunip" title="Permanent link">&para;</a></h3>
+<p>原理：隧道模式就是把客户端发来的数据包，封装一个新的 IP 头标记(仅目的 IP)发给 RS，RS 收到后，先把数据包的头解开，还原数据包。处理后直接返回给客户端，不需要再经过负载均衡器。注意：由于 RS 需要对负载均衡器发过来的数据包进行还原，所以说必须支持 IPTUNNEL 协议。 <strong>在 RS 的内核中，必须编译支持 IPTUNNEL 这个选项</strong>。</p>
+<p>各集群节点可以跨越不同的网络， <strong>不用在同一个 VLAN</strong>。</p>
+<p>调度器根据各个服务器的负载情况，动态地选择一台服务器，将请求报文封装在另一个 IP 报文中，再将封装后的 IP 报文转发给选出的服务器</p>
+<p>服务器收到报文后先将报文解封获得原来目标地址为 VIP 的报文，服务器发现 VIP 地址被配置在本地的 IP 隧道设备上，所以就处理这个请求，然后根据路由表将响应报文直接返回给客户。</p>
+<h3 id="dr">DR(直接路由模式)<a class="headerlink" href="#dr" title="Permanent link">&para;</a></h3>
+<p>原理：负载均衡器和 RS 都使用同一个 IP 对外服务，但只有 DR 对 ARP 请求进行响应，所有 RS 对本身这个 IP 的 ARP 请求保持静默。也就是说网关会把对这个服务 IP 的请求全部定向给 DR，而 DR 收到数据包后根据调度算法，找出对应的 RS 把目的 MAC 地址改为 RS 的 MAC(因为 IP 一致)并将请求分发给这台 RS。这时 RS 收到这个数据包处理完成之后，由于 IP 一致，可以直接将数据返给客户，则等于直接从客户端收到这个数据包无异，处理后直接返回给客户端。由于负载均衡器要对二层包头进行改换，所以负载均衡器和 RS 之间必须在一个广播域，也可以简单理解为在同一台交换机上。</p>
+<h3 id="_7">区别<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">优点</th>
+<th style="text-align: center;">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>NAT</strong></td>
+<td style="text-align: center;">集群中的物理服务器可以使用任何支持 TCP/IP 操作系统它只需要一个 IP 地址配置在调度器上，服务器组可以用私有的 IP 地址</td>
+<td style="text-align: center;">扩展性有限。当服务器节点(普通 PC 服务器)增长过多时,负载均衡器将成为整个系统的瓶颈，因为所有的请求包和应答包的流向都经过负载均衡器。当服务器节点过多时，大量的数据包都交汇在负载均衡器那，速度就会变慢</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>TUN</strong></td>
+<td style="text-align: center;">负载均衡器只负责将请求包分发给后端节点服务器，而 RS 将应答包直接发给用户。所以，减少了负载均衡器的大量数据流动，负载均衡器不再是系统的瓶颈，就能处理很巨大的请求量，这种方式，一台负载均衡器能够为很多 RS 进行分发。而且跑在公网上就能进行不同地域的分发</td>
+<td style="text-align: center;">隧道模式的 RS 节点需要合法 IP，这种方式需要所有的服务器支持 IP Tunneling(IP Encapsulation)协议，服务器可能只局限在部分 Linux 系统上</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>DR</strong></td>
+<td style="text-align: center;">VS/DR 跟 VS/TUN 方法相同，负载调度器中只负责调度请求，而服务器直接将响应返回给客户，可以极大地提高整个集群系统的吞吐量</td>
+<td style="text-align: center;">要求负载均衡器的网卡必须与物理网卡在一个物理段上</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">NAT 模式</th>
+<th style="text-align: center;">IP TUN 模式</th>
+<th style="text-align: center;">DR 模式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>对服务器要求</strong></td>
+<td style="text-align: center;">任何操作系统均支持</td>
+<td style="text-align: center;">必须支持 IP 隧道协议，目前 <strong>只有 Linux 支持</strong></td>
+<td style="text-align: center;">支持虚拟网卡，且可以禁用 ARP 响应</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>网络要求</strong></td>
+<td style="text-align: center;">局域网</td>
+<td style="text-align: center;">局域网或广域网</td>
+<td style="text-align: center;">局域网</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>支持的节点数</strong></td>
+<td style="text-align: center;">10~20 个，视 Director 处理能力而定</td>
+<td style="text-align: center;">可以支持到 100 个节点</td>
+<td style="text-align: center;">可以支持到 100 个节点</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>安全性</strong></td>
+<td style="text-align: center;">较高，可隐藏 real server</td>
+<td style="text-align: center;">较差，real server 容易暴露</td>
+<td style="text-align: center;">较差，real server 容易暴露</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>IP 要求</strong></td>
+<td style="text-align: center;">仅需要一个合法 IP 地址作为 VIP</td>
+<td style="text-align: center;">除 VIP 外， <strong>每个服务器需要拥有合法 IP 地址</strong> 可以直接路由至客户端</td>
+<td style="text-align: center;">除 VIP 外， <strong>每个服务器需要拥有合法 IP 地址</strong> 可以直接路由至客户端</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>拓展性</strong></td>
+<td style="text-align: center;">差</td>
+<td style="text-align: center;">很好</td>
+<td style="text-align: center;">好</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>特点</strong></td>
+<td style="text-align: center;">地址转换</td>
+<td style="text-align: center;">封装 IP</td>
+<td style="text-align: center;">修改 MAC 地址</td>
+</tr>
+</tbody>
+</table>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin'><span data-tippy-content='创建时间: 2025-05-31'><span class='material-icons' data-icon='doc_created'></span>2025-05-31 18:31:21</span><span data-tippy-content='最后更新: 2025-05-31'><span class='material-icons' data-icon='doc_modified'></span>2025-05-31 18:31:21</span></div></div>
+
+                
+
+  
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+        <script src="https://giscus.app/client.js"
+                data-repo="LulietLyan/Internship-Basic"
+                data-repo-id="R_kgDOOJAUow"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOOJAUo84CplqN"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="fro"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/LulietLyan/" target="_blank" rel="noopener" title="GitHub | LulietLyan" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:<lulietlyan@gmail.com>" target="_blank" rel="noopener" title="Email | LulietLyan" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.code.select", "content.tooltips", "content.footnote.tooltips", "content.tabs.link", "toc.follow", "header.autohide"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml-full.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-svg-full.js"></script>
+      
+        <script src="../../javascripts/tablesort.js"></script>
+      
+        <script src="../../javascripts/toc.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+      
+        <script src="../../javascripts/web-time.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/extra.js"></script>
+      
+        <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      
+        <script src="../../assets/document_dates/tippy/popper.min.js"></script>
+      
+        <script src="../../assets/document_dates/tippy/tippy.umd.min.js"></script>
+      
+        <script src="../../assets/document_dates/document-dates.config.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script><script>document.addEventListener('DOMContentLoaded', () => {
+    let attempts = 0;
+    const maxAttempts = 50;
+
+    const waitForNav = setInterval(() => {
+        attempts++;
+        const nav = document.querySelector('.md-sidebar--secondary .md-nav__list');
+        if (!nav) return;
+
+        const navItems = Array.from(nav.querySelectorAll('.md-nav__item'));
+        if (navItems.length === 0) {
+            if (attempts >= maxAttempts) {
+                clearInterval(waitForNav);
+                console.error('目录加载超时');
+            }
+            return;
+        }
+
+        clearInterval(waitForNav);
+        console.log('目录项数量:', navItems.length);
+
+        // 获取主内容区域
+        const mainContent = document.querySelector('.md-content__inner');
+        if (!mainContent) return;
+
+        // 获取所有标题
+        const headings = Array.from(mainContent.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+        console.log('标题数量:', headings.length);
+
+        // 收集所有分隔线位置
+        const walker = document.createTreeWalker(mainContent, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node) => {
+                if (!node || !node.textContent) return NodeFilter.FILTER_REJECT;
+                if (node.parentElement?.closest('pre, code, .md-nav, script, style')) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }, false);
+
+        const hrPositions = [];
+        let node;
+        while (node = walker.nextNode()) {
+            const text = node.textContent.trim();
+            const match = text.match(/^---(.+?)---$/);
+            if (match) {
+                hrPositions.push({
+                    node,
+                    content: match[1].trim()
+                });
+            }
+        }
+
+        // 处理每个分隔线
+        hrPositions.forEach((hrData, index) => {
+            // 创建分隔线
+            const hr = document.createElement('hr');
+            hr.setAttribute('data-content', hrData.content);
+            hr.classList.add('custom-hr');
+            hr.id = `hr-${index + 1}`;
+            hrData.node.parentNode.replaceChild(hr, hrData.node);
+
+            // 创建目录项
+            const li = document.createElement('li');
+            li.classList.add('md-nav__item', 'hr-nav-item');
+            const a = document.createElement('a');
+            a.classList.add('md-nav__link');
+            a.href = `#hr-${index + 1}`;
+            a.textContent = `${hrData.content}`; // 修改这里，添加前后的破折号
+            li.appendChild(a);
+
+
+
+            // 找到分隔线后的第一个标题
+            let nextHeadingIndex = -1;
+            for (let i = 0; i < headings.length; i++) {
+                const heading = headings[i];
+                if (hr.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING) {
+                    nextHeadingIndex = i;
+                    break;
+                }
+            }
+
+            console.log('分隔线:', hrData.content, '下一个标题索引:', nextHeadingIndex);
+
+            if (nextHeadingIndex !== -1) {
+                // 找到对应的目录项
+                const nextHeading = headings[nextHeadingIndex];
+                const nextNavItem = navItems.find(item => {
+                    const link = item.querySelector('a');
+                    const text = link?.textContent?.replace('¶', '').trim();
+                    return text === nextHeading.textContent.replace('¶', '').trim();
+                });
+
+                if (nextNavItem) {
+                    nav.insertBefore(li, nextNavItem);
+                    console.log('插入到标题前:', nextHeading.textContent);
+                    return;
+                }
+            }
+
+            nav.appendChild(li);
+            console.log('追加到末尾:', hrData.content);
+        });
+    }, 100);
+});</script></body>
+</html>

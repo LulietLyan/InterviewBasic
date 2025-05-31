@@ -1,0 +1,250 @@
+.md-typeset .admonition, .md-typeset details {
+    font-size: var(--text-font-size);
+    border-width: 1px;
+}
+
+.md-typeset .admonition.note,
+.md-typeset :is(.admonition,details):is(.note) {
+    border-color: rgba(68, 138, 255, 0.1);
+}
+.md-typeset .note > .admonition-title,
+.md-typeset :is(.note)>:is(.admonition-title,summary) {
+    background-color: rgba(68, 138, 255, 0.1);
+}
+.md-typeset .note > .admonition-title::before,
+.md-typeset :is(.note)>:is(.admonition-title,summary):before {
+    background-color: rgb(68, 138, 255);
+}
+
+.md-typeset .admonition.abstract,
+.md-typeset :is(.admonition,details):is(.abstract) {
+    border-color: rgba(0, 176, 255, 0.1);
+}
+.md-typeset .abstract > .admonition-title,
+.md-typeset :is(.abstract)>:is(.admonition-title,summary) {
+    background-color: rgba(0, 176, 255, 0.1);
+}
+.md-typeset .abstract > .admonition-title::before,
+.md-typeset :is(.abstract)>:is(.admonition-title,summary):before {
+    background-color: rgb(0, 176, 255);
+}
+
+.md-typeset .admonition.info,
+.md-typeset :is(.admonition,details):is(.info) {
+    border-color: rgba(0, 184, 212, 0.1);
+}
+.md-typeset .info > .admonition-title,
+.md-typeset :is(.info)>:is(.admonition-title,summary) {
+    background-color: rgba(0, 184, 212, 0.1);
+}
+.md-typeset .info > .admonition-title::before,
+.md-typeset :is(.info)>:is(.admonition-title,summary):before {
+    background-color: rgb(0, 184, 212);
+}
+
+.md-typeset .admonition.tip,
+.md-typeset :is(.admonition,details):is(.tip) {
+    border-color: rgba(4, 248, 235, 0.1);
+}
+.md-typeset .tip > .admonition-title,
+.md-typeset :is(.tip)>:is(.admonition-title,summary) {
+    background-color: rgba(4, 248, 235, 0.1);
+}
+.md-typeset .tip > .admonition-title::before,
+.md-typeset :is(.tip)>:is(.admonition-title,summary):before {
+    background-color: rgb(4, 248, 235);
+}
+
+.md-typeset .admonition.success,
+.md-typeset :is(.admonition,details):is(.success) {
+    border-color: rgba(0, 200, 83, 0.1);
+}
+.md-typeset .success > .admonition-title,
+.md-typeset :is(.success)>:is(.admonition-title,summary) {
+    background-color: rgba(0, 200, 83, 0.1);
+}
+.md-typeset .success > .admonition-title::before,
+.md-typeset :is(.success)>:is(.admonition-title,summary):before {
+    background-color: rgb(0, 200, 83);
+}
+
+.md-typeset .admonition.question,
+.md-typeset :is(.admonition,details):is(.question) {
+    border-color: rgba(100, 221, 23, 0.1);
+}
+.md-typeset .question > .admonition-title,
+.md-typeset :is(.question)>:is(.admonition-title,summary) {
+    background-color: rgba(100, 221, 23, 0.1);
+}
+.md-typeset .question > .admonition-title::before,
+.md-typeset :is(.question)>:is(.admonition-title,summary):before {
+    background-color: rgb(100, 221, 23);
+}
+
+.md-typeset .admonition.warning,
+.md-typeset :is(.admonition,details):is(.warning) {
+    border-color: rgba(255, 145, 0, 0.1);
+}
+.md-typeset .warning > .admonition-title,
+.md-typeset :is(.warning)>:is(.admonition-title,summary) {
+    background-color: rgba(255, 145, 0, 0.1);
+}
+.md-typeset .warning > .admonition-title::before,
+.md-typeset :is(.warning)>:is(.admonition-title,summary):before {
+    background-color: rgb(255, 145, 0);
+}
+
+.md-typeset .admonition.failure,
+.md-typeset :is(.admonition,details):is(.failure) {
+    border-color: rgba(255, 82, 82, 0.1);
+}
+.md-typeset .failure > .admonition-title,
+.md-typeset :is(.failure)>:is(.admonition-title,summary) {
+    background-color: rgba(255, 82, 82, 0.1);
+}
+.md-typeset .failure > .admonition-title::before,
+.md-typeset :is(.failure)>:is(.admonition-title,summary):before {
+    background-color: rgb(255, 82, 82);
+}
+
+.md-typeset .admonition.danger,
+.md-typeset :is(.admonition,details):is(.danger) {
+    border-color: rgba(255, 23, 68, 0.1);
+}
+.md-typeset .danger > .admonition-title,
+.md-typeset :is(.danger)>:is(.admonition-title,summary) {
+    background-color: rgba(255, 23, 68, 0.1);
+}
+.md-typeset .danger > .admonition-title::before,
+.md-typeset :is(.danger)>:is(.admonition-title,summary):before {
+    background-color: rgb(255, 23, 68);
+}
+
+.md-typeset .admonition.bug,
+.md-typeset :is(.admonition,details):is(.bug) {
+    border-color: rgba(245, 0, 87, 0.1);
+}
+.md-typeset .bug > .admonition-title,
+.md-typeset :is(.bug)>:is(.admonition-title,summary) {
+    background-color: rgba(245, 0, 87, 0.1);
+}
+.md-typeset .bug > .admonition-title::before,
+.md-typeset :is(.bug)>:is(.admonition-title,summary):before {
+    background-color: rgb(245, 0, 87);
+}
+
+.md-typeset .admonition.quote,
+.md-typeset :is(.admonition,details):is(.quote) {
+    border-color: rgba(158, 158, 158, 0.1);
+}
+.md-typeset .quote > .admonition-title,
+.md-typeset :is(.quote)>:is(.admonition-title,summary) {
+    background-color: rgba(158, 158, 158, 0.1);
+}
+.md-typeset .quote > .admonition-title::before,
+.md-typeset :is(.quote)>:is(.admonition-title,summary):before {
+    background-color: rgb(158, 158, 158);
+}
+
+.md-typeset .admonition.example,
+.md-typeset :is(.admonition,details):is(.example) {
+    border-color: rgba(124, 77, 255, 0.1);
+}
+.md-typeset .example > .admonition-title,
+.md-typeset :is(.example)>:is(.admonition-title,summary) {
+    background-color: rgba(124, 77, 255, 0.1);
+}
+.md-typeset .example > .admonition-title::before,
+.md-typeset :is(.example)>:is(.admonition-title,summary):before {
+    background-color: rgb(124, 77, 255);
+}
+
+:root {
+    --md-admonition-icon--plane: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M0 96c0-35.3 28.7-64 64-64h320c35.3 0 64 28.7 64 64v320c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96z"/></svg>')
+}
+.md-typeset .admonition.plane,
+.md-typeset :is(.admonition,details):is(.plane) {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+.md-typeset .plane > .admonition-title,
+.md-typeset :is(.plane)>:is(.admonition-title,summary) {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.md-typeset .plane > .admonition-title::before,
+.md-typeset :is(.plane)>:is(.admonition-title,summary):before {
+    background-color: rgb(0, 0, 0);
+    -webkit-mask-image: var(--md-admonition-icon--plane);
+    mask-image: var(--md-admonition-icon--plane);
+}
+
+:root {
+    --md-admonition-icon--list: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M40 48c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zm152 16c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32h288c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24v-48c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zm24 136c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24h48c13.3 0 24-10.7 24-24v-48c0-13.3-10.7-24-24-24H40z"/></svg>')
+}
+.md-typeset .admonition.list,
+.md-typeset :is(.admonition,details):is(.list) {
+    border-color: rgba(247, 211, 24, 0.1);
+}
+.md-typeset .list > .admonition-title,
+.md-typeset :is(.list)>:is(.admonition-title,summary) {
+    background-color: rgba(247, 211, 24, 0.1);
+}
+.md-typeset .list > .admonition-title::before,
+.md-typeset :is(.list)>:is(.admonition-title,summary):before {
+    background-color: rgb(247, 221, 24);
+    -webkit-mask-image: var(--md-admonition-icon--list);
+    mask-image: var(--md-admonition-icon--list);
+}
+
+:root {
+    --md-admonition-icon--definition: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M64 32v448c0 17.7-14.3 32-32 32S0 497.7 0 480V32C0 14.3 14.3 0 32 0s32 14.3 32 32zm40.8 302.8c-3 .9-6 1.7-8.8 2.6V13.5C121.5 6.4 153 0 184 0c36.5 0 68.3 9.1 95.6 16.9l1.3.4C309.4 25.4 333.3 32 360 32c26.8 0 52.9-6.8 73-14.1 9.9-3.6 17.9-7.2 23.4-9.8 2.7-1.3 4.8-2.4 6.2-3.1.7-.4 1.1-.6 1.4-.8l.2-.1c9.9-5.6 22.1-5.6 31.9.2S512 20.6 512 32v256c0 12.1-6.8 23.2-17.7 28.6L480 288l14.3 28.6h-.1l-.2.1-.7.4c-.6.3-1.5.7-2.5 1.2-2.2 1-5.2 2.4-9 4-7.7 3.3-18.5 7.6-31.5 11.9-25.8 8.7-61.5 17.8-98.3 17.8-37 0-65.2-9.4-89-17.3l-1-.3c-24-8-43.7-14.4-70-14.4-27.5 0-60.1 7-87.2 14.8z"/></svg>')
+}
+.md-typeset .admonition.definition,
+.md-typeset :is(.admonition,details):is(.definition) {
+    border-color: rgba(255, 171, 0, 0.1);
+}
+.md-typeset .definition > .admonition-title,
+.md-typeset :is(.definition)>:is(.admonition-title,summary) {
+    background-color: rgba(255, 171, 0, 0.1);
+}
+.md-typeset .definition > .admonition-title::before,
+.md-typeset :is(.definition)>:is(.admonition-title,summary):before {
+    background-color: rgb(247, 195, 24);
+    -webkit-mask-image: var(--md-admonition-icon--definition);
+    mask-image: var(--md-admonition-icon--definition);
+}
+
+:root {
+    --md-admonition-icon--theorem: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M177.9 494.1c-18.7 18.7-49.1 18.7-67.9 0l-92.1-92.2c-18.7-18.7-18.7-49.1 0-67.9l50.7-50.7 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48L333.9 18C352.6-.7 383-.7 401.8 18l92.1 92.1c18.7 18.7 18.7 49.1 0 67.9l-316 316.1z"/></svg>')
+}
+.md-typeset .admonition.theorem,
+.md-typeset :is(.admonition,details):is(.theorem) {
+    border-color: rgba(140, 242, 255, 0.1);
+}
+.md-typeset .theorem > .admonition-title,
+.md-typeset :is(.theorem)>:is(.admonition-title,summary) {
+    background-color: rgba(140, 242, 255, 0.1);
+}
+.md-typeset .theorem > .admonition-title::before,
+.md-typeset :is(.theorem)>:is(.admonition-title,summary):before {
+    background-color: rgb(22, 138, 247);
+    -webkit-mask-image: var(--md-admonition-icon--theorem);
+    mask-image: var(--md-admonition-icon--theorem);
+}
+
+:root {
+    --md-admonition-icon--proof: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="m220.6 130.3-67.2 28.2V43.2L98.7 233.5l54.7-24.2v130.3l67.2-209.3zm-83.2-96.7-1.3 4.7-15.2 52.9C80.6 106.7 52 145.8 52 191.5c0 52.3 34.3 95.9 83.4 105.5v53.6C57.5 340.1 0 272.4 0 191.6c0-80.5 59.8-147.2 137.4-158zm311.4 447.2c-11.2 11.2-23.1 12.3-28.6 10.5-5.4-1.8-27.1-19.9-60.4-44.4-33.3-24.6-33.6-35.7-43-56.7-9.4-20.9-30.4-42.6-57.5-52.4l-9.7-14.7c-24.7 16.9-53 26.9-81.3 28.7l2.1-6.6 15.9-49.5c46.5-11.9 80.9-54 80.9-104.2 0-54.5-38.4-102.1-96-107.1V32.3C254.4 37.4 320 106.8 320 191.6c0 33.6-11.2 64.7-29 90.4l14.6 9.6c9.8 27.1 31.5 48 52.4 57.4s32.2 9.7 56.8 43c24.6 33.2 42.7 54.9 44.5 60.3s.7 17.3-10.5 28.5zm-9.9-17.9c0-4.4-3.6-8-8-8s-8 3.6-8 8 3.6 8 8 8 8-3.6 8-8z"/></svg>')
+}
+.md-typeset .admonition.proof,
+.md-typeset :is(.admonition,details):is(.proof) {
+    border-color: rgba(22, 73, 225, 0.1);
+}
+.md-typeset .proof > .admonition-title,
+.md-typeset :is(.proof)>:is(.admonition-title,summary) {
+    background-color: rgba(22, 73, 225, 0.1);
+}
+.md-typeset .proof > .admonition-title::before,
+.md-typeset :is(.proof)>:is(.admonition-title,summary):before {
+    background-color: rgb(35, 69, 217);
+    -webkit-mask-image: var(--md-admonition-icon--proof);
+    mask-image: var(--md-admonition-icon--proof);
+}

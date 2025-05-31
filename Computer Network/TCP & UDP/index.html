@@ -1,0 +1,2544 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="博学 审问 慎思 明辨 笃行">
+      
+      
+      
+        <link rel="canonical" href="https://lulietlyan.github.io/Internship-Basic/Computer%20Network/TCP%20%26%20UDP/">
+      
+      
+        <link rel="prev" href="../HTTP%20%26%20HTTPs/">
+      
+      
+        <link rel="next" href="../IP/">
+      
+      
+      <link rel="icon" href="../../Figures/README/SYSU.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+    
+    
+      
+        <title>TCP & UDP - ✨ SYSU-CS-Basic</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M3.499.75a.75.75%200%200%201%201.5%200v.996C5.9%202.903%206.793%203.65%207.662%204.376l.24.202c-.036-.694.055-1.422.426-2.163C9.1.873%2010.794-.045%2012.622.26%2014.408.558%2016%201.94%2016%204.25c0%201.278-.954%202.575-2.44%202.734l.146.508.065.22c.203.701.412%201.455.476%202.226.142%201.707-.4%203.03-1.487%203.898C11.714%2014.671%2010.27%2015%208.75%2015h-6a.75.75%200%200%201%200-1.5h1.376a4.5%204.5%200%200%201-.563-1.191%203.84%203.84%200%200%201-.05-2.063%204.65%204.65%200%200%201-2.025-.293.75.75%200%200%201%20.525-1.406c1.357.507%202.376-.006%202.698-.318l.009-.01a.747.747%200%200%201%201.06%200%20.75.75%200%200%201-.012%201.074c-.912.92-.992%201.835-.768%202.586.221.74.745%201.337%201.196%201.621H8.75c1.343%200%202.398-.296%203.074-.836.635-.507%201.036-1.31.928-2.602-.05-.603-.216-1.224-.422-1.93l-.064-.221c-.12-.407-.246-.84-.353-1.29a2.4%202.4%200%200%201-.507-.441%203.1%203.1%200%200%201-.633-1.248.75.75%200%200%201%201.455-.364c.046.185.144.436.31.627.146.168.353.305.712.305.738%200%201.25-.615%201.25-1.25%200-1.47-.95-2.315-2.123-2.51-1.172-.196-2.227.387-2.706%201.345-.46.92-.27%201.774.019%203.062l.042.19.01.05c.348.443.666.949.94%201.553a.75.75%200%201%201-1.365.62c-.553-1.217-1.32-1.94-2.3-2.768L6.7%205.527c-.814-.68-1.75-1.462-2.692-2.619a3.7%203.7%200%200%200-1.023.88c-.406.495-.663%201.036-.722%201.508.116.122.306.21.591.239.388.038.797-.06%201.032-.19a.75.75%200%200%201%20.728%201.31c-.515.287-1.23.439-1.906.373-.682-.067-1.473-.38-1.879-1.193L.75%205.677V5.5c0-.984.48-1.94%201.077-2.664.46-.559%201.05-1.055%201.673-1.353z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=LXGW+WenKai+Screen+GB+Screen:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"LXGW WenKai Screen GB Screen";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/timeline.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/basic.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/admonition.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.css">
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/no-footer.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/unordered-list-symbols.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/cards.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/flink.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/rounded_corner.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://gcore.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/lxgw/lxgwscreen.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/custom.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/tasklist.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/fold_toc.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/changelog_extra.css">
+    
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/material.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/light.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/backdrop.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/scale.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/document-dates.config.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script><style>/* 自定义分隔线样式 */
+hr.custom-hr {
+    position: relative;
+    text-align: center;
+    border: 0;
+    height: 1px;
+    background: none;
+    /* 使用主题的边框颜色 */
+    border-top: 2px solid var(--md-default-fg-color--lighter, currentColor);
+    margin: 100px 0 !important;
+}
+
+hr.custom-hr:before {
+    content: attr(data-content);
+    position: absolute;
+    /* 使用主题的背景色，fallback 到页面背景色 */
+    background: var(--md-default-bg-color, var(--md-primary-bg-color, inherit));
+    /* 使用主题的文本颜色 */
+    color: var(--md-default-fg-color, currentColor);
+    padding: 0 0.5em;
+    line-height: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    font-weight: bold;
+}
+
+/* 目录中分隔线条目的样式 */
+.md-nav__item.hr-nav-item {
+    text-align: center;
+    margin: 1.16em 0;
+    /* 增加上下间距 */
+}
+
+.md-nav__item.hr-nav-item .md-nav__link {
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: var(--md-typeset-color) !important;
+}
+
+/* 悬停效果 */
+.md-nav__item.hr-nav-item .md-nav__link:hover {
+    color: var(--md-accent-fg-color) !important;
+}
+
+/* 修改分隔线的样式 */
+.md-content__inner hr.custom-hr {
+    border: none !important;
+    height: 2px !important;
+    background-color: var(--md-typeset-color) !important;
+    margin: 8em 0 !important;
+    /* 增加分隔线的上下间距 */
+}
+
+/* 确保分隔线文字可见 */
+.md-content__inner hr.custom-hr[data-content]::before {
+    color: var(--md-typeset-color) !important;
+}</style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#tcp-udp" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="✨ SYSU-CS-Basic" class="md-header__button md-logo" aria-label="✨ SYSU-CS-Basic" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ✨ SYSU-CS-Basic
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              TCP & UDP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256l137.3-137.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/LulietLyan/Internship-Basic" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SYSU-CS-Basic
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  🔯 Portal
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../Intro/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🕸 Computer Network
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Operating%20System/Intro/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  💻 Operating System
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Database/MySQL/MySQL/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  📕 Database
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../Docker/Docker/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  🎒 Docker
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="✨ SYSU-CS-Basic" class="md-nav__button md-logo" aria-label="✨ SYSU-CS-Basic" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ✨ SYSU-CS-Basic
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/LulietLyan/Internship-Basic" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SYSU-CS-Basic
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🔯 Portal
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    🕸 Computer Network
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            🕸 Computer Network
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Network Model
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HTTP%20%26%20HTTPs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HTTP & HTTPs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    TCP & UDP
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    TCP & UDP
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么是 TCP？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的头部结构
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 如何保证可靠传输
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的三次握手
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么要三次握手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      如果 TCP 的三次握手丢失会发生什么？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么不是两次握手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么不是四次握手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      为什么每次建立 TCP 连接时，初始化的序列号都要求不一样？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isn" class="md-nav__link">
+    <span class="md-ellipsis">
+      初始序列号 ISN 是如何随机产生的？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的四次挥手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么要四次挥手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何在 Linux 系统中查看 TCP 状态
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fin_wait_2-fin-tcp-time_wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      在 FIN_WAIT_2 状态下，是如何处理收到的乱序到 FIN 报文，然后 TCP 连接又是什么时候才进入到 TIME_WAIT 状态？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      如果 TCP 的四次挥手丢失会发生什么？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么不是三次挥手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的延迟应答和累计应答？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-msl" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的 MSL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      已经建立了连接，客户端突然出现故障了会怎样？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么时候用长连接，短连接？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的半连接队列和全连接队列？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#syn" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么是 SYN 攻击？如何避免？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="什么是 SYN 攻击？如何避免？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      概念
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      避免方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time_wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      TIME_WAIT 作用，过多如何解决？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TIME_WAIT 作用，过多如何解决？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      作用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      危害
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      避免方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_tw_reuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      tcp_tw_reuse 为什么默认是关闭的？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paws" class="md-nav__link">
+    <span class="md-ellipsis">
+      PAWS 的保护机制
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PAWS 的保护机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      潜在问题：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time_wait-2msl" class="md-nav__link">
+    <span class="md-ellipsis">
+      TIME_WAIT 状态为什么需要经过 2MSL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#close_wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLOSE_WAIT 状态过多如何解决？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-udp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 和 UDP 的区别？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#udp" class="md-nav__link">
+    <span class="md-ellipsis">
+      UDP 的头部结构
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-udp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 和 UDP 可以使用同一个端口吗？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      粘包和拆包问题的解决办法？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="粘包和拆包问题的解决办法？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      概念
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      解决办法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-keepalive-http-keepalive" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的 keepalive 和 HTTP 的 keepalive 的区别？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip-tcp-mss" class="md-nav__link">
+    <span class="md-ellipsis">
+      IP 层会分片，为什么 TCP 层还需要 MSS 呢？
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../IP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    IP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    💻 Operating System
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            💻 Operating System
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating%20System/Intro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    System Basic
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating%20System/Concurrency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concurrency
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating%20System/Memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Memory
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating%20System/Process%20%26%20Thread/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Process & Thread
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating%20System/File%20System/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    File System
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Operating%20System/Socket%20%26%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Socket & Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    📕 Database
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            📕 Database
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Database/MySQL/MySQL/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MySQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Database/Redis/Redis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Redis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    🎒 Docker
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            🎒 Docker
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Docker/Docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么是 TCP？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的头部结构
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 如何保证可靠传输
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的三次握手
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么要三次握手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      如果 TCP 的三次握手丢失会发生什么？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么不是两次握手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么不是四次握手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      为什么每次建立 TCP 连接时，初始化的序列号都要求不一样？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#isn" class="md-nav__link">
+    <span class="md-ellipsis">
+      初始序列号 ISN 是如何随机产生的？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的四次挥手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么要四次挥手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linux-tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何在 Linux 系统中查看 TCP 状态
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fin_wait_2-fin-tcp-time_wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      在 FIN_WAIT_2 状态下，是如何处理收到的乱序到 FIN 报文，然后 TCP 连接又是什么时候才进入到 TIME_WAIT 状态？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      如果 TCP 的四次挥手丢失会发生什么？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 为什么不是三次挥手？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的延迟应答和累计应答？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-msl" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的 MSL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      已经建立了连接，客户端突然出现故障了会怎样？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么时候用长连接，短连接？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的半连接队列和全连接队列？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#syn" class="md-nav__link">
+    <span class="md-ellipsis">
+      什么是 SYN 攻击？如何避免？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="什么是 SYN 攻击？如何避免？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      概念
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      避免方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time_wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      TIME_WAIT 作用，过多如何解决？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TIME_WAIT 作用，过多如何解决？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      作用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      危害
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      避免方法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp_tw_reuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      tcp_tw_reuse 为什么默认是关闭的？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paws" class="md-nav__link">
+    <span class="md-ellipsis">
+      PAWS 的保护机制
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PAWS 的保护机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      潜在问题：
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time_wait-2msl" class="md-nav__link">
+    <span class="md-ellipsis">
+      TIME_WAIT 状态为什么需要经过 2MSL
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#close_wait" class="md-nav__link">
+    <span class="md-ellipsis">
+      CLOSE_WAIT 状态过多如何解决？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-udp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 和 UDP 的区别？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#udp" class="md-nav__link">
+    <span class="md-ellipsis">
+      UDP 的头部结构
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-udp_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 和 UDP 可以使用同一个端口吗？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      粘包和拆包问题的解决办法？
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="粘包和拆包问题的解决办法？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      概念
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      解决办法
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tcp-keepalive-http-keepalive" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP 的 keepalive 和 HTTP 的 keepalive 的区别？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip-tcp-mss" class="md-nav__link">
+    <span class="md-ellipsis">
+      IP 层会分片，为什么 TCP 层还需要 MSS 呢？
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+                  
+  
+    <a href="https://github.com/LulietLyan/Internship-Basic/edit/main/docs/Computer Network/TCP & UDP.md" title="编辑此页" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/LulietLyan/Internship-Basic/raw/main/docs/Computer Network/TCP & UDP.md" title="查看本页的源代码" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+
+
+<style>
+body {
+  position: relative; /* 确保 body 元素的 position 属性为非静态值 */
+}
+
+body::before {
+  --size: 35px; /* 调整网格单元大小 */
+  --line: color-mix(in hsl, canvasText, transparent 80%); /* 调整线条透明度 */
+  content: '';
+  height: 100vh;
+  width: 100%;
+  position: absolute; /* 修改为 absolute 以使其随页面滚动 */
+  background: linear-gradient(
+        90deg,
+        var(--line) 1px,
+        transparent 1px var(--size)
+      )
+      50% 50% / var(--size) var(--size),
+    linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
+      var(--size) var(--size);
+  -webkit-mask: linear-gradient(-20deg, transparent 50%, white);
+          mask: linear-gradient(-20deg, transparent 50%, white);
+  top: 0;
+  transform-style: flat;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@media (max-width: 768px) {
+  body::before {
+    display: none; /* 在手机端隐藏网格效果 */
+  }
+}
+</style>
+
+<h1 id="tcp-udp">🔴 TCP &amp; UDP<a class="headerlink" href="#tcp-udp" title="Permanent link">&para;</a></h1>
+<div style="margin-top: -30px; font-size: 0.75em; opacity: 0.7;">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10h-2a8 8 0 0 1-8 8 8 8 0 0 1-8-8 8 8 0 0 1 8-8zm6.78 1a.7.7 0 0 0-.48.2l-1.22 1.21 2.5 2.5L20.8 5.7c.26-.26.26-.7 0-.95L19.25 3.2c-.13-.13-.3-.2-.47-.2m-2.41 2.12L9 12.5V15h2.5l7.37-7.38z"/></svg></span> 约 9044 个字 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6m80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3l89.3 89.4-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3"/></svg></span> 1 行代码 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 17H7V3h14m0-2H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2M3 5H1v16a2 2 0 0 0 2 2h16v-2H3m12.96-10.71-2.75 3.54-1.96-2.36L8.5 15h11z"/></svg></span> 4 张图片 <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20c4.42 0 8-3.58 8-8s-3.58-8-8-8-8 3.58-8 8 3.58 8 8 8m0-18c5.5 0 10 4.5 10 10s-4.5 10-10 10C6.47 22 2 17.5 2 12S6.5 2 12 2m.5 11H11V7h1.5v4.26l3.7-2.13.75 1.3z"/></svg></span> 预计阅读时间 45 分钟</p>
+</div>
+<h2 id="tcp">什么是 TCP？<a class="headerlink" href="#tcp" title="Permanent link">&para;</a></h2>
+<p>TCP 是 <strong>面向连接的、可靠的、基于字节流</strong> 的传输层通信协议。</p>
+<ul>
+<li><strong>面向连接</strong>：一定是「一对一」才能连接，不能像 UDP 协议可以一个主机同时向多个主机发送消息，也就是一对多是无法做到的</li>
+<li><strong>可靠的</strong>：无论网络链路中出现了怎样的链路变化，TCP 都可以保证一个报文一定能够到达接收端</li>
+<li><strong>字节流</strong>：用户消息通过 TCP 协议传输时，消息可能会被操作系统「分组」成多个的 TCP 报文，如果接收方的程序如果不知道「消息的边界」，是无法读出一个有效的用户消息的。并且 TCP 报文是「有序的」，当「前一个」TCP 报文没有收到的时候，即使它先收到了后面的 TCP 报文，那么也不能扔给应用层去处理，同时对「重复」的 TCP 报文会自动丢弃</li>
+</ul>
+<h2 id="tcp_1">TCP 的头部结构<a class="headerlink" href="#tcp_1" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../../Figures/Computer%20Network/TCP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84.svg" data-type="image" data-width="80%" data-height="auto" data-desc-position="bottom"><img alt="TCP的头部结构" src="../../Figures/Computer%20Network/TCP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84.svg" /></a></p>
+<ul>
+<li><strong>源端口</strong>：16 位，标识报文的返回地址</li>
+<li><strong>目的端口</strong>：16 位，指明接收方计算机上的应用程序接口</li>
+<li><strong>序列号</strong>：32 位，在建立连接时由计算机生成的随机数作为其初始值，通过 SYN 包传给接收端主机，每发送一次数据，就累加一次该数据字节数的大小。用来解决网络包乱序问题</li>
+<li><strong>确认号</strong>：32 位，指下一次期望收到的数据的序列号，发送端收到这个确认应答以后可以认为在这个序号以前的数据都已经被正常接收。用来解决丢包的问题</li>
+<li><strong>数据偏移/首部长度</strong>：4 位，TCP 首部可能含有可选项内容，所以 TCP 报头的长度是不确定的，报头不包含任何任选字段则长度为 20 字节，4 位首部长度字段所能表示最大长度为 60 字节。首部长度也叫数据偏移，因为首部长度实际上指示了数据区在报文段中的起始偏移值</li>
+<li><strong>保留</strong>：6 位，为将来定义新的用途保留，现在一般置 0</li>
+<li><strong>校验和</strong>：16 位，由发送端填充，接收端对 TCP 报文段执行 CRC 算法以检验 TCP 报文段在传输过程中是否损坏，这个校验不仅包括 TCP 头部，也包括数据部分。这是 TCP 实现可靠传输的一个重要保障</li>
+<li><strong>窗口</strong>：16 位，是 TCP 流量控制的一个手段。通过窗口告诉对方本端的 TCP 接收缓冲区还能容纳多少字节的数据，这样对方可以控制发送数据的速度，从而达到流量控制。窗口大小为16 bit 字段，因而窗口大小最大为 65535</li>
+<li><strong>紧急指针</strong>：16 位，只有当 URG 标志置 1 时紧急指针才有效。紧急指针是一个正的偏移量，和顺序号字段中的值相加表示紧急数据最后一个字节的序号。使用紧急指针是发送端向另一端发送紧急数据的一种方式</li>
+<li><strong>选项和填充</strong>：TCP 头部的最后一个选项字段是可变长的可选信息。这部分最多包含 40 字节，因为 TCP 头部最长是 60 字节。 最常见的可选字段是最长报文大小 MSS，每个连接方通常都在通信的第一个报文段中指明这个选项，它表示本端所能接受的最大报文段的长度</li>
+<li><strong>数据部分</strong>：TCP 报文段中的数据部分是可选的。在连接建立或者终止时，双方交换的报文段仅有 TCP 首部；如果一方没有数据要发送，也会使用没有任何数据的首部来确认收到的数据；在处理超时的许多情况中，也会发送不带任何数据的报文段</li>
+</ul>
+<p>还包括控制位：</p>
+<ul>
+<li><strong>URG</strong>：紧急指针标志，为 1 时表示紧急指针有效，该报文应该优先传送，为 0 则忽略紧急指针</li>
+<li><strong>ACK</strong>：确认序号标志，为 1 时表示确认号有效，为 0 表示报文中不含确认信息。携带 ACK 标识的 TCP 报文段被称为确认报文段</li>
+<li><strong>RST</strong>：重置连接标志，用于重置由于主机崩溃或其他原因而出现错误的连接，或者用于拒绝非法的报文段和拒绝连接请求。称携带 RST 标志的 TCP 报文段为复位报文段</li>
+<li><strong>SYN</strong>：表示请求建立一个连接。称携带 SYN 标志的 TCP 报文段为同步报文段</li>
+<li><strong>FIN</strong>：finish 标志，用于释放连接，为 1 时表示发送方已经没有数据发送了，即关闭本方数据流。称携带 FIN 标志的 TCP 报文段为结束报文段</li>
+<li><strong>PSH</strong>：push 标志，为 1 表示是带有 push 标志的数据，指示接收方在接收到该报文段以后，应优先将这个报文段交给应用程序，而不是在缓冲区排队</li>
+</ul>
+<h2 id="tcp_2">TCP 如何保证可靠传输<a class="headerlink" href="#tcp_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>校验和</strong>：目的是为了 <strong>验证 TCP 首部和数据在发送过程中没有任何改动</strong>，一旦发现校验和有差错，直接丢弃 TCP 段并重新发送</li>
+<li><strong>序列号/确认号</strong>：序列号用于 <strong>解决包乱序问题</strong>，确认号用于 <strong>解决包丢失问题</strong> </li>
+<li><strong>连接管理</strong>：三次握手、四次挥手</li>
+<li><strong>流量控制</strong>：基于滑动窗口机制实现。TCP 的报文信息中有一个 16 位字段来标识滑动窗口，窗口大小就是接收方剩余缓冲区大小，在回复 ACK 时，接收方将自己剩余缓冲区大小填入。发送方根据窗口大小来调整自己的发送速度，如果缓冲区大小为 0，那么发送方会停止发送数据。并且发送方定期会发送探测报文，来获取缓冲区大小</li>
+<li>
+<p><strong>拥塞控制</strong>：拥塞控制与流量控制相比，更加关注网络线路中的拥塞程度，即网络的包转发还要受到当前网络端到端路由的拥塞情况</p>
+</li>
+<li>
+<p><strong>慢启动算法</strong>：一开始不发送大量数据，而是应该先发一小部分探测数据，然后由小到大逐渐增大发送窗口。通常在刚刚开始发送报文段时，先把拥塞窗口 cwnd 设置为1，每次接收到报文之后将窗口大小翻倍。如果指数增长到避免拥塞算法的门限 ssthresh，则改用避免拥塞算法</p>
+</li>
+<li><strong>拥塞避免算法</strong>：每当收到一个 ACK 时，cwnd 增加 1，变为线性增长。一但发现丢包和超时重传，就进入拥塞处理状态</li>
+<li><strong>拥塞发生</strong>：<ul>
+<li><strong>超时重传</strong>：ssthresh 设为 cwnd/2；cwnd 重置为 1；回到慢启动过程</li>
+<li><strong>快速重传</strong>：当发送方在超时之前收到来自接收方的 3 个冗余 ACK，cwnd = cwnd/2，也就是设置为原来的一半；ssthresh = cwnd；进入快速恢复算法</li>
+</ul>
+</li>
+<li><strong>快速恢复</strong>：拥塞窗口 cwnd = ssthresh + 3；因为 3 个冗余 ACK 已经收到，所以窗口应该增加 3。重传丢失的数据包
+    如果再收到重复的 ACK，那么 cwnd 增加 1；如果收到新数据的 ACK 后，把 cwnd 设置为第一步中的 ssthresh 的值，原因是该 ACK 确认了新的数据，说明从 duplicated ACK 时的数据都已收到，该恢复过程已经结束，可以回到恢复之前的状态了，也即再次进入拥塞避免状态</li>
+</ul>
+<h2 id="tcp_3">TCP 的三次握手<a class="headerlink" href="#tcp_3" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../../Figures/Computer%20Network/TCP%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" data-type="image" data-width="80%" data-height="auto" data-desc-position="bottom"><img alt="TCP 的三次握手" src="../../Figures/Computer%20Network/TCP%E7%9A%84%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B.jpg" /></a></p>
+<ul>
+<li><strong>第一次握手</strong>：SYN = 1; seq = x; 进入 SYN_SENT 状态</li>
+<li><strong>第二次握手</strong>：SYN = 1; ACK = 1; seq = y; ack = x + 1; 进入 SYN_RCVD 状态</li>
+<li><strong>第三次握手</strong>：ACK = 1; seq = x + 1; ack = y + 1; 进入 ESTABLISHED 状态</li>
+</ul>
+<h2 id="tcp_4">TCP 为什么要三次握手？<a class="headerlink" href="#tcp_4" title="Permanent link">&para;</a></h2>
+<p>只有三次握手才能证明服务端和客户端的 <strong>收发能力都是正常</strong> 的。</p>
+<ul>
+<li><strong>第一次握手</strong>：服务端可以知道客户端发消息的能力是正常的，自己接收消息的能力是正常的</li>
+<li><strong>第二次握手</strong>：客户端可以知道自己发送接收消息的能力和服务端发送接收消息的能力是正常的</li>
+<li><strong>第三次握手</strong>：服务端可以知道自己发送消息的能力是正常的，客户端接收消息的能力是正常的</li>
+</ul>
+<p>由此经过三次握手之后双方就可以都知道自己的发送和接收消息的能力是正常的。</p>
+<h2 id="tcp_5">如果 TCP 的三次握手丢失会发生什么？<a class="headerlink" href="#tcp_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>第一次丢失</strong>：客户端发送的 SYN 报文会收不到服务端的响应，从而会 <strong>触发超时重传</strong>，重传的 SYN 报文序列号和之前相同，重传最大重传次数由内核参数控制，一般是 5。如果超过最大次数客户端仍 <strong>没有收到回复就会断开连接</strong> </li>
+<li><strong>第二次丢失</strong>：服务端在收到客户端的报文之后会回复 SYN + ACK 报文。如果第二次握手丢失了客户端会认为自己丢包了， <strong>触发超时重传</strong>，重新发送 SYN 报文，服务端因为收不到确认的 ACK  <strong>自身也会重传</strong> </li>
+<li><strong>第三次丢失</strong>：客户端收到服务端的 SYN-ACK 报文后会给服务端回一个 ACK 报文，此时客户端状态进入到 ESTABLISH 状态。如果发生了丢包，服务端收不到 ACK 会触发超时重传机制，重传 SYN-ACK 报文，直到收到确认 ACK 或者达到最大重传次数</li>
+</ul>
+<h2 id="tcp_6">TCP 为什么不是两次握手？<a class="headerlink" href="#tcp_6" title="Permanent link">&para;</a></h2>
+<p>最好再加上  <strong>如果 TCP 的三次握手丢失会发生什么？</strong> </p>
+<ul>
+<li><strong>避免历史连接(首要原因)</strong>：如果使用的是两次握手建立连接，可能客户端发送的第一个请求连接并且没有丢失，只是因为在网络中滞留的时间太长了，由于 TCP 的客户端迟迟没有收到确认报文，以为服务器没有收到，此时重新向服务器发送这条报文，此后客户端和服务器经过两次握手完成连接，传输数据，然后关闭连接。之前滞留的那一次请求连接，因为网络通畅了，到达了服务器，这个报文本该是失效的，但是，两次握手的机制将会让客户端和服务器再次建立连接，这将导致不必要的错误和资源的浪费</li>
+<li><strong>同步双方初始序列号</strong>：为了实现可靠数据传输，TCP 协议的通信双方，都必须维护一个序列号，以标识发送出去的数据包中，哪些是已经被对方收到的。 三次握手的过程即是通信双方相互告知序列号起始值，并确认对方已经收到了序列号起始值的必经步骤。如果只是两次握手，至多只有连接发起方的起始序列号能被确认，另一方选择的序列号则得不到确认</li>
+</ul>
+<h2 id="tcp_7">TCP 为什么不是四次握手？<a class="headerlink" href="#tcp_7" title="Permanent link">&para;</a></h2>
+<p>尽管四次握手其实也能够可靠的同步双方的初始化序号，但由于 <strong>第二次和第三次可以合并</strong>，优化结果为三次握手。三次握手就已经理论上最少可靠连接建立，所以不需要使用更多的通信次数。</p>
+<h2 id="tcp_8">为什么每次建立 TCP 连接时，初始化的序列号都要求不一样？<a class="headerlink" href="#tcp_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>为了防止历史报文被下一个相同四元组的连接接收(主要方面)</strong>：如果每次建立连接客户端和服务端的初始化序列号都是一样的，容易出现历史报文被下一个相同四元组的连接接收的问题</li>
+<li><strong>为了安全性，防止黑客伪造的相同序列号的 TCP 报文被对方接收</strong></li>
+</ul>
+<h2 id="isn">初始序列号 ISN 是如何随机产生的？<a class="headerlink" href="#isn" title="Permanent link">&para;</a></h2>
+<p>起始 <code>ISN</code> 是基于时钟的，每 4 微秒 + 1，转一圈要 4.55 个小时。RFC793 提到初始化序列号 ISN 随机生成算法：ISN = M + F(localhost, localport, remotehost, remoteport)。</p>
+<ul>
+<li><code>M</code> 是一个计时器，这个计时器每隔 4 微秒加 1</li>
+<li><code>F</code> 是一个 Hash 算法，根据源 IP、目的 IP、源端口、目的端口生成一个随机数值。要保证 Hash 算法不能被外部轻易推算得出，用 MD5 算法是一个比较好的选择</li>
+</ul>
+<p>随机数是会基于时钟计时器递增的，基本不可能会随机成一样的初始化序列号。</p>
+<h2 id="tcp_9">TCP 的四次挥手？<a class="headerlink" href="#tcp_9" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../../Figures/Computer%20Network/TCP%E7%9A%84%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" data-type="image" data-width="80%" data-height="auto" data-desc-position="bottom"><img alt="TCP 的四次挥手" src="../../Figures/Computer%20Network/TCP%E7%9A%84%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" /></a></p>
+<ul>
+<li><strong>第一次挥手</strong>：客户端发送释放报文，并停止发送数据，将首部的 FIN 标识位置为 1，序列号 seq = u 发送给服务器，值等于前面已经传送过来的数据的最后一个字节的序号加 1，此时客户端进入  <strong>FIN_WAIT_1</strong>  状态。即便 FIN 报文不携带数据，也要消耗一个序列号</li>
+<li><strong>第二次挥手</strong>：服务器在收到释放报文后，发送确认报文，ACK 标识位置为 1，ack 值为客户端发送的序列号 u + 1，并带上自己的序列号 v，然后服务器进入  <strong>CLOSE_WAIT</strong>  关闭等待状态。这时服务器 TCP 通知高级应用进程：客户端向服务器的连接释放了，进入半关闭状态。但是服务器如果向客户端发送数据，客户端仍然可以接收，这个状态要持续一段时间，也就是  <strong>CLOSE_WAIT</strong>  关闭等待持续的时间。客户端收到服务器的确认请求后，进入  <strong>FIN_WAIT_2</strong>  状态，等待服务器发送释放报文</li>
+<li><strong>第三次挥手</strong>：服务器数据处理完毕后向客户端发送释放连接报文，FIN 标识位置为 1，ack 的值为客户端的序列号 u + 1。由于在半关闭状态，服务器很可能又发送一些数据，假定此时序列号为 w，服务器进入  <strong>LAST_ACK</strong>  状态，等待客户端确认</li>
+<li><strong>第四次挥手</strong>：客户端在收到服务器的释放连接报文后，会发送确认报文，ACK 标识位置为 1，ack 值为服务器发送的序列号 w + 1，自己的序列号是 u + 1，然后客户端就进入  <strong>TIME_WAIT</strong>  状态。此时 TCP 连接还没有释放，必须经过 <strong>两个 MSL 时间</strong> (一个 MSL 指的是报文段最长寿命)，当客户端撤销 TCB，才进入  <strong>CLOSED</strong>  状态。服务器只要收到客户端发送的确认请求，立即进入  <strong>CLOSED</strong>  状态。同时会撤销 TCB，TCP 连接至此结束</li>
+</ul>
+<h2 id="tcp_10">TCP 为什么要四次挥手？<a class="headerlink" href="#tcp_10" title="Permanent link">&para;</a></h2>
+<p>关闭连接时，客户端向服务端发送  <strong>FIN</strong>  时，仅仅表示客户端不再发送数据了但是还能接收数据。</p>
+<p>服务端收到客户端的  <strong>FIN</strong>  报文时，先回一个  <strong>ACK</strong>  应答报文，而服务端可能还有数据需要处理和发送，等服务端不再发送数据时，才发送  <strong>FIN</strong>  报文给客户端来表示同意现在关闭连接。</p>
+<h2 id="linux-tcp">如何在 Linux 系统中查看 TCP 状态<a class="headerlink" href="#linux-tcp" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><span class="filename">Bash</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos" data-linenos="1 "></span></a>netstat<span class="w"> </span>-napt
+</span></code></pre></div>
+<h2 id="fin_wait_2-fin-tcp-time_wait">在 FIN_WAIT_2 状态下，是如何处理收到的乱序到 FIN 报文，然后 TCP 连接又是什么时候才进入到 TIME_WAIT 状态？<a class="headerlink" href="#fin_wait_2-fin-tcp-time_wait" title="Permanent link">&para;</a></h2>
+<p>在  <strong>FIN_WAIT_2</strong>  状态时，如果收到乱序的  <strong>FIN</strong>  报文会加入到乱序队列，并不会进入到  <strong>TIME_WAIT</strong>  状态。等再次收到前面被网络延迟的数据包时，会判断乱序队列有没有数据，检测乱序队列中是否有可用的数据，如果能在乱序队列中找到与当前报文的序列号保持的顺序的报文，就会看该报文是否有  <strong>FIN</strong>  标志，如果发现有  <strong>FIN</strong>  标志，才会进入  <strong>TIME_WAIT</strong>  状态</p>
+<h2 id="tcp_11">如果 TCP 的四次挥手丢失会发生什么？<a class="headerlink" href="#tcp_11" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>第一次丢失</strong>：客户端发送的报文 FIN 报文收不到服务端的 ACK 响应，会触发超时重传，重传 FIN 报文，重发次数由内核参数控制</li>
+<li><strong>第二次丢失</strong>：服务端回复的 ACK 报文发生丢失，客户端会触发超时重传，重传 FIN 报文，直到收到服务端的 ACK 或者达到最大的重传次数。超过最大重传次数还没收到 ACK 会等待一段时间，再断开连接</li>
+<li><strong>第三次丢失</strong>：服务端收到客户端的 FIN 报文后内核会自动回复 ACK，同时连接处于  <strong>CLOSE_WAIT</strong>  状态。服务端处于  <strong>CLOSE_WAIT</strong>  状态时，调用了 close 函数，内核会发出 FIN 报文，同时连接进入  <strong>LAST_ACK</strong>  状态，等待客户端返回 ACK 来确认连接关闭。收不到 ACK 的话会重发 FIN 报文直到最大次数为止</li>
+<li><strong>第四次丢失</strong>：最后一次的 ACK 发生了丢失，服务端没有收到 ACK 报文前是处于  <strong>LAST_ACK</strong>  状态。超时之后服务端会重传 FIN 报文，客户端此时是在  <strong>TIME_WAIT</strong>  状态，开启时长为 2MSL 的定时器，如果途中再次收到第三次挥手(FIN 报文)后，会重置定时器，当等待 2MSL 时长后，客户端会断开连接</li>
+</ul>
+<h2 id="tcp_12">TCP 为什么不是三次挥手？<a class="headerlink" href="#tcp_12" title="Permanent link">&para;</a></h2>
+<p>当被动关闭方在 TCP 挥手过程中，没有数据要发送并且开启了延迟应答，第二和第三次挥手就会合并传输，这样就出现了三次挥手。</p>
+<h2 id="tcp_13">TCP 的延迟应答和累计应答？<a class="headerlink" href="#tcp_13" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>延迟应答</strong>：TCP 在接收到对端的报文后并不会立即发送 ACK，而是等待一段时间发送 ACK，以便将 ACK 和要发送的数据一块发送。延迟时间不能无限延长，否则对方端会认为丢包超时而造成超时重传。Linux 采用动态调节算法来确定等待的时间</li>
+<li><strong>累计应答</strong>：为了保证顺序性，每一个包都有一个 ID(序号)，在建立连接的时候，双方会商定起始的 ID 是多少，然后按照 ID 一个个发送。为了保证不丢包，对应发送的包都要进行应答，但不是一个个应答，而是会应答 <strong>某个之前的 ID</strong>，该模式称为 <strong>累计应答</strong> </li>
+</ul>
+<h2 id="tcp-msl">TCP 的 MSL<a class="headerlink" href="#tcp-msl" title="Permanent link">&para;</a></h2>
+<p>MSL 是任何报文在网络中被丢弃前的最长存活时间，这个时间是有限的，因为 TCP 是以 IP 数据报的形式在网络中传输，IP 有限制其生存的时间 TTL，RFC793 指出 MSL 为  <strong>2 分钟</strong>，现实中常用  <strong>30 秒</strong>  或  <strong>1 分钟</strong> </p>
+<h2 id="_1">已经建立了连接，客户端突然出现故障了会怎样？<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>TCP 存在保活计时器，如果客户端故障，服务器不会一直等待。通常计时器设置为两小时，在每次收到客户端发来的报文都会重置计时器，超时之后服务端就会向客户端发送探测报文，每隔 75s 发送一次，如果连续 10 个探测报文都没有收到回复，服务器会认为客户端发生故障，中断此次连接</p>
+<h2 id="_2">什么时候用长连接，短连接？<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>长连接多用于 <strong>操作频繁，点对点的通讯，而且连接数不能太多</strong> 的情况。每个 TCP 连接都需要三步握手，这需要时间。如果每个操作都是先连接，再操作的话那么处理速度会降低很多。所以每个操作完后都不断开，下次处理时直接发送数据包就可以，不用建立 TCP 连接。例如： <strong>数据库的连接用长连接</strong>。</p>
+<p><strong>WEB 网站的 HTTP 服务一般都用短连接</strong>，因为长连接对于服务端来说会耗费一定的资源，而 WEB 网站成千上万客户端的连接用短连接会更省一些资源，如果用长连接，而且同时有成千上万的用户，如果每个用户都占用一个连接的话，所以并发量大，用短连接可以快速释放资源。</p>
+<h2 id="tcp_14">TCP 的半连接队列和全连接队列？<a class="headerlink" href="#tcp_14" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>半连接队列</strong>：也称  <strong>SYN 队列</strong>，服务端收到客户端发起的 SYN 请求后，内核会把该连接存储到半连接队列，并向客户端发  <strong>SYN + ACK</strong> </li>
+<li><strong>全连接队列</strong>：也称 accept 队列，服务端收到第三次握手的 ACK 后， <strong>内核会把连接从半连接队列移除，然后创建新的完全的连接，并将其添加到全连接队列</strong>，等待进程调用 accept 函数时把连接取出来</li>
+</ul>
+<h2 id="syn">什么是 SYN 攻击？如何避免？<a class="headerlink" href="#syn" title="Permanent link">&para;</a></h2>
+<h3 id="_3">概念<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p><strong>SYN 攻击</strong> 是指利用合理的服务请求来占用过多的服务资源，从而使合法用户无法得到服务的响应。如果向某个服务器端口发送大量的 SYN 报文，接收到客户端发来的 SYN 报文之后，服务端就需要为每个请求分配一个进程控制块 TCB，并返回一个 SYN-ACK 报文，并立即转为 SYN_RECV 半开连接状态，收不到对端 ACK 回复的服务端还会重传 SYN-ACK 报文, 系统会为此耗尽资源</p>
+<h3 id="_4">避免方法<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Cache</strong>：系统在收到一个 SYN 报文时，在一个专用 HASH 表中保存这种半连接信息，直到收到正确的回应 ACK 报文再分配 TCB。这个开销远小于  TCB 的开销</li>
+<li><strong>Cookie</strong>：利用算法，通过对方的 IP、端口、己方 IP、端口的固定信息，以及对方无法知道而己方比较固定的一些信息，如 MSS(最大报文段大小)、时间等，在收到对方的 ACK 报文后，重新计算一遍，看其是否与对方回应报文中的 <strong>(Sequence Numbe r -1)</strong> 相同，从而决定是否分配 TCB 资源</li>
+<li><strong>Proxy 防火墙</strong>：设立中间层防火墙，防火墙在确认了连接的有效性后，才向内部的服务器发起 SYN 请求，所有的无效连接均无法到达内部的服务器。而防火墙采用的验证连接有效性的方法则可以是  <strong>Cookie</strong>  或  <strong>Cache</strong>  等其他技术</li>
+<li><strong>减少 SYN+ACK 重传次数</strong>：减少 SYN-ACK 的重传次数，以加快处于  <strong>SYN_RECV</strong>  状态的 TCP 连接断开</li>
+<li><strong>无效连接监视释放</strong>：不停监视系统的半开连接和不活动连接，当达到一定阈值时拆除这些连接，从而释放系统资源。这种方法对于所有的连接一视同仁，正常连接请求也会被这种方式误释放掉</li>
+<li><strong>增大半连接队列</strong>：修改 TCP 的内核参数，增大半连接队列以及全连接队列大小</li>
+<li><strong>调大 netdev_max_backlog</strong>：当网卡接收数据包的速度大于内核处理的速度时，会有一个队列保存这些数据包，可以调大队列大小</li>
+</ul>
+<h2 id="time_wait">TIME_WAIT 作用，过多如何解决？<a class="headerlink" href="#time_wait" title="Permanent link">&para;</a></h2>
+<h3 id="_5">作用<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>实现全双工的可靠释放连接</strong>：假设发起主动关闭的一方最后发送的 ACK 在网络中丢失，由于 TCP 的重传机制，被动关闭的一方会重新发送 FIN 报文，在 FIN 在被主动关闭方接收之前，主动关闭方都需要维护这条连接状态，包括对应的 IP 地址和端口号。如果发送方不维护 TIME_WAIT 状态，那么当  FIN 到达主动关闭方的时候，主动关闭方会发送 RST 包来响应，被动关闭方就会认为有错误发生</li>
+<li><strong>为使旧的数据包在网络因过期而消失</strong>：如果不存在  <strong>TIME_WAIT</strong>  状态，当前的一个 TCP 四元组因为某些原因关闭之后，假设有一个新的相同的四元组建立了 TCP 连接，因为 TCP 连接是由四元组唯一标识的，所以没法区分新旧连接。旧的已经关闭的 TCP 连接发送的数据到达接受方之后，会被当作正常数据而向上传输，从而导致数据错乱。有了  <strong>TIME_WAIT</strong>  状态之后，可以使旧 TCP 产生的数据包全部在网络中消亡</li>
+</ul>
+<h3 id="_6">危害<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>占用服务器系统资源</strong>，比如文件描述符、内存资源、CPU 资源、线程资源等</li>
+<li><strong>占用客户端端口资源</strong>，端口资源也是有限的，一般可以开启的端口为 32768～61000，也可以通过  <strong>net.ipv4.ip_local_port_rang</strong>  参数指定范围</li>
+</ul>
+<p><strong>注意</strong>：服务器一般只监听一个端口，端口资源不会占用过多</p>
+<h3 id="_7">避免方法<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>修改短连接为长连接</li>
+<li>扩大可使用端口号的范围</li>
+<li>客户端机器打开  <strong>tcp_tw_reuse</strong>  和  <strong>tcp_timestamps</strong>   <strong>选项：tcp_tw_reuse</strong>  调用 connect() 函数时，内核会随机找一个 time_wait 状态超过 1 秒的连接给新的连接复。复用连接之后需要更新  <strong>timestamps</strong>  参数，当旧的 TCP 数据包到达时，根据时间戳判断是旧连接的数据可以舍弃</li>
+<li>客户端机器打开  <strong>tcp_tw_recycle</strong>  和  <strong>tcp_timestamps</strong>  选项：当开启之后内核会快速回收  <strong>TIME_WAIT</strong>  状态的连接，时间是一个 RTO，远小于两个 MSL 。在启用该配置，当连接进入  <strong>TIME_WAIT</strong>  状态后，内核里会记录包括该连接对应五元组的一些统计数据，包括从该对方 IP 所接收到的最近的一次数据包时间。当有新的数据包到达，只要时间晚于内核记录的这个时间，数据包都会被统统的丢掉</li>
+<li>缩小  <strong>net.ipv4.tcp_max_tw_buckets</strong>：当系统中处于  <strong>TIME_WAIT</strong>  的连接一旦超过这个值时，系统就会将后面的  <strong>TIME_WAIT</strong>  连接状态重置</li>
+<li>程序中使用  <strong>SO_LINGER</strong>：调用 close 后，会立刻发送一个 RST 标志给对端，该 TCP 连接将跳过四次挥手，也就跳过了  <strong>TIME_WAIT</strong>  状态，直接关闭</li>
+</ul>
+<h2 id="tcp_tw_reuse">tcp_tw_reuse 为什么默认是关闭的？<a class="headerlink" href="#tcp_tw_reuse" title="Permanent link">&para;</a></h2>
+<ul>
+<li>历史 RST 报文可能会终止后面相同四元组的连接，因为 PAWS 检查到即使 RST 是过期的，也不会丢弃</li>
+<li>如果第四次挥手的 ACK 报文丢失了，有可能被动关闭连接的一方不能被正常的关闭</li>
+</ul>
+<h2 id="paws">PAWS 的保护机制<a class="headerlink" href="#paws" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>序列号回绕</strong>：​当序列号在高数据传输速率下回绕时，旧的数据包可能被误认为新的。PAWS 通过时间戳机制，确保只有时间上更新的数据包被接受。</li>
+<li><strong>连接重启后的旧数据包</strong>：​在连接关闭后，若同一对端口重新建立连接，之前的旧数据包可能会被误认为新的。PAWS 通过时间戳机制，确保只有在当前连接中接收到的最新数据包被接受</li>
+</ul>
+<h3 id="_8">潜在问题：<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>NAT(网络地址转换)设备的时间戳问题</strong>：​某些 NAT 设备可能会修改 TCP 数据包中的时间戳，导致 PAWS 机制错误地丢弃合法的数据包</li>
+<li><strong>时间戳同步问题</strong>：​如果连接双方的系统时间不同步，可能导致 PAWS 机制误判数据包的有效性</li>
+</ul>
+<h2 id="time_wait-2msl">TIME_WAIT 状态为什么需要经过 2MSL<a class="headerlink" href="#time_wait-2msl" title="Permanent link">&para;</a></h2>
+<p><strong>因为客户端最后一个发送的 ACK 有可能丢失</strong>。假如服务器没有收到客户端发送的最后一个 ACK，就会重新发送 FIN 报文，为了确保服务器收到了 FIN 报文，客户端在  <strong>TIME_WAIT</strong>  状态需要经过 2MSL，在这个期间客户端收到重发的 FIN 报文就会重新发送 ACK 并且重设计时器。MSL 指一个片段在网络中最大的存活时间，2MSL 就是一个发送和一个回复所需的最大时间。第一个 MSL 是保证最后一次挥手客户端响应服务端的 ACK 到达了服务端。第二个 MSL 是保证服务端没有重发新的报文给客户端，没有超时重传。</p>
+<p>如果客户端直接关闭，然后向服务器建立新连接，如果新连接和老连接的端口是一样的。假设老连接还有一些数据，因为网络或者其他原因，一直滞留没有发送成功，新连接建立后，就直接发送到新连接里面去了，造成数据的紊乱，因此，需要等到2MSL，让滞留在网络中的报文失效，再去建立新的连接。</p>
+<p>2MSL 的时间是从客户端接收到 FIN 后发送 ACK 开始计时的。如果在 TIME-WAIT 时间内，因为客户端的 ACK 没有传输到服务端，客户端又接收到了服务端重发的 FIN 报文，那么 2MSL 时间将重新计时</p>
+<h2 id="close_wait">CLOSE_WAIT 状态过多如何解决？<a class="headerlink" href="#close_wait" title="Permanent link">&para;</a></h2>
+<p>如果一直保持在  <strong>CLOSE_WAIT</strong>  状态，原因是在对方关闭连接之后服务器程序自己没有进一步发出 ACK 信号。</p>
+<p><strong>CLOSE_WAIT</strong>  的解决办法是：查代码。因为问题出在服务器程序</p>
+<h2 id="tcp-udp_1">TCP 和 UDP 的区别？<a class="headerlink" href="#tcp-udp_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>TCP 是面向连接的</strong>。在通信之前需要三次握手建立连接，通信之后断开连接时需要四次挥手； UDP 不需要进行连接建立</li>
+<li><strong>TCP 是可靠传输服务</strong>。通过 TCP 传输数据可以保证数据无差错、不丢失、不重复；UDP 尽最大努力交付，不保证可靠交付</li>
+<li><strong>每个 TCP 对应的是点对点的连接</strong>； <strong>UDP 支持一对一、一对多、多对一、多对多等多种方式的通讯</strong> </li>
+<li><strong>UDP 对系统资源要求较少，通讯效率高，实时性好</strong>，应用于高速传输并且对实时性有要求的通信； <strong>TCP 适合需要可靠连接</strong>，比如付费、加密数据等等方向都需要依靠 TCP</li>
+<li><strong>TCP 首部长度较长</strong>，会有一定的开销，首部在没有使用「选项」字段时是 20 个字节，如果使用了「选项」字段则会变长的； <strong>UDP 首部只有 8 个字节</strong>，并且是固定不变的</li>
+<li><strong>TCP 是流式传输</strong>，没有边界，但保证顺序和可靠。 <strong>UDP 是一个包一个包的发送</strong>，是有边界的，可能会丢包和乱序</li>
+<li><strong>TCP 的数据大小如果大于 MSS 大小，则会在传输层进行分片</strong>，目标主机收到后，也同样在传输层组装 TCP 数据包，如果中途丢失了一个分片，只需要传输丢失的这个分片。 <strong>UDP 的数据大小如果大于 MTU 大小，则会在 IP 层进行分片</strong>，目标主机收到后，在 IP 层组装完数据，接着再传给传输层</li>
+<li>应用场景：TCP 用于 FTP 文件传输、HTTP / HTTPs；UDP 用于包总量较少的通信，如 DNS、SNMP 等、视频、音频等多媒体通信、广播通信</li>
+</ul>
+<h2 id="udp">UDP 的头部结构<a class="headerlink" href="#udp" title="Permanent link">&para;</a></h2>
+<p><a class="glightbox" href="../../Figures/Computer%20Network/UDP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84.svg" data-type="image" data-width="80%" data-height="auto" data-desc-position="bottom"><img alt="UDP的头部结构" src="../../Figures/Computer%20Network/UDP%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84.svg" /></a></p>
+<ul>
+<li><strong>目标和源端口</strong>：主要是告诉 UDP 协议应该把报文发给哪个进程</li>
+<li><strong>长度</strong>：该字段保存了 UDP 首部的长度跟数据的长度之和</li>
+<li><strong>检验和</strong>：校验和是为了提供可靠的 UDP 首部和数据而设计，防止收到在网络传输中受损的 UDP 包</li>
+</ul>
+<h2 id="tcp-udp_2">TCP 和 UDP 可以使用同一个端口吗？<a class="headerlink" href="#tcp-udp_2" title="Permanent link">&para;</a></h2>
+<p><strong>可以</strong></p>
+<p>在数据链路层中，通过 MAC 地址来寻找局域网中的主机。在网际层中，通过 IP 地址来寻找网络中互连的主机或路由器。在传输层中，需要通过端口进行寻址，来识别同一计算机中同时通信的不同应用程序。所以，传输层的「端口号」的作用，是为了区分同一个主机上不同应用程序的数据包。</p>
+<p>传输层的两个传输协议分别是 TCP 和 UDP，在内核中是两个完全独立的软件模块。当主机收到数据包后，可以在 IP 包头的「协议号」字段知道该数据包是 TCP/UDP，所以可以根据这个信息确定送给哪个模块（TCP/UDP）处理，送给 TCP/UDP 模块的报文根据「端口号」确定送给哪个应用程序处理。</p>
+<h2 id="_9">粘包和拆包问题的解决办法？<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h3 id="_10">概念<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<ul>
+<li>TCP 的特点之一就是面向字节流的，也就是说传输时候数据像“水流一样”，是没有边界的，因此 <strong>拆包这个功能本身就不在 TCP 来完成</strong> </li>
+<li>所谓的粘包拆包就是 TCP 流的特性导致的，而且根本不能说是问题，拆包本身就应该在应用层来完成</li>
+</ul>
+<h3 id="_11">解决办法<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>遇到这个面试题，作者个人认为是面试官基础不扎实才会问出来，就直接怼它</li>
+</ul>
+<h2 id="tcp-keepalive-http-keepalive">TCP 的 keepalive 和 HTTP 的 keepalive 的区别？<a class="headerlink" href="#tcp-keepalive-http-keepalive" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>HTTP 的 Keep-Alive 是由应用层(用户态)实现的</strong>，称为 HTTP 长连接； <strong>TCP 的 Keepalive，是由 TCP 层(内核态)实现的</strong>，称为 TCP 保活机制</li>
+<li><strong>HTTP Keep-Alive 是指使用同一个 TCP 连接来发送和接收多个 HTTP 请求/应答</strong>，好处是避免了连接建立和释放的开销，只要任意一端没有明确提出断开连接，就保持 TCP 连接状态； <strong>TCP Keepalive 是指建立 TCP 连接的两端一直没有数据交互达到触发 TCP 保活机制的条件，内核里的 TCP 协议栈就会发送探测报文，如果对端程序正常工作，收到探测报文之后就会回复响应，同时保活时间重置，如果对端主机崩溃没有响应或者网络原因报文不可达，连续几次探测报文之后 TCP 会报告该 TCP 连接已经死亡</strong> </li>
+<li>web 服务软件一般都会提供 keepalive_timeout 参数来指定 HTTP 长连接的超时时间。例如设置了 HTTP 长连接的超时时间是 60 秒，web 服务软件就会启动一个定时器，如果客户端在完成一个 HTTP 请求后，在 60 秒内都没有再发起新的请求，定时器的时间一到，就会触发回调函数来释放该连接</li>
+</ul>
+<h2 id="ip-tcp-mss">IP 层会分片，为什么 TCP 层还需要 MSS 呢？<a class="headerlink" href="#ip-tcp-mss" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>MTU</strong>：一个网络包的最大长度，以太网中一般为 1500 字节</li>
+<li><strong>MSS</strong>：除去 IP 和 TCP 头部之后，一个网络包所能容纳的 TCP 数据的最大长度</li>
+</ul>
+<p>如果交给 IP 来进行分片，一个 IP 分片丢失，整个 IP 报文的所有分片都得重传。因为 IP 层本身没有超时重传机制，它由传输层的 TCP 来负责超时和重传。当某一个 IP 分片丢失后，接收方的 IP 层就无法组装成一个完整的 TCP 报文(头部 + 数据)，也就无法将数据报文送到 TCP 层，所以接收方不会响应 ACK 给发送方，因为发送方迟迟收不到 ACK 确认报文，所以会触发超时重传，就会重发整个 TCP 报文(头部 + 数据)。</p>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin'><span data-tippy-content='创建时间: 2025-05-31'><span class='material-icons' data-icon='doc_created'></span>2025-05-31 18:31:21</span><span data-tippy-content='最后更新: 2025-05-31'><span class='material-icons' data-icon='doc_modified'></span>2025-05-31 18:31:21</span></div></div>
+
+                
+
+  
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+        <script src="https://giscus.app/client.js"
+                data-repo="LulietLyan/Internship-Basic"
+                data-repo-id="R_kgDOOJAUow"
+                data-category="Announcements"
+                data-category-id="DIC_kwDOOJAUo84CplqN"
+                data-mapping="pathname"
+                data-strict="0"
+                data-reactions-enabled="1"
+                data-emit-metadata="0"
+                data-input-position="bottom"
+                data-theme="fro"
+                data-lang="zh-CN"
+                crossorigin="anonymous"
+                async>
+        </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      // Instruct Giscus to set theme
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    // Register event handlers after documented loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          // Instruct Giscus to change theme
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/LulietLyan/" target="_blank" rel="noopener" title="GitHub | LulietLyan" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="mailto:<lulietlyan@gmail.com>" target="_blank" rel="noopener" title="Email | LulietLyan" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m20 8-8 5-8-5V6l8 5 8-5m0-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.action.edit", "content.action.view", "content.code.copy", "content.code.annotate", "content.code.select", "content.tooltips", "content.footnote.tooltips", "content.tabs.link", "toc.follow", "header.autohide"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml-full.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-svg-full.js"></script>
+      
+        <script src="../../javascripts/tablesort.js"></script>
+      
+        <script src="../../javascripts/toc.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="../../javascripts/katex.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js"></script>
+      
+        <script src="../../javascripts/web-time.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/Wcowin/Wcowin.github.io@main/docs/javascripts/extra.js"></script>
+      
+        <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+      
+        <script src="../../assets/document_dates/tippy/popper.min.js"></script>
+      
+        <script src="../../assets/document_dates/tippy/tippy.umd.min.js"></script>
+      
+        <script src="../../assets/document_dates/document-dates.config.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script><script>document.addEventListener('DOMContentLoaded', () => {
+    let attempts = 0;
+    const maxAttempts = 50;
+
+    const waitForNav = setInterval(() => {
+        attempts++;
+        const nav = document.querySelector('.md-sidebar--secondary .md-nav__list');
+        if (!nav) return;
+
+        const navItems = Array.from(nav.querySelectorAll('.md-nav__item'));
+        if (navItems.length === 0) {
+            if (attempts >= maxAttempts) {
+                clearInterval(waitForNav);
+                console.error('目录加载超时');
+            }
+            return;
+        }
+
+        clearInterval(waitForNav);
+        console.log('目录项数量:', navItems.length);
+
+        // 获取主内容区域
+        const mainContent = document.querySelector('.md-content__inner');
+        if (!mainContent) return;
+
+        // 获取所有标题
+        const headings = Array.from(mainContent.querySelectorAll('h1, h2, h3, h4, h5, h6'));
+        console.log('标题数量:', headings.length);
+
+        // 收集所有分隔线位置
+        const walker = document.createTreeWalker(mainContent, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node) => {
+                if (!node || !node.textContent) return NodeFilter.FILTER_REJECT;
+                if (node.parentElement?.closest('pre, code, .md-nav, script, style')) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        }, false);
+
+        const hrPositions = [];
+        let node;
+        while (node = walker.nextNode()) {
+            const text = node.textContent.trim();
+            const match = text.match(/^---(.+?)---$/);
+            if (match) {
+                hrPositions.push({
+                    node,
+                    content: match[1].trim()
+                });
+            }
+        }
+
+        // 处理每个分隔线
+        hrPositions.forEach((hrData, index) => {
+            // 创建分隔线
+            const hr = document.createElement('hr');
+            hr.setAttribute('data-content', hrData.content);
+            hr.classList.add('custom-hr');
+            hr.id = `hr-${index + 1}`;
+            hrData.node.parentNode.replaceChild(hr, hrData.node);
+
+            // 创建目录项
+            const li = document.createElement('li');
+            li.classList.add('md-nav__item', 'hr-nav-item');
+            const a = document.createElement('a');
+            a.classList.add('md-nav__link');
+            a.href = `#hr-${index + 1}`;
+            a.textContent = `${hrData.content}`; // 修改这里，添加前后的破折号
+            li.appendChild(a);
+
+
+
+            // 找到分隔线后的第一个标题
+            let nextHeadingIndex = -1;
+            for (let i = 0; i < headings.length; i++) {
+                const heading = headings[i];
+                if (hr.compareDocumentPosition(heading) & Node.DOCUMENT_POSITION_FOLLOWING) {
+                    nextHeadingIndex = i;
+                    break;
+                }
+            }
+
+            console.log('分隔线:', hrData.content, '下一个标题索引:', nextHeadingIndex);
+
+            if (nextHeadingIndex !== -1) {
+                // 找到对应的目录项
+                const nextHeading = headings[nextHeadingIndex];
+                const nextNavItem = navItems.find(item => {
+                    const link = item.querySelector('a');
+                    const text = link?.textContent?.replace('¶', '').trim();
+                    return text === nextHeading.textContent.replace('¶', '').trim();
+                });
+
+                if (nextNavItem) {
+                    nav.insertBefore(li, nextNavItem);
+                    console.log('插入到标题前:', nextHeading.textContent);
+                    return;
+                }
+            }
+
+            nav.appendChild(li);
+            console.log('追加到末尾:', hrData.content);
+        });
+    }, 100);
+});</script></body>
+</html>

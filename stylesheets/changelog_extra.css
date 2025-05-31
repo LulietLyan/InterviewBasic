@@ -1,0 +1,30 @@
+
+.changelog-type-newpage {
+    background-color: #ebbdff;
+}
+.changelog-type-newpage::before {
+    content: "新增内容";
+}
+
+.changelog-type-pageupdate {
+    background-color: #e4f7d2;
+}
+.changelog-type-pageupdate::before {
+    content: "内容更新";
+}
+
+
+.changelog-type-function {
+    background-color: #00a2c9;
+}
+.changelog-type-function::before {
+    content: "新增功能";
+}
+
+.changelog-type-refactor {
+    background-color: #c3f9ff;
+}
+.changelog-type-refactor::before {
+    content: "功能更新";
+}
+
